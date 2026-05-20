@@ -5,6 +5,7 @@
    ============================================================
 
    目次
+   0.  お知らせ
    1.  パスワード設定
    2.  ギャラリー
    3.  ライトボックス
@@ -24,6 +25,75 @@
    ============================================================ */
 
 'use strict';
+
+/* ------------------------------------------------------------
+   0. お知らせデータ（新しい順に追加してください・最大20件表示）
+   ------------------------------------------------------------ */
+const NEWS_LIST = [
+  { date:'2026/05/21', cat:'site',    text:'白山クラブ公式サイトを公開しました' },
+];
+
+// カテゴリ設定
+const NEWS_CAT = {
+  site:    { icon:'🔧', label:'サイト更新', color:'#0057ff', bg:'rgba(0,87,255,0.07)', border:'rgba(0,87,255,0.2)' },
+  gallery: { icon:'📸', label:'ギャラリー', color:'#e65100', bg:'rgba(230,81,0,0.07)',  border:'rgba(230,81,0,0.2)' },
+  club:    { icon:'📢', label:'クラブ情報', color:'#2e7d32', bg:'rgba(46,125,50,0.07)', border:'rgba(46,125,50,0.2)' },
+  content: { icon:'📄', label:'コンテンツ', color:'#6a1b9a', bg:'rgba(106,27,154,0.07)',border:'rgba(106,27,154,0.2)' },
+};
+
+const NEWS_SHOW  = 5;   // 最初に表示する件数
+const NEWS_MAX   = 20;  // 最大表示件数
+let   newsExpanded = false;
+
+function renderNews() {
+  const list = document.getElementById('newsBandList');
+  const band = document.getElementById('newsBand');
+  if (!list || !band) return;
+  const items = NEWS_LIST.slice(0, NEWS_MAX);
+  if (items.length === 0) return;
+  band.style.display = 'block';
+  list.innerHTML = items.map((item, i) => {
+    const c = NEWS_CAT[item.cat] || NEWS_CAT.site;
+    return `<li style="
+        display:flex;align-items:center;gap:0.5rem;
+        padding:0.4rem 0;
+        border-bottom:${i < items.length - 1 ? '1px solid #dce4f8' : 'none'};
+        font-size:0.8rem;
+      ">
+      <span style="
+        display:inline-block;font-size:0.68rem;font-weight:700;
+        color:${c.color};background:${c.bg};
+        border:1px solid ${c.border};
+        border-radius:999px;padding:0.1rem 0.5rem;white-space:nowrap
+      ">${c.icon} ${c.label}</span>
+      <span style="color:var(--text-light);white-space:nowrap;font-size:0.75rem">${item.date}</span>
+      <span style="color:var(--text-dark);flex:1">${item.text}</span>
+    </li>`;
+  }).join('');
+
+  const wrap = document.getElementById('newsBandWrap');
+  const btn  = document.getElementById('newsBandToggleBtn');
+  if (items.length <= 1) {
+    if (btn) btn.style.display = 'none';
+    if (wrap) wrap.style.maxHeight = 'none';
+  }
+}
+
+let newsBandExpanded = false;
+function toggleNewsBand() {
+  const wrap = document.getElementById('newsBandWrap');
+  const btn  = document.getElementById('newsBandToggleBtn');
+  newsBandExpanded = !newsBandExpanded;
+  if (newsBandExpanded) {
+    wrap.style.maxHeight = (NEWS_MAX * 56) + 'px';
+    btn.textContent = '閉じる ▲';
+  } else {
+    wrap.style.maxHeight = '52px';
+    btn.textContent = 'もっと見る ▼';
+  }
+}
+
+
 
 /* ------------------------------------------------------------
    1. パスワード設定
@@ -1338,6 +1408,9 @@ function initStars() {
    15. 初期化（DOMContentLoaded）
    ------------------------------------------------------------ */
 document.addEventListener('DOMContentLoaded', () => {
+
+  // ---- お知らせ初期表示 ----
+  renderNews();
 
   // ---- ギャラリー初期表示 ----
   renderGallery();
