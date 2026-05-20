@@ -121,7 +121,6 @@ function checkPassword() {
   document.getElementById('pwBox').style.display   = 'none';
   document.getElementById('pwError').style.display = 'none';
   uploadAuthed = true;
-  document.getElementById('fileInput').value = '';
   const ready = document.getElementById('uploadReady');
   ready.style.display = 'block';
   setTimeout(() => ready.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
