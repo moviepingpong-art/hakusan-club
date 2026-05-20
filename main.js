@@ -55,28 +55,21 @@ function renderNews() {
   list.innerHTML = items.map((item, i) => {
     const c = NEWS_CAT[item.cat] || NEWS_CAT.site;
     return `<li style="
-        display:flex;align-items:center;gap:0.5rem;
-        padding:0.4rem 0;
-        border-bottom:${i < items.length - 1 ? '1px solid #dce4f8' : 'none'};
-        font-size:0.8rem;
+        display:flex;align-items:flex-start;gap:0.4rem;
+        padding:0.5rem 0.8rem;
+        border-bottom:${i < items.length - 1 ? '1px solid #e8edf8' : 'none'};
+        font-size:0.78rem;
       ">
-      <span style="
-        display:inline-block;font-size:0.68rem;font-weight:700;
-        color:${c.color};background:${c.bg};
-        border:1px solid ${c.border};
-        border-radius:999px;padding:0.1rem 0.5rem;white-space:nowrap
-      ">${c.icon} ${c.label}</span>
-      <span style="color:var(--text-light);white-space:nowrap;font-size:0.75rem">${item.date}</span>
-      <span style="color:var(--text-dark);flex:1">${item.text}</span>
+      <span style="flex-shrink:0;font-size:0.9rem">${c.icon}</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:0.4rem;margin-bottom:0.15rem">
+          <span style="font-size:0.68rem;font-weight:700;color:${c.color}">${c.label}</span>
+          <span style="font-size:0.68rem;color:#999">${item.date}</span>
+        </div>
+        <p style="margin:0;color:#333;line-height:1.5;font-size:0.78rem">${item.text}</p>
+      </div>
     </li>`;
   }).join('');
-
-  const wrap = document.getElementById('newsBandWrap');
-  const btn  = document.getElementById('newsBandToggleBtn');
-  if (items.length <= 1) {
-    if (btn) btn.style.display = 'none';
-    if (wrap) wrap.style.maxHeight = 'none';
-  }
 }
 
 let newsBandExpanded = false;
@@ -84,13 +77,8 @@ function toggleNewsBand() {
   const wrap = document.getElementById('newsBandWrap');
   const btn  = document.getElementById('newsBandToggleBtn');
   newsBandExpanded = !newsBandExpanded;
-  if (newsBandExpanded) {
-    wrap.style.maxHeight = (NEWS_MAX * 56) + 'px';
-    btn.textContent = '閉じる ▲';
-  } else {
-    wrap.style.maxHeight = '52px';
-    btn.textContent = 'もっと見る ▼';
-  }
+  wrap.style.display = newsBandExpanded ? 'block' : 'none';
+  btn.textContent = newsBandExpanded ? '▲' : '▼';
 }
 
 

@@ -109,28 +109,23 @@
   </nav>
 </header>
 
-<!-- お知らせ帯 -->
-<div id="newsBand" style="background:#f0f4ff;border-bottom:1px solid #dce4f8;padding:0;display:none">
-  <div style="max-width:900px;margin:0 auto;padding:0.5rem 1.2rem">
-    <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.4rem">
-      <span style="font-size:0.78rem;font-weight:800;color:var(--primary);letter-spacing:0.05em">📢 お知らせ</span>
-      <button onclick="toggleNewsBand()" id="newsBandToggleBtn"
-        style="margin-left:auto;background:transparent;border:1px solid var(--primary);color:var(--primary);font-size:0.72rem;padding:0.15rem 0.7rem;border-radius:999px;cursor:pointer;font-weight:700">
-        もっと見る ▼
-      </button>
-    </div>
-    <div id="newsBandWrap" style="overflow:hidden;max-height:calc(1 * 52px);transition:max-height 0.4s ease">
-      <ul id="newsBandList" style="list-style:none;padding:0;margin:0"></ul>
-    </div>
-  </div>
-</div>
-
 <!-- HERO -->
 <section class="hero" id="heroSection">
   <canvas id="heroCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;display:none"></canvas>
   <div class="hero-bg-shape s1"></div>
   <div class="hero-bg-shape s2"></div>
   <div class="hero-bg-shape s3"></div>
+
+  <!-- お知らせボタン -->
+  <div id="newsBand" style="display:none;position:absolute;top:80px;right:1.5rem;z-index:10;max-width:280px">
+    <button onclick="toggleNewsBand()"
+      style="display:flex;align-items:center;gap:0.4rem;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.35);color:white;padding:0.35rem 0.9rem;border-radius:999px;font-size:0.75rem;font-weight:700;cursor:pointer;letter-spacing:0.05em;transition:all 0.2s">
+      📢 お知らせ <span id="newsBandToggleBtn">▼</span>
+    </button>
+    <div id="newsBandWrap" style="display:none;margin-top:0.4rem;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.2)">
+      <ul id="newsBandList" style="list-style:none;padding:0.4rem 0;margin:0"></ul>
+    </div>
+  </div>
   <div class="hero-content">
     <div style="margin-bottom:1.5rem"><img data-img="1" src="" alt="白山クラブロゴ" style="width:110px;height:110px;border-radius:50%;object-fit:cover;border:4px solid rgba(255,255,255,0.85);box-shadow:0 8px 32px rgba(0,0,0,0.35)"></div>
     <div class="hero-badge">ラージボール卓球クラブ</div>
