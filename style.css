@@ -1,0 +1,579 @@
+/* ============================================================
+   白山クラブ｜ラージボール卓球  -  style.css
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. CSS カスタムプロパティ（変数）
+   ------------------------------------------------------------ */
+:root {
+  --primary:       #0057ff;
+  --primary-light: #3a7fff;
+  --primary-pale:  #e0eaff;
+  --primary-dark:  #0040cc;
+  --accent:        #ff5722;
+  --accent2:       #ffca28;
+  --bg:            #f4f6fb;
+  --card:          #ffffff;
+  --text-dark:     #1a1a2e;
+  --text-mid:      #4a4a6a;
+  --text-light:    #9090b0;
+  --border:        #e0e4f0;
+}
+
+/* ------------------------------------------------------------
+   2. リセット・ベース
+   ------------------------------------------------------------ */
+*  { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--text-dark);
+  line-height: 1.8;
+}
+
+/* ------------------------------------------------------------
+   3. ヘッダー・ナビ
+   ------------------------------------------------------------ */
+header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 3px solid var(--primary);
+  padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+.logo {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.25rem; font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.logo-img {
+  width: 44px; height: 44px;
+  border-radius: 50%; object-fit: cover;
+  border: 2px solid var(--primary);
+  flex-shrink: 0;
+}
+.logo-text { display: flex; align-items: center; gap: 0.3rem; }
+.logo span  { color: var(--accent); }
+
+nav { display: flex; gap: 1.6rem; }
+nav a {
+  font-size: 0.78rem; font-weight: 700;
+  color: var(--text-mid);
+  text-decoration: none;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  transition: color 0.2s;
+  position: relative;
+}
+nav a::after {
+  content: '';
+  position: absolute; bottom: -4px; left: 0; right: 0;
+  height: 2px; background: var(--accent);
+  transform: scaleX(0); transition: transform 0.2s;
+}
+nav a:hover           { color: var(--primary); }
+nav a:hover::after    { transform: scaleX(1); }
+
+/* ------------------------------------------------------------
+   4. ヒーローセクション
+   ------------------------------------------------------------ */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  padding-top: 64px;
+  background: linear-gradient(135deg, #0a0a2e 0%, #0057ff 60%, #1a1aff 100%);
+}
+.hero-bg-shape { position: absolute; border-radius: 50%; }
+.hero-bg-shape.s1 { width:700px; height:700px; background:white;         opacity:0.06; top:-200px;  right:-200px; }
+.hero-bg-shape.s2 { width:500px; height:500px; background:var(--accent2); opacity:0.08; bottom:-150px; left:-150px; }
+.hero-bg-shape.s3 { width:300px; height:300px; background:var(--accent);  opacity:0.06; top:40%; left:25%; }
+
+.hero-content {
+  text-align: center; z-index: 1;
+  animation: fadeUp 0.9s ease both;
+  padding: 0 1.5rem;
+  display: flex; flex-direction: column; align-items: center;
+}
+.hero-badge {
+  display: inline-block;
+  background: var(--accent); color: white;
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.15em;
+  padding: 0.35em 1.4em; border-radius: 4px;
+  margin-bottom: 1.8rem; text-transform: uppercase;
+}
+.hero h1 {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700; color: white;
+  line-height: 1.1; letter-spacing: 0.05em; text-transform: uppercase;
+}
+.hero h1 .accent-txt { color: var(--accent2); }
+.hero h1 .sub {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.28em; color: rgba(255,255,255,0.7);
+  display: block; font-weight: 400;
+  margin-top: 0.6em; letter-spacing: 0.2em; text-transform: none;
+}
+.hero-catch {
+  margin: 1.8rem 0 2.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* ① 上段：小さめのラベル風 */
+.hero-catch-sub {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ff9a40;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: 1.5px solid rgba(255,154,64,0.5);
+  border-radius: 50px;
+  padding: 0.25rem 1.2rem;
+  display: inline-block;
+  animation: fadeUp 0.8s ease 0.2s both;
+}
+
+/* ② 中段：メインコピー・最大サイズ */
+.hero-catch-main {
+  font-size: clamp(1.25rem, 4vw, 1.7rem);
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.65;
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+  animation: fadeUp 0.8s ease 0.4s both;
+}
+
+/* ③ 下段：締めの一言・オレンジ強調 */
+.hero-catch-close {
+  font-size: clamp(1.05rem, 3vw, 1.3rem);
+  font-weight: 700;
+  color: #ffca28;
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 20px rgba(255,202,40,0.35);
+  animation: fadeUp 0.8s ease 0.6s both;
+}
+
+/* ------------------------------------------------------------
+   5. ボタン
+   ------------------------------------------------------------ */
+.btn {
+  display: inline-block;
+  padding: 0.8em 2.4em; border-radius: 6px;
+  font-size: 0.88rem; font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  transition: all 0.22s; cursor: pointer;
+  font-family: 'Noto Sans JP', sans-serif; border: none;
+}
+.btn-primary {
+  background: var(--accent); color: white;
+  box-shadow: 0 6px 20px rgba(255,87,34,0.4);
+}
+.btn-primary:hover {
+  background: #e64a19;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(255,87,34,0.5);
+}
+.btn-outline {
+  border: 2px solid white; color: white; background: transparent;
+}
+.btn-outline:hover { background: white; color: var(--primary); transform: translateY(-3px); }
+.btn-outline-dark {
+  border: 2px solid var(--primary); color: var(--primary); background: transparent;
+}
+.btn-outline-dark:hover { background: var(--primary); color: white; transform: translateY(-3px); }
+
+/* ------------------------------------------------------------
+   6. セクション共通
+   ------------------------------------------------------------ */
+section { padding: 6rem 1.5rem; }
+.section-inner { max-width: 960px; margin: 0 auto; }
+.section-label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.78rem; letter-spacing: 0.25em;
+  color: var(--accent); font-weight: 500;
+  text-transform: uppercase; margin-bottom: 0.4rem;
+}
+.section-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700; color: var(--text-dark);
+  margin-bottom: 1rem; line-height: 1.2; letter-spacing: 0.04em;
+}
+.section-title .blue { color: var(--primary); }
+.section-desc {
+  color: var(--text-mid); font-size: 0.95rem;
+  max-width: 600px; margin-bottom: 3rem; line-height: 2;
+}
+
+/* ------------------------------------------------------------
+   7. About セクション
+   ------------------------------------------------------------ */
+#about { background: white; }
+#clubinfo { background: linear-gradient(180deg, #f0f5ff 0%, #ffffff 100%); }
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; align-items: center;
+}
+.photo-placeholder {
+  width: 100%; aspect-ratio: 4/3; border-radius: 12px;
+  background: linear-gradient(135deg, var(--primary-pale), #c8d8ff);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: var(--primary); font-size: 0.85rem; gap: 0.8rem;
+  border: 2px dashed var(--primary-light);
+}
+.photo-placeholder svg    { opacity: 0.4; }
+.photo-placeholder .ph-label { opacity: 0.7; letter-spacing: 0.05em; }
+.about-text h3 {
+  font-family: 'Oswald', sans-serif; font-size: 1rem;
+  color: var(--primary); margin-bottom: 0.6rem; margin-top: 1.5rem;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.about-text h3:first-child { margin-top: 0; }
+.about-text p { font-size: 0.92rem; color: var(--text-mid); line-height: 2; }
+
+/* ------------------------------------------------------------
+   8. Schedule セクション
+   ------------------------------------------------------------ */
+#schedule { background: linear-gradient(180deg, #f0f5ff 0%, #ffffff 100%); }
+.schedule-card {
+  background: linear-gradient(135deg, #0a0a2e 0%, #0057ff 100%);
+  border-radius: 16px; padding: 3rem; color: white;
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem; position: relative; overflow: hidden;
+}
+.schedule-card::before {
+  content: '🏓';
+  position: absolute; right: 1.5rem; top: 50%; transform: translateY(-50%);
+  font-size: 7rem; opacity: 0.07;
+}
+.schedule-item h4 {
+  font-family: 'Oswald', sans-serif; font-size: 0.72rem;
+  letter-spacing: 0.2em; opacity: 0.65;
+  margin-bottom: 0.6rem; text-transform: uppercase;
+}
+.schedule-item p {
+  font-family: 'Oswald', sans-serif; font-size: 1.4rem;
+  font-weight: 500; line-height: 1.5;
+}
+.schedule-item .note {
+  font-size: 0.78rem; opacity: 0.65;
+  margin-top: 0.4rem; font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* ------------------------------------------------------------
+   9. Recruit セクション
+   ------------------------------------------------------------ */
+#recruit { background: linear-gradient(180deg, #fff4ef 0%, #fff9f7 100%); }
+.recruit-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 3rem; align-items: start;
+}
+.recruit-points { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+.recruit-points li {
+  display: flex; align-items: flex-start; gap: 1rem;
+  background: var(--card); border-radius: 10px;
+  padding: 1rem 1.2rem;
+  border-left: 4px solid var(--primary);
+  box-shadow: 0 2px 10px rgba(0,87,255,0.06);
+  transition: transform 0.2s;
+}
+.recruit-points li:hover              { transform: translateX(4px); }
+.recruit-points li:nth-child(2)       { border-left-color: var(--accent); }
+.recruit-points li:nth-child(3)       { border-left-color: #00c896; }
+.recruit-points li:nth-child(4)       { border-left-color: var(--accent2); }
+.recruit-points li:nth-child(5)       { border-left-color: var(--primary-light); }
+.recruit-points li:nth-child(6)       { border-left-color: var(--accent); }
+.recruit-points .rp-icon              { font-size: 1.4rem; flex-shrink: 0; }
+.recruit-points .rp-text strong {
+  display: block; color: var(--text-dark);
+  font-size: 0.92rem; font-weight: 700; margin-bottom: 0.2rem;
+}
+.recruit-points .rp-text span        { font-size: 0.82rem; color: var(--text-mid); line-height: 1.7; }
+
+/* ------------------------------------------------------------
+   10. Gallery セクション
+   ------------------------------------------------------------ */
+#gallery { background: linear-gradient(180deg, #f5f0ff 0%, #ffffff 100%); }
+.gallery-tabs { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2rem; }
+.gallery-tab {
+  padding: 0.5em 1.4em; border-radius: 6px;
+  font-size: 0.82rem; font-weight: 700; cursor: pointer;
+  border: 2px solid var(--border); background: white; color: var(--text-mid);
+  transition: all 0.2s; letter-spacing: 0.05em;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+.gallery-tab.active,
+.gallery-tab:hover { background: var(--primary); color: white; border-color: var(--primary); }
+.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.gallery-item {
+  position: relative; border-radius: 10px; overflow: hidden;
+  aspect-ratio: 4/3; background: var(--primary-pale);
+  cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+}
+.gallery-item:hover { transform: scale(1.03); box-shadow: 0 10px 28px rgba(0,0,0,0.14); }
+.gallery-item img   { width: 100%; height: 100%; object-fit: cover; display: block; }
+.gallery-item .gallery-label {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.7));
+  color: white; font-size: 0.76rem;
+  padding: 1.5rem 0.8rem 0.6rem;
+  opacity: 0; transition: opacity 0.2s;
+}
+.gallery-item:hover .gallery-label { opacity: 1; }
+.gallery-item.has-title .gallery-label { opacity: 1; }
+
+/* ライトボックス */
+.lightbox {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.9); z-index: 999;
+  align-items: center; justify-content: center; padding: 2rem;
+}
+.lightbox.open    { display: flex; }
+.lightbox img     { max-width: 90vw; max-height: 85vh; border-radius: 8px; object-fit: contain; }
+.lightbox-close {
+  position: absolute; top: 1.2rem; right: 1.5rem;
+  color: white; font-size: 2rem; cursor: pointer; background: none; border: none;
+}
+
+/* ------------------------------------------------------------
+   11. Matches セクション
+   ------------------------------------------------------------ */
+#matches { background: linear-gradient(180deg, #fffbf0 0%, #fff8e6 100%); }
+.match-list  { display: flex; flex-direction: column; gap: 1rem; }
+.match-card  {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.2rem 1.5rem;
+  display: flex; align-items: center; gap: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: transform 0.2s;
+}
+.match-card:hover        { transform: translateX(4px); }
+.match-date              { min-width: 90px; text-align: center; }
+.match-date .md          { font-family: 'Oswald', sans-serif; font-size: 1.5rem; color: var(--primary); font-weight: 700; line-height: 1; }
+.match-date .my          { font-size: 0.75rem; color: var(--text-light); }
+.match-divider           { width: 1px; height: 40px; background: var(--border); }
+.match-info .mi-title    { font-size: 0.95rem; font-weight: 700; color: var(--text-dark); }
+.match-info .mi-place    { font-size: 0.8rem; color: var(--text-light); margin-top: 0.2rem; }
+.match-result            { margin-left: auto; font-size: 0.8rem; padding: 0.3em 1em; border-radius: 4px; font-weight: 700; }
+.match-result.win        { background: var(--primary-pale); color: var(--primary); }
+.match-result.scheduled  { background: #fff8e1; color: #b07800; }
+.match-placeholder {
+  background: var(--card); border: 2px dashed var(--border); border-radius: 10px;
+  padding: 3rem; text-align: center; color: var(--text-light); font-size: 0.9rem;
+}
+
+/* ------------------------------------------------------------
+   12. Contact セクション
+   ------------------------------------------------------------ */
+#contact                  { background: linear-gradient(135deg, #0a0a2e 0%, #0057ff 100%); }
+#contact .section-label   { color: var(--accent2); }
+#contact .section-title   { color: white; }
+#contact .section-desc    { color: rgba(255,255,255,0.75); }
+.contact-card {
+  background: white; border-radius: 16px; padding: 3rem;
+  max-width: 600px; margin: 0 auto; text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+.contact-card > p { font-size: 0.92rem; color: var(--text-mid); margin-bottom: 1.5rem; line-height: 2; }
+
+/* ------------------------------------------------------------
+   13. フッター
+   ------------------------------------------------------------ */
+footer {
+  background: #0a0a2e; color: rgba(255,255,255,0.5);
+  text-align: center; padding: 2.5rem 1.5rem;
+  font-size: 0.82rem; letter-spacing: 0.05em;
+}
+footer .footer-logo {
+  font-family: 'Oswald', sans-serif; color: white;
+  font-size: 1.2rem; letter-spacing: 0.1em;
+  margin-bottom: 0.5rem; text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------
+   14. トップへ戻るボタン
+   ------------------------------------------------------------ */
+#backToTop {
+  position: fixed; bottom: 1.5rem; right: 1.2rem;
+  width: 48px; height: 48px;
+  background: var(--primary); color: white; border: none;
+  border-radius: 50%; cursor: pointer; font-size: 1.2rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3); z-index: 500;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.3s, transform 0.3s;
+  display: flex; align-items: center; justify-content: center;
+}
+#backToTop.visible  { opacity: 1; transform: translateY(0); }
+#backToTop:hover    { background: var(--primary-dark); transform: translateY(-3px); }
+
+/* ------------------------------------------------------------
+   15. Deep Dive セクション（記事・PDF・動画ビューア）
+   ------------------------------------------------------------ */
+.article-h2 {
+  font-family: 'Oswald', sans-serif; font-size: 1.4rem; color: #ffca28;
+  margin: 2rem 0 0.8rem; padding-bottom: 0.5rem; border-bottom: 2px solid #ffca28;
+}
+.article-h3 {
+  font-family: 'Oswald', sans-serif; font-size: 1.1rem; color: #64b5f6;
+  margin: 1.5rem 0 0.6rem; padding-left: 0.8rem; border-left: 3px solid #64b5f6;
+}
+.article-h4 { font-size: 0.95rem; color: #a5d6a7; margin: 1rem 0 0.4rem; }
+.article-p  { color: rgba(255,255,255,0.85); line-height: 1.9; margin-bottom: 1rem; font-size: 0.92rem; }
+.article-li {
+  color: rgba(255,255,255,0.75); line-height: 1.8;
+  margin-bottom: 0.4rem; font-size: 0.9rem;
+  list-style: none; padding-left: 1rem;
+}
+.article-li::before { content: "▶ "; color: #ffca28; font-size: 0.75rem; }
+.pdf-nav-btn {
+  background: rgba(255,255,255,0.15); color: white;
+  border: 1px solid rgba(255,255,255,0.3); border-radius: 8px;
+  padding: 0.5rem 1.2rem; cursor: pointer; font-size: 0.9rem;
+  transition: background 0.2s;
+}
+.pdf-nav-btn:hover { background: rgba(255,255,255,0.3); }
+
+/* ------------------------------------------------------------
+   16. アニメーション・キーフレーム
+   ------------------------------------------------------------ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes flashBorder {
+  0%,100% { box-shadow: 0 0 0 0  rgba(46,125,50,0.6); }
+  50%     { box-shadow: 0 0 0 10px rgba(46,125,50,0); }
+}
+@keyframes deepdiveGlow {
+  0%,100% { filter: brightness(1)   drop-shadow(0 0  8px rgba(255,202,40,0.4)); }
+  50%     { filter: brightness(1.2) drop-shadow(0 0 20px rgba(255,202,40,0.8)); }
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50%     { opacity: 0.4; }
+}
+
+/* Orange HUB フロートアニメーション */
+@keyframes float1 { 0%,100%{transform:translateY(  0px) rotate(-15deg)} 50%{transform:translateY(-25px) rotate(-10deg)} }
+@keyframes float2 { 0%,100%{transform:translateY(  0px) rotate( 25deg)} 50%{transform:translateY(-20px) rotate( 30deg)} }
+@keyframes float3 { 0%,100%{transform:translateY(  0px) rotate(-30deg)} 50%{transform:translateY(-30px) rotate(-25deg)} }
+@keyframes float4 { 0%,100%{transform:translateY(  0px) rotate(-20deg)} 50%{transform:translateY(-18px) rotate(-15deg)} }
+@keyframes float5 { 0%,100%{transform:translateY(  0px) rotate( 35deg)} 50%{transform:translateY(-22px) rotate( 40deg)} }
+@keyframes float6 { 0%,100%{transform:translateY(  0px) rotate( 20deg)} 50%{transform:translateY(-28px) rotate( 15deg)} }
+@keyframes float7 { 0%,100%{transform:translateY(  0px) rotate( 15deg)} 50%{transform:translateY(-20px) rotate( 20deg)} }
+@keyframes float8 { 0%,100%{transform:translateY(  0px) rotate( 40deg)} 50%{transform:translateY(-24px) rotate( 35deg)} }
+@keyframes float9 { 0%,100%{transform:translateY(  0px) rotate(-10deg)} 50%{transform:translateY(-26px) rotate( -5deg)} }
+@keyframes floatA { 0%,100%{transform:translateY(  0px) rotate(-20deg)} 50%{transform:translateY(-15px) rotate(-25deg)} }
+@keyframes floatB { 0%,100%{transform:translateY(  0px) rotate(-40deg)} 50%{transform:translateY(-20px) rotate(-45deg)} }
+@keyframes floatC { 0%,100%{transform:translateY(  0px) rotate( 22deg)} 50%{transform:translateY(-28px) rotate( 17deg)} }
+@keyframes floatD { 0%,100%{transform:translateY(  0px) rotate( -8deg)} 50%{transform:translateY(-16px) rotate(-13deg)} }
+@keyframes floatE { 0%,100%{transform:translateY(  0px) rotate( 18deg)} 50%{transform:translateY(-32px) rotate( 23deg)} }
+@keyframes floatF { 0%,100%{transform:translateY(  0px) rotate(-12deg)} 50%{transform:translateY(-22px) rotate( -7deg)} }
+
+/* ------------------------------------------------------------
+   17. スクロールフェードイン
+   ------------------------------------------------------------ */
+.fade-in         { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ------------------------------------------------------------
+   18. レスポンシブ（スマートフォン）
+   ------------------------------------------------------------ */
+@media (max-width: 700px) {
+  nav { display: none; }
+  .about-grid,
+  .recruit-grid,
+  .features-grid,
+  .schedule-card { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  section { padding: 4rem 1.2rem; }
+}
+
+/* ------------------------------------------------------------
+   フォーカスモード（メニューからジャンプ時）
+   ------------------------------------------------------------ */
+body.focus-mode header,
+body.focus-mode .hero,
+body.focus-mode footer { display: none !important; }
+
+body.focus-mode section { display: none !important; }
+body.focus-mode section.focus-target { display: block !important; }
+
+#focusExitBtn {
+  display: none;
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.2rem;
+  z-index: 9100;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+#focusExitBtn.visible { display: flex; }
+#focusExitBtn span {
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.9);
+  background: rgba(0,0,0,0.65);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+#focusExitBtn button {
+  width: 52px; height: 52px;
+  background: var(--primary);
+  color: white; border: none;
+  border-radius: 50%; cursor: pointer;
+  font-size: 1.3rem;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, transform 0.2s;
+}
+#focusExitBtn button:hover { transform: translateY(-3px); }
+
+/* ------------------------------------------------------------
+   クラブ案内タブ（clubinfo）
+   ------------------------------------------------------------ */
+.clubinfo-tabs {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.clubinfo-tab {
+  padding: 0.6rem 1.4rem;
+  border: 2px solid var(--border);
+  border-radius: 50px;
+  background: var(--card);
+  color: var(--text-mid);
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Noto Sans JP', sans-serif;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.clubinfo-tab.active,
+.clubinfo-tab:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+.clubinfo-panel {
+  animation: fadeInPanel 0.3s ease;
+}
+@keyframes fadeInPanel {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
