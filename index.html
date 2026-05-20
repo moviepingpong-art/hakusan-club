@@ -117,12 +117,12 @@
   <div class="hero-bg-shape s3"></div>
 
   <!-- お知らせボタン -->
-  <div id="newsBand" style="display:none;position:absolute;top:80px;right:1.5rem;z-index:10;max-width:280px">
+  <div id="newsBand" style="display:none;position:absolute;top:80px;right:1.5rem;z-index:500;max-width:280px;pointer-events:auto">
     <button onclick="toggleNewsBand()"
-      style="display:flex;align-items:center;gap:0.4rem;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.35);color:white;padding:0.35rem 0.9rem;border-radius:999px;font-size:0.75rem;font-weight:700;cursor:pointer;letter-spacing:0.05em;transition:all 0.2s">
+      style="display:flex;align-items:center;gap:0.4rem;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.35);color:white;padding:0.35rem 0.9rem;border-radius:999px;font-size:0.75rem;font-weight:700;cursor:pointer;letter-spacing:0.05em;transition:all 0.2s;pointer-events:auto;-webkit-tap-highlight-color:rgba(255,255,255,0.2)">
       📢 お知らせ <span id="newsBandToggleBtn">▼</span>
     </button>
-    <div id="newsBandWrap" style="display:none;margin-top:0.4rem;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.2)">
+    <div id="newsBandWrap" style="display:none;margin-top:0.4rem;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.2);pointer-events:auto">
       <ul id="newsBandList" style="list-style:none;padding:0.4rem 0;margin:0"></ul>
     </div>
   </div>
