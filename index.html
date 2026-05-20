@@ -307,9 +307,15 @@
         </div>
         <!-- 認証後のファイル選択ボタン -->
         <div id="uploadReady" style="display:none;margin-top:1.2rem;padding:1rem;background:#e8f5e9;border-radius:10px;border:2px solid #2e7d32;animation:flashBorder 0.8s ease 3">
-          <p style="font-size:0.85rem;color:#2e7d32;margin-bottom:0.8rem;font-weight:700">✅ 認証OK！下のボタンをタップして写真を選んでください</p>
-          <label for="fileInput" style="display:inline-block;background:#2e7d32;color:white;padding:0.6rem 1.5rem;border-radius:8px;cursor:pointer;font-size:0.9rem;font-weight:700">📂 写真を選ぶ</label>
-          <input type="file" id="fileInput" accept="image/*" multiple style="display:none" onchange="handleUpload(event)">
+          <p style="font-size:0.85rem;color:#2e7d32;margin-bottom:0.8rem;font-weight:700">✅ 認証OK！Google Driveの共有URLを貼り付けてください</p>
+          <p style="font-size:0.78rem;color:#555;margin-bottom:0.8rem">📌 Google Driveで写真を右クリック →「共有」→「リンクをコピー」したURLを貼り付けてください</p>
+          <input id="driveUrlInput" type="url" placeholder="https://drive.google.com/file/d/..."
+            style="width:100%;max-width:480px;padding:0.6rem 1rem;border:2px solid #2e7d32;border-radius:8px;font-size:0.9rem;outline:none;margin-bottom:0.8rem;box-sizing:border-box">
+          <br>
+          <button onclick="handleUrlAdd()"
+            style="background:#2e7d32;color:white;border:none;padding:0.6rem 2rem;border-radius:8px;font-size:0.95rem;font-weight:700;cursor:pointer">📸 追加する</button>
+          <button onclick="document.getElementById('uploadReady').style.display='none';uploadAuthed=false;"
+            style="background:#eee;color:#666;border:none;padding:0.6rem 1.2rem;border-radius:8px;font-size:0.9rem;cursor:pointer;margin-left:0.5rem">キャンセル</button>
         </div>
         <!-- 削除用パスワードフォーム -->
         <div id="deleteBox" style="display:none;margin-top:1.2rem;padding:1.2rem;background:#ffebee;border-radius:10px;border:2px solid #ef9a9a;text-align:center">

@@ -134,31 +134,45 @@ function cancelUpload() {
   uploadCategory = '';
 }
 
-function handleUpload(e) {
-  const files = Array.from(e.target.files);
+// Google DriveのURLを直接表示用URLに変換する
+function convertGoogleDriveUrl(url) {
+  // 共有リンク形式: https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+  const match = url.match(/\/file\/d\/([^\/]+)/);
+  if (match) {
+    return 'https://drive.google.com/thumbnail?id=' + match[1] + '&sz=w800';
+  }
+  // すでに直接URLの場合はそのまま返す
+  return url;
+}
+
+function handleUrlAdd() {
+  const urlInput = document.getElementById('driveUrlInput');
+  const url = urlInput.value.trim();
+  if (!url) {
+    alert('URLを入力してください');
+    return;
+  }
   let title = '';
-  if (uploadCategory === 'match' && files.length > 0) {
+  if (uploadCategory === 'match') {
     title = prompt(
       '📝 大会・試合のタイトルを入力してください\n（例：2026年 石川スポーツレク交流大会）'
     ) || '';
+  } else {
+    title = prompt('📝 写真のキャプション（説明文）を入力してください\n（省略可、Enterでスキップ）') || '';
   }
-  files.forEach(file => {
-    const reader = new FileReader();
-    reader.onload = ev => {
-      photos.push({
-        id:       Date.now() + Math.random(),
-        src:      ev.target.result,
-        category: uploadCategory,
-        caption:  title,
-      });
-      savePhotos();
-      renderGallery();
-    };
-    reader.readAsDataURL(file);
+  const src = convertGoogleDriveUrl(url);
+  photos.push({
+    id:       Date.now() + Math.random(),
+    src:      src,
+    category: uploadCategory,
+    caption:  title,
   });
+  savePhotos();
+  renderGallery();
+  urlInput.value = '';
   document.getElementById('uploadReady').style.display = 'none';
   uploadAuthed = false;
-  e.target.value = '';
+  alert('✅ 写真を追加しました！');
 }
 
 function deletePhoto(id) {
