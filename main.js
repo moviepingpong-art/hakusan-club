@@ -29,6 +29,13 @@
 /* ------------------------------------------------------------
    0. お知らせデータ（新しい順に追加してください・最大20件表示）
    ------------------------------------------------------------ */
+
+/* --- クラブ紹介セクションの写真（Google DriveのURLを貼り付けてください） --- */
+const ABOUT_PHOTO_URL = '';  // 例: 'https://drive.google.com/file/d/XXXX/view'
+
+/* --- メンバー募集セクションの写真（Google DriveのURLを貼り付けてください） --- */
+const RECRUIT_PHOTO_URL = '';  // 例: 'https://drive.google.com/file/d/XXXX/view'
+
 const NEWS_LIST = [
   { date:'2026/05/21', cat:'site',    text:'白山クラブ公式サイトを公開しました' },
 ];
@@ -193,14 +200,31 @@ function cancelUpload() {
 
 // Google DriveのURLを直接表示用URLに変換する
 function convertGoogleDriveUrl(url) {
-  // 共有リンク形式: https://drive.google.com/file/d/FILE_ID/view?usp=sharing
   const match = url.match(/\/file\/d\/([^\/]+)/);
-  if (match) {
-    return 'https://drive.google.com/thumbnail?id=' + match[1] + '&sz=w800';
-  }
-  // すでに直接URLの場合はそのまま返す
+  if (match) return 'https://drive.google.com/thumbnail?id=' + match[1] + '&sz=w800';
   return url;
 }
+
+/* クラブ紹介・メンバー募集の写真を表示 */
+function renderSectionPhotos() {
+  if (ABOUT_PHOTO_URL) {
+    const el = document.getElementById('aboutPhoto');
+    if (el) {
+      el.innerHTML = `<img src="${convertGoogleDriveUrl(ABOUT_PHOTO_URL)}"
+        alt="集合写真・練習風景"
+        style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;display:block">`;
+    }
+  }
+  if (RECRUIT_PHOTO_URL) {
+    const el = document.getElementById('recruitPhoto');
+    if (el) {
+      el.innerHTML = `<img src="${convertGoogleDriveUrl(RECRUIT_PHOTO_URL)}"
+        alt="練習・交流の様子"
+        style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;display:block">`;
+    }
+  }
+}
+
 
 function handleUrlAdd() {
   const urlInput = document.getElementById('driveUrlInput');
@@ -1399,6 +1423,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---- お知らせ初期表示 ----
   renderNews();
+
+  // ---- クラブ紹介・メンバー募集の写真表示 ----
+  renderSectionPhotos();
 
   // ---- ギャラリー初期表示 ----
   renderGallery();
