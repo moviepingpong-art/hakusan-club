@@ -298,6 +298,38 @@ function copySaveCode() {
   alert('✅ コードをコピーしました！\nmain.jsの該当行を置き換えてGitHubにアップロードしてください。');
 }
 
+/* お問い合わせフォーム送信処理 */
+function initContactForm() {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('contactSubmitBtn');
+    btn.textContent = '送信中…';
+    btn.disabled = true;
+    btn.style.opacity = '0.7';
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        form.reset();
+        document.getElementById('contactSuccess').style.display = 'block';
+        btn.style.display = 'none';
+      } else {
+        throw new Error();
+      }
+    } catch {
+      alert('送信に失敗しました。時間をおいて再度お試しいただくか、メールにてご連絡ください。');
+      btn.textContent = '送信する';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  });
+}
+
 
 function handleUrlAdd() {
   const urlInput = document.getElementById('driveUrlInput');
@@ -1499,6 +1531,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---- クラブ紹介・メンバー募集の写真表示 ----
   renderSectionPhotos();
+
+  // ---- お問い合わせフォーム初期化 ----
+  initContactForm();
 
   // ---- ギャラリー初期表示 ----
   renderGallery();

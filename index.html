@@ -1117,33 +1117,84 @@
       <h2 class="section-title">お問い合わせ</h2>
       <p class="section-desc" style="margin:0 auto 2rem">見学・体験・入会のご質問はお気軽にどうぞ😊</p>
     </div>
-    <div class="contact-card fade-in">
-      <p>まずはメールでもフォームでもお気軽にご連絡ください。</p>
-      <div style="background:var(--bg);border-radius:10px;padding:1rem 1.5rem;margin-bottom:1.5rem;border:2px solid var(--primary-pale);text-align:center">
+
+    <div class="contact-card fade-in" style="max-width:600px;margin:0 auto">
+
+      <!-- メールアドレス表示 -->
+      <div style="background:var(--bg);border-radius:10px;padding:0.8rem 1.5rem;margin-bottom:1.8rem;border:2px solid var(--primary-pale);text-align:center">
         <div style="font-size:0.75rem;color:var(--text-light);margin-bottom:0.3rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700">📧 Email</div>
-        <a href="mailto:hakusan.large@gmail.com" style="font-size:1rem;color:var(--primary);font-weight:700;text-decoration:none;letter-spacing:0.05em">hakusan.large@gmail.com</a>
+        <a href="mailto:hakusan.large@gmail.com" style="font-size:1rem;color:var(--primary);font-weight:700;text-decoration:none">hakusan.large@gmail.com</a>
       </div>
 
-      <!-- Googleフォームボタン -->
-      <div style="text-align:center;padding:1.5rem 0 0.5rem">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSft4GetOiYW7qnZiy1DhTvz846pmFXtu3IEvDC1tgPrk52j3Q/viewform?usp=dialog"
-          target="_blank" rel="noopener"
-          style="display:inline-flex;align-items:center;gap:0.75rem;
-                 background:linear-gradient(135deg,var(--accent),#e64a19);
-                 color:white;border-radius:14px;padding:1rem 2.2rem;
-                 text-decoration:none;font-size:1rem;font-weight:700;
-                 box-shadow:0 4px 18px rgba(255,87,34,0.35);letter-spacing:0.04em;
-                 font-family:'Noto Sans JP',sans-serif;transition:transform 0.2s,box-shadow 0.2s"
-          onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(255,87,34,0.45)'"
-          onmouseout="this.style.transform='';this.style.boxShadow='0 4px 18px rgba(255,87,34,0.35)'">
-          <span style="font-size:1.3rem">📝</span>
-          お問い合わせフォームを開く
-        </a>
-        <p style="font-size:0.75rem;color:var(--text-light);margin-top:0.9rem;line-height:1.7">
-          フォームはGoogleフォームで開きます。<br>
-          送信後に確認メールが届きます。
-        </p>
-      </div>
+      <!-- お問い合わせフォーム -->
+      <form id="contactForm" action="https://ssgform.com/s/B1WNrmDL1EGa" method="POST">
+
+        <!-- お名前 -->
+        <div style="margin-bottom:1.2rem">
+          <label style="display:block;font-size:0.85rem;font-weight:700;color:var(--text-dark);margin-bottom:0.4rem">
+            お名前 <span style="color:var(--accent);font-size:0.75rem">必須</span>
+          </label>
+          <input type="text" name="お名前" required placeholder="例：山田 太郎"
+            style="width:100%;padding:0.7rem 1rem;border:2px solid var(--border);border-radius:8px;font-size:0.95rem;font-family:'Noto Sans JP',sans-serif;outline:none;transition:border 0.2s;box-sizing:border-box"
+            onfocus="this.style.borderColor='var(--primary)'"
+            onblur="this.style.borderColor='var(--border)'">
+        </div>
+
+        <!-- メールアドレス -->
+        <div style="margin-bottom:1.2rem">
+          <label style="display:block;font-size:0.85rem;font-weight:700;color:var(--text-dark);margin-bottom:0.4rem">
+            メールアドレス <span style="color:var(--accent);font-size:0.75rem">必須</span>
+          </label>
+          <input type="email" name="メールアドレス" required placeholder="例：example@gmail.com"
+            style="width:100%;padding:0.7rem 1rem;border:2px solid var(--border);border-radius:8px;font-size:0.95rem;font-family:'Noto Sans JP',sans-serif;outline:none;transition:border 0.2s;box-sizing:border-box"
+            onfocus="this.style.borderColor='var(--primary)'"
+            onblur="this.style.borderColor='var(--border)'">
+        </div>
+
+        <!-- お問い合わせ種別 -->
+        <div style="margin-bottom:1.2rem">
+          <label style="display:block;font-size:0.85rem;font-weight:700;color:var(--text-dark);margin-bottom:0.4rem">
+            お問い合わせ種別
+          </label>
+          <select name="お問い合わせ種別"
+            style="width:100%;padding:0.7rem 1rem;border:2px solid var(--border);border-radius:8px;font-size:0.95rem;font-family:'Noto Sans JP',sans-serif;outline:none;transition:border 0.2s;box-sizing:border-box;background:white;color:var(--text-dark)"
+            onfocus="this.style.borderColor='var(--primary)'"
+            onblur="this.style.borderColor='var(--border)'">
+            <option value="見学について">見学について</option>
+            <option value="体験について">体験について</option>
+            <option value="入会について">入会について</option>
+            <option value="その他">その他</option>
+          </select>
+        </div>
+
+        <!-- お問い合わせ内容 -->
+        <div style="margin-bottom:1.8rem">
+          <label style="display:block;font-size:0.85rem;font-weight:700;color:var(--text-dark);margin-bottom:0.4rem">
+            お問い合わせ内容 <span style="color:var(--accent);font-size:0.75rem">必須</span>
+          </label>
+          <textarea name="お問い合わせ内容" required rows="5" placeholder="ご質問・ご要望をお書きください"
+            style="width:100%;padding:0.7rem 1rem;border:2px solid var(--border);border-radius:8px;font-size:0.95rem;font-family:'Noto Sans JP',sans-serif;outline:none;transition:border 0.2s;box-sizing:border-box;resize:vertical"
+            onfocus="this.style.borderColor='var(--primary)'"
+            onblur="this.style.borderColor='var(--border)'"></textarea>
+        </div>
+
+        <!-- 送信ボタン -->
+        <div style="text-align:center">
+          <button type="submit" id="contactSubmitBtn"
+            style="display:inline-flex;align-items:center;gap:0.75rem;background:linear-gradient(135deg,var(--primary),#0040cc);color:white;border:none;border-radius:14px;padding:1rem 3rem;font-size:1rem;font-weight:700;font-family:'Noto Sans JP',sans-serif;cursor:pointer;box-shadow:0 4px 18px rgba(0,87,255,0.35);transition:transform 0.2s,box-shadow 0.2s;letter-spacing:0.04em"
+            onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(0,87,255,0.45)'"
+            onmouseout="this.style.transform='';this.style.boxShadow='0 4px 18px rgba(0,87,255,0.35)'">
+            <span style="font-size:1.2rem">✉️</span> 送信する
+          </button>
+        </div>
+
+        <!-- 送信完了メッセージ -->
+        <div id="contactSuccess" style="display:none;text-align:center;margin-top:1.5rem;padding:1.2rem;background:#e8f5e9;border-radius:10px;border:2px solid #2e7d32">
+          <p style="color:#2e7d32;font-weight:700;font-size:1rem">✅ 送信が完了しました！</p>
+          <p style="color:#555;font-size:0.85rem;margin-top:0.4rem">お問い合わせありがとうございます。後ほどご連絡いたします。</p>
+        </div>
+
+      </form>
     </div>
   </div>
 </section>
