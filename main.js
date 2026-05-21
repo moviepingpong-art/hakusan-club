@@ -121,6 +121,18 @@ let deleteTargetId  = null;
 
 function savePhotos() {
   localStorage.setItem('hakusan_photos', JSON.stringify(photos));
+  // コピー用コードを生成して通知
+  showSaveCode();
+}
+
+function showSaveCode() {
+  const code = `// ↓この行をmain.jsの「let photos = ...」の行と置き換えてGitHubにアップロードしてください\nlet photos = ${JSON.stringify(photos, null, 2)};`;
+  const modal = document.getElementById('saveCodeModal');
+  const textarea = document.getElementById('saveCodeText');
+  if (modal && textarea) {
+    textarea.value = code;
+    modal.style.display = 'flex';
+  }
 }
 
 function renderGallery() {
@@ -212,17 +224,78 @@ function renderSectionPhotos() {
     if (el) {
       el.innerHTML = `<img src="${convertGoogleDriveUrl(ABOUT_PHOTO_URL)}"
         alt="集合写真・練習風景"
-        style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;display:block">`;
+        style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;display:block;cursor:pointer"
+        onclick="openSectionPhotoEdit('about')">`;
     }
+  } else {
+    const el = document.getElementById('aboutPhoto');
+    if (el) el.onclick = () => openSectionPhotoEdit('about');
   }
   if (RECRUIT_PHOTO_URL) {
     const el = document.getElementById('recruitPhoto');
     if (el) {
       el.innerHTML = `<img src="${convertGoogleDriveUrl(RECRUIT_PHOTO_URL)}"
         alt="練習・交流の様子"
-        style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;display:block">`;
+        style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;display:block;cursor:pointer"
+        onclick="openSectionPhotoEdit('recruit')">`;
     }
+  } else {
+    const el = document.getElementById('recruitPhoto');
+    if (el) el.onclick = () => openSectionPhotoEdit('recruit');
   }
+}
+
+let sectionPhotoAuthed = false;
+let sectionPhotoTarget = '';
+
+function openSectionPhotoEdit(target) {
+  sectionPhotoTarget = target;
+  const modal = document.getElementById('sectionPhotoModal');
+  if (modal) {
+    modal.style.display = 'flex';
+    document.getElementById('sectionPhotoPwInput').value = '';
+    document.getElementById('sectionPhotoUrlInput').value = '';
+    document.getElementById('sectionPhotoPwError').style.display = 'none';
+    document.getElementById('sectionPhotoUrlBox').style.display = 'none';
+    document.getElementById('sectionPhotoPwBox').style.display = 'block';
+  }
+}
+
+function checkSectionPhotoPw() {
+  const pw = document.getElementById('sectionPhotoPwInput').value;
+  if (pw !== window.ADMIN_PW) {
+    document.getElementById('sectionPhotoPwError').style.display = 'block';
+    return;
+  }
+  document.getElementById('sectionPhotoPwBox').style.display = 'none';
+  document.getElementById('sectionPhotoUrlBox').style.display = 'block';
+}
+
+function saveSectionPhoto() {
+  const url = document.getElementById('sectionPhotoUrlInput').value.trim();
+  if (!url) { alert('URLを入力してください'); return; }
+  const label = sectionPhotoTarget === 'about' ? 'ABOUT_PHOTO_URL' : 'RECRUIT_PHOTO_URL';
+  const code = `const ${label} = '${url}';`;
+  const codeModal = document.getElementById('saveCodeModal');
+  const textarea  = document.getElementById('saveCodeText');
+  document.getElementById('sectionPhotoModal').style.display = 'none';
+  if (codeModal && textarea) {
+    textarea.value = `// main.jsの「${label}」の行を以下に置き換えてGitHubにアップロードしてください\n${code}`;
+    codeModal.style.display = 'flex';
+  }
+}
+
+function closeSectionPhotoModal() {
+  document.getElementById('sectionPhotoModal').style.display = 'none';
+}
+function closeSaveCodeModal() {
+  document.getElementById('saveCodeModal').style.display = 'none';
+}
+function copySaveCode() {
+  const textarea = document.getElementById('saveCodeText');
+  textarea.select();
+  document.execCommand('copy');
+  alert('✅ コードをコピーしました！\nmain.jsの該当行を置き換えてGitHubにアップロードしてください。');
 }
 
 
