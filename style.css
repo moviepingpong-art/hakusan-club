@@ -520,7 +520,15 @@ body.focus-mode section.focus-target { display: block !important; }
   }
 }
 
-/* スマホでのクラブ一覧テーブル表示修正 */
+/* スマホでクラブ一覧カードを横幅いっぱいに */
+@media (max-width: 768px) {
+  #clubListCard {
+    padding: 0.8rem 0.4rem !important;
+    border-radius: 8px !important;
+    margin-left: -0.5rem !important;
+    margin-right: -0.5rem !important;
+  }
+}
 @media (max-width: 768px) {
   #clubTable {
     font-size: 0.7rem !important;
