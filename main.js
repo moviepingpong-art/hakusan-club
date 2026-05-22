@@ -126,25 +126,6 @@ let photos = [
   }
 ];
 let currentCategory = 'all';
-let uploadCategory  = '';
-let uploadAuthed    = false;
-let deleteTargetId  = null;
-
-function savePhotos() {
-  localStorage.setItem('hakusan_photos', JSON.stringify(photos));
-  // コピー用コードを生成して通知
-  showSaveCode();
-}
-
-function showSaveCode() {
-  const code = `// ↓この行をmain.jsの「let photos = ...」の行と置き換えてGitHubにアップロードしてください\nlet photos = ${JSON.stringify(photos, null, 2)};`;
-  const modal = document.getElementById('saveCodeModal');
-  const textarea = document.getElementById('saveCodeText');
-  if (modal && textarea) {
-    textarea.value = code;
-    modal.style.display = 'flex';
-  }
-}
 
 function renderGallery() {
   const grid = document.getElementById('galleryGrid');
@@ -181,40 +162,6 @@ function filterGallery(cat, btn) {
   document.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
   renderGallery();
-}
-
-function triggerUpload(cat) {
-  uploadCategory = cat;
-  uploadAuthed   = false;
-  document.getElementById('pwInput').value          = '';
-  document.getElementById('pwError').style.display  = 'none';
-  document.getElementById('uploadReady').style.display = 'none';
-  const box = document.getElementById('pwBox');
-  box.style.display = 'block';
-  setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
-  setTimeout(() => document.getElementById('pwInput').focus(), 300);
-}
-
-function checkPassword() {
-  const pw = document.getElementById('pwInput').value;
-  if (pw !== window.ADMIN_PW) {
-    document.getElementById('pwError').style.display = 'block';
-    document.getElementById('pwInput').value = '';
-    return;
-  }
-  document.getElementById('pwBox').style.display   = 'none';
-  document.getElementById('pwError').style.display = 'none';
-  uploadAuthed = true;
-  const ready = document.getElementById('uploadReady');
-  ready.style.display = 'block';
-  setTimeout(() => ready.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
-}
-
-function cancelUpload() {
-  document.getElementById('pwBox').style.display   = 'none';
-  document.getElementById('pwInput').value          = '';
-  document.getElementById('pwError').style.display = 'none';
-  uploadCategory = '';
 }
 
 // Google DriveのURLを直接表示用URLに変換する
@@ -410,66 +357,6 @@ function initContactForm() {
       btn.style.opacity = '1';
     }
   });
-}
-
-
-function handleUrlAdd() {
-  const urlInput = document.getElementById('driveUrlInput');
-  const url = urlInput.value.trim();
-  if (!url) {
-    alert('URLを入力してください');
-    return;
-  }
-  let title = '';
-  if (uploadCategory === 'match') {
-    title = prompt(
-      '📝 大会・試合のタイトルを入力してください\n（例：2026年 石川スポーツレク交流大会）'
-    ) || '';
-  } else {
-    title = prompt('📝 写真のキャプション（説明文）を入力してください\n（省略可、Enterでスキップ）') || '';
-  }
-  const src = convertGoogleDriveUrl(url);
-  photos.push({
-    id:       Date.now() + Math.random(),
-    src:      src,
-    category: uploadCategory,
-    caption:  title,
-  });
-  savePhotos();
-  renderGallery();
-  urlInput.value = '';
-  document.getElementById('uploadReady').style.display = 'none';
-  uploadAuthed = false;
-  alert('✅ 写真を追加しました！');
-}
-
-function deletePhoto(id) {
-  deleteTargetId = id;
-  document.getElementById('deletePwInput').value        = '';
-  document.getElementById('deletePwError').style.display = 'none';
-  const box = document.getElementById('deleteBox');
-  box.style.display = 'block';
-  setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
-}
-
-function checkDeletePassword() {
-  const pw = document.getElementById('deletePwInput').value;
-  if (pw !== window.ADMIN_PW) {
-    document.getElementById('deletePwError').style.display = 'block';
-    document.getElementById('deletePwInput').value = '';
-    return;
-  }
-  photos = photos.filter(p => p.id !== deleteTargetId);
-  savePhotos();
-  renderGallery();
-  document.getElementById('deleteBox').style.display = 'none';
-  deleteTargetId = null;
-}
-
-function cancelDelete() {
-  document.getElementById('deleteBox').style.display    = 'none';
-  document.getElementById('deletePwInput').value        = '';
-  deleteTargetId = null;
 }
 
 
