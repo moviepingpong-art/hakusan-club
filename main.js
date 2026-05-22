@@ -37,7 +37,8 @@ const ABOUT_PHOTO_URL = '';  // 例: 'https://drive.google.com/file/d/XXXX/view'
 const RECRUIT_PHOTO_URL = '';  // 例: 'https://drive.google.com/file/d/XXXX/view'
 
 const NEWS_LIST = [
-  { date:'2026/05/21', cat:'site',    text:'白山クラブ公式サイトを公開しました' },
+  { date:'2026/05/22', cat:'gallery', text:'写真を追加しました。' },
+  { date:'2026/05/21', cat:'site', text:'白山クラブ公式サイトを公開しました' },
 ];
 
 // カテゴリ設定
