@@ -522,14 +522,29 @@ body.focus-mode section.focus-target { display: block !important; }
 
 /* スマホでのクラブ一覧テーブル表示修正 */
 @media (max-width: 768px) {
-  #clubTableBody td,
-  #clubTableBody th {
-    padding: 0.4rem 0.3rem !important;
-    font-size: 0.72rem !important;
+  #clubTable {
+    font-size: 0.7rem !important;
+    table-layout: fixed;
+    width: 100% !important;
   }
-  #clubTableBody td span {
-    font-size: 0.68rem !important;
-    padding: 0.1rem 0.3rem !important;
+  #clubTable th,
+  #clubTable td {
+    padding: 0.35rem 0.25rem !important;
+    font-size: 0.7rem !important;
+    word-break: break-all;
+    white-space: normal !important;
+  }
+  #clubTable th:nth-child(1),
+  #clubTable td:nth-child(1) { width: 14% !important; }
+  #clubTable th:nth-child(2),
+  #clubTable td:nth-child(2) { width: 26% !important; }
+  #clubTable th:nth-child(3),
+  #clubTable td:nth-child(3) { width: 34% !important; }
+  #clubTable th:nth-child(4),
+  #clubTable td:nth-child(4) { width: 26% !important; }
+  #clubTable td span {
+    font-size: 0.65rem !important;
+    padding: 0.1rem 0.25rem !important;
   }
 }
 
