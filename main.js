@@ -30,6 +30,9 @@
    0. お知らせデータ（新しい順に追加してください・最大20件表示）
    ------------------------------------------------------------ */
 
+/* --- Google Apps Script Web API URL --- */
+const GAS_URL = 'https://script.google.com/macros/s/AKfycby6cvIHu_7d5caysgDYznj1nJITMyyKs8h6woNEHKZi0toKKPxVr5nO6xGJlVr9DCNI/exec';
+
 /* --- クラブ紹介セクションの写真（Google DriveのURLを貼り付けてください） --- */
 const ABOUT_PHOTO_URL = '';  // 例: 'https://drive.google.com/file/d/XXXX/view'
 
@@ -334,28 +337,36 @@ function closeNewsAdmin() {
   document.getElementById('newsAdminModal').style.display = 'none';
 }
 
-function generateNewsCode() {
+async function generateNewsCode() {
   const cat  = document.getElementById('newsCatInput').value;
   const date = document.getElementById('newsDateInput').value;
   const text = document.getElementById('newsTextInput').value.trim();
   if (!date || !text) { alert('日付と内容を入力してください'); return; }
 
-  // 日付をYYYY/MM/DD形式に変換
   const dateFormatted = date.replace(/-/g, '/');
+  const btn = document.querySelector('#newsAdminForm button');
+  btn.textContent = '送信中…';
+  btn.disabled = true;
 
-  // 新しいお知らせを先頭に追加した配列を生成
-  const newItem = `  { date:'${dateFormatted}', cat:'${cat}', text:'${text}' },`;
-  const currentItems = NEWS_LIST.map(item =>
-    `  { date:'${item.date}', cat:'${item.cat}', text:'${item.text}' },`
-  ).join('\n');
-  const newList = `const NEWS_LIST = [\n${newItem}\n${currentItems}\n];`;
-
-  const codeModal = document.getElementById('saveCodeModal');
-  const textarea  = document.getElementById('saveCodeText');
-  document.getElementById('newsAdminModal').style.display = 'none';
-  if (codeModal && textarea) {
-    textarea.value = `// main.jsの「const NEWS_LIST = [...]」の部分を以下に置き換えてGitHubにアップロードしてください\n\n${newList}`;
-    codeModal.style.display = 'flex';
+  try {
+    const res = await fetch(GAS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        password: window.ADMIN_PW,
+        item: { date: dateFormatted, cat, text }
+      })
+    });
+    // no-corsのため成功とみなす
+    document.getElementById('newsAdminModal').style.display = 'none';
+    alert('✅ お知らせを追加しました！\n数秒後にサイトに反映されます。');
+    // 30秒後にページをリロードして反映
+    setTimeout(() => location.reload(), 30000);
+  } catch(err) {
+    alert('送信に失敗しました。もう一度お試しください。');
+    btn.textContent = '📋 追加する';
+    btn.disabled = false;
   }
 }
 
