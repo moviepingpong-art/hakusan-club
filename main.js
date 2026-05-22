@@ -113,7 +113,14 @@ const CATEGORY_ICONS = {
   match:      '🏆',
 };
 
-let photos          = JSON.parse(localStorage.getItem('hakusan_photos') || '[]');
+let photos = [
+  {
+    "id": 1779454318110.0647,
+    "src": "https://drive.google.com/thumbnail?id=1yGR9YRV0-nB9HvlbMTnDotNMqBT_2C3N&sz=w800",
+    "category": "match",
+    "caption": "2026/5  スポレク"
+  }
+];
 let currentCategory = 'all';
 let uploadCategory  = '';
 let uploadAuthed    = false;
