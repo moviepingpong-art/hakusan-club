@@ -303,35 +303,33 @@ function initContactForm() {
   const form = document.getElementById('contactForm');
   if (!form) return;
 
-  // ページ表示時（戻るボタン含む）にボタンをリセット
-  window.addEventListener('pageshow', function() {
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
     const btn = document.getElementById('contactSubmitBtn');
-    if (btn) {
-      btn.textContent = '✉️ 送信する';
-      btn.disabled = false;
-      btn.style.opacity = '1';
-      btn.style.display = 'inline-flex';
-    }
-  });
-
-  form.addEventListener('submit', function() {
-    const btn = document.getElementById('contactSubmitBtn');
-    btn.textContent = '送信中…';
+    btn.innerHTML = '送信中…';
     btn.disabled = true;
     btn.style.opacity = '0.7';
-  });
 
-  // 送信完了後（?sent=1）に完了メッセージを表示
-  if (new URLSearchParams(window.location.search).get('sent') === '1') {
-    const success = document.getElementById('contactSuccess');
-    const btn = document.getElementById('contactSubmitBtn');
-    if (success) success.style.display = 'block';
-    if (btn) btn.style.display = 'none';
-    setTimeout(() => {
-      const el = document.getElementById('contact');
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 500);
-  }
+    const formData = new FormData(form);
+
+    try {
+      await fetch('https://ssgform.com/s/B1WNrmDL1EGa', {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData
+      });
+      // no-corsでは成功/失敗が判定できないため、送信完了とみなす
+      form.reset();
+      document.getElementById('contactSuccess').style.display = 'block';
+      btn.style.display = 'none';
+      document.getElementById('contact').scrollIntoView({ behavior:'smooth', block:'start' });
+    } catch(err) {
+      alert('送信に失敗しました。メールにてご連絡ください。\nhakusan.large@gmail.com');
+      btn.innerHTML = '<span style="font-size:1.2rem">✉️</span> 送信する';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }
+  });
 }
 
 
