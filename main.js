@@ -173,6 +173,7 @@ function renderGallery() {
           ? `<br><strong style="font-size:0.85rem;letter-spacing:0.03em">${photo.caption}</strong>`
           : ''}
       </div>
+    </div>`).join('');
 }
 
 function filterGallery(cat, btn) {
