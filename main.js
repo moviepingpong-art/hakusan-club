@@ -119,64 +119,10 @@ const CATEGORY_ICONS = {
 
 let photos = [
   {
-    "id": 1,
-    "src": "https://drive.google.com/thumbnail?id=1y_V5Pj4AZmCyIYdMbUWfj3e8GDa9EwvC&sz=w800",
-    "category": "atmosphere",
-    "caption": ""
-  },
-  {
-    "id": 2,
-    "src": "https://drive.google.com/thumbnail?id=1_QZSJb38ditFd5xM0RclXVv6RDHH7111&sz=w800",
-    "category": "atmosphere",
-    "caption": ""
-  },
-  {
-    "id": 3,
-    "src": "https://drive.google.com/thumbnail?id=1UvO4rfYz0swvfgmEaoX2Gof7ra5mKle-&sz=w800",
-    "category": "practice",
-    "caption": ""
-  },
-  {
-    "id": 4,
-    "src": "https://drive.google.com/thumbnail?id=1Y_GlL4UKbY9ywpEf0uFzs7FZGZ3LBNPu&sz=w800",
-    "category": "practice",
-    "caption": ""
-  },
-  {
-    "id": 5,
-    "src": "https://drive.google.com/thumbnail?id=1rBHi4oj0sbs0fk_RWYe7a_Dne_fdutCP&sz=w800",
-    "category": "practice",
-    "caption": ""
-  },
-  {
-    "id": 6,
-    "src": "https://drive.google.com/thumbnail?id=199wQY9aK9kHLFp8uSwbwR2W4ucGbygVq&sz=w800",
-    "category": "practice",
-    "caption": ""
-  },
-  {
-    "id": 7,
-    "src": "https://drive.google.com/thumbnail?id=1JQ74O1k0bIH-DTYDJ7yJX1z3KRTY36wx&sz=w800",
-    "category": "practice",
-    "caption": ""
-  },
-  {
-    "id": 8,
-    "src": "https://drive.google.com/thumbnail?id=14S67-yQkv_umKUIz_Z0c_ZjsCrohGkjM&sz=w800",
-    "category": "match",
-    "caption": "2026/5　スポレク2"
-  },
-  {
-    "id": 9,
-    "src": "https://drive.google.com/thumbnail?id=16fb7Q4ZS3zV0T8KvF-Zj8kCHKgNXaKqg&sz=w800",
-    "category": "match",
-    "caption": "2026/5　スポレク1"
-  },
-  {
-    "id": 10,
+    "id": 1779454318110.0647,
     "src": "https://drive.google.com/thumbnail?id=1yGR9YRV0-nB9HvlbMTnDotNMqBT_2C3N&sz=w800",
     "category": "match",
-    "caption": "2026/5　スポレク優勝"
+    "caption": "2026/5  スポレク"
   }
 ];
 let currentCategory = 'all';
@@ -212,7 +158,7 @@ function renderGallery() {
     grid.innerHTML = `
       <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-light)">
         <div style="font-size:3rem;margin-bottom:0.8rem">📷</div>
-        <div style="font-size:0.9rem">写真がまだありません。上のボタンから追加してください。</div>
+        <div style="font-size:0.9rem">写真はGoogle Driveフォルダに保存すると毎週月曜日に自動更新されます。</div>
       </div>`;
     return;
   }
@@ -227,11 +173,6 @@ function renderGallery() {
           ? `<br><strong style="font-size:0.85rem;letter-spacing:0.03em">${photo.caption}</strong>`
           : ''}
       </div>
-      <button onclick="event.stopPropagation(); deletePhoto(${photo.id})"
-        style="position:absolute;top:0.5rem;right:0.5rem;background:rgba(0,0,0,0.55);
-               color:white;border:none;border-radius:50%;width:26px;height:26px;
-               font-size:0.8rem;cursor:pointer;line-height:26px;text-align:center">✕</button>
-    </div>`).join('');
 }
 
 function filterGallery(cat, btn) {

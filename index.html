@@ -300,53 +300,6 @@
         <button class="gallery-tab" onclick="filterGallery('match',this)">🏆 試合・大会</button>
       </div>
       <div class="gallery-grid fade-in" id="galleryGrid"></div>
-      <div style="text-align:center;margin-top:2rem;background:var(--card);border:2px dashed var(--border);border-radius:12px;padding:1.5rem" class="fade-in">
-        <p style="font-size:0.9rem;font-weight:700;color:var(--text-dark);margin-bottom:0.4rem">📸 写真を追加する</p>
-        <p style="font-size:0.8rem;color:var(--text-light);margin-bottom:0.5rem">カテゴリを選んでアップロードしてください</p>
-        <p style="font-size:0.78rem;color:var(--accent);margin-bottom:1rem">※ 写真の追加・削除は白山クラブ役員のみが行います</p>
-        <div style="display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap">
-          <button class="btn btn-outline-dark" style="font-size:0.82rem" onclick="triggerUpload('atmosphere')">＋ 😊 クラブ紹介・雰囲気</button>
-          <button class="btn btn-outline-dark" style="font-size:0.82rem" onclick="triggerUpload('equipment')">＋ 🏓 用具・施設</button>
-          <button class="btn btn-outline-dark" style="font-size:0.82rem" onclick="triggerUpload('practice')">＋ 🏋️ 練習・技術</button>
-          <button class="btn btn-outline-dark" style="font-size:0.82rem" onclick="triggerUpload('match')">＋ 🏆 試合・大会</button>
-        </div>
-        <!-- ページ内パスワード入力フォーム -->
-        <div id="pwBox" style="display:none;margin-top:1.2rem;padding:1.2rem;background:#fff8e1;border-radius:10px;border:2px solid #ffca28">
-          <p style="font-size:0.88rem;font-weight:700;color:#5d4037;margin-bottom:0.8rem">🔒 パスワードを入力してください</p>
-          <input id="pwInput" type="password" placeholder="パスワード"
-            style="width:100%;max-width:240px;padding:0.6rem 1rem;border:2px solid #ffca28;border-radius:8px;font-size:1rem;text-align:center;outline:none;margin-bottom:0.8rem;box-sizing:border-box">
-          <br>
-          <button onclick="checkPassword()"
-            style="background:#ffca28;color:#333;border:none;padding:0.6rem 2rem;border-radius:8px;font-size:0.95rem;font-weight:700;cursor:pointer">確認</button>
-          <button onclick="cancelUpload()"
-            style="background:#eee;color:#666;border:none;padding:0.6rem 1.2rem;border-radius:8px;font-size:0.9rem;cursor:pointer;margin-left:0.5rem">キャンセル</button>
-          <p id="pwError" style="color:#c62828;font-size:0.82rem;margin-top:0.6rem;display:none">パスワードが違います</p>
-        </div>
-        <!-- 認証後のファイル選択ボタン -->
-        <div id="uploadReady" style="display:none;margin-top:1.2rem;padding:1rem;background:#e8f5e9;border-radius:10px;border:2px solid #2e7d32;animation:flashBorder 0.8s ease 3">
-          <p style="font-size:0.85rem;color:#2e7d32;margin-bottom:0.8rem;font-weight:700">✅ 認証OK！Google Driveの共有URLを貼り付けてください</p>
-          <p style="font-size:0.78rem;color:#555;margin-bottom:0.8rem">📌 Google Driveで写真を右クリック →「共有」→「リンクをコピー」したURLを貼り付けてください</p>
-          <input id="driveUrlInput" type="url" placeholder="https://drive.google.com/file/d/..."
-            style="width:100%;max-width:480px;padding:0.6rem 1rem;border:2px solid #2e7d32;border-radius:8px;font-size:0.9rem;outline:none;margin-bottom:0.8rem;box-sizing:border-box">
-          <br>
-          <button onclick="handleUrlAdd()"
-            style="background:#2e7d32;color:white;border:none;padding:0.6rem 2rem;border-radius:8px;font-size:0.95rem;font-weight:700;cursor:pointer">📸 追加する</button>
-          <button onclick="document.getElementById('uploadReady').style.display='none';uploadAuthed=false;"
-            style="background:#eee;color:#666;border:none;padding:0.6rem 1.2rem;border-radius:8px;font-size:0.9rem;cursor:pointer;margin-left:0.5rem">キャンセル</button>
-        </div>
-        <!-- 削除用パスワードフォーム -->
-        <div id="deleteBox" style="display:none;margin-top:1.2rem;padding:1.2rem;background:#ffebee;border-radius:10px;border:2px solid #ef9a9a;text-align:center">
-          <p style="font-size:0.88rem;font-weight:700;color:#b71c1c;margin-bottom:0.8rem">🗑️ 写真を削除します。パスワードを入力してください</p>
-          <input id="deletePwInput" type="password" placeholder="パスワード"
-            style="width:100%;max-width:240px;padding:0.6rem 1rem;border:2px solid #ef9a9a;border-radius:8px;font-size:1rem;text-align:center;outline:none;margin-bottom:0.8rem;box-sizing:border-box">
-          <br>
-          <button onclick="checkDeletePassword()"
-            style="background:#c62828;color:white;border:none;padding:0.6rem 2rem;border-radius:8px;font-size:0.95rem;font-weight:700;cursor:pointer">削除する</button>
-          <button onclick="cancelDelete()"
-            style="background:#eee;color:#666;border:none;padding:0.6rem 1.2rem;border-radius:8px;font-size:0.9rem;cursor:pointer;margin-left:0.5rem">キャンセル</button>
-          <p id="deletePwError" style="color:#c62828;font-size:0.82rem;margin-top:0.6rem;display:none">パスワードが違います</p>
-        </div>
-      </div>
     </div>
 
   </div>
