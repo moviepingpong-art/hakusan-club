@@ -324,14 +324,15 @@ function initContactForm() {
       btn.style.display = 'none';
       document.getElementById('contact').scrollIntoView({ behavior:'smooth', block:'start' });
 
-      // フォームのどこかをクリック・タップしたら完了メッセージを非表示にして再送信可能に
-      form.addEventListener('click', function resetForm() {
+      // セクション全体をクリック・タップしたら完了メッセージを非表示にして再送信可能に
+      const contactSection = document.getElementById('contact');
+      contactSection.addEventListener('click', function resetForm() {
         success.style.display = 'none';
         btn.innerHTML = '<span style="font-size:1.2rem">✉️</span> 送信する';
         btn.disabled = false;
         btn.style.opacity = '1';
         btn.style.display = 'inline-flex';
-        form.removeEventListener('click', resetForm);
+        contactSection.removeEventListener('click', resetForm);
       }, { once: true });
 
     } catch(err) {
