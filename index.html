@@ -663,25 +663,6 @@
         <!-- 地図 -->
         <div id="clubMap" style="width:100%;height:300px;border-radius:12px;overflow:hidden;margin-bottom:1.2rem;border:1px solid rgba(255,120,0,0.3)"></div>
 
-        <!-- 地域フィルターボタン -->
-        <div style="margin-bottom:1rem">
-          <p style="font-size:0.78rem;color:rgba(255,255,255,0.5);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.4rem">
-            🔍 地域でクラブを探す
-          </p>
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap" id="regionBtnWrap">
-            <button class="region-btn" data-region="北海道" onclick="filterClubs('北海道',this)" style="background:rgba(255,120,0,0.15);color:#ff7a00;border:1px solid rgba(255,120,0,0.3);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">北海道</button>
-            <button class="region-btn" data-region="東北" onclick="filterClubs('東北',this)" style="background:rgba(255,120,0,0.15);color:#ff7a00;border:1px solid rgba(255,120,0,0.3);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">東北</button>
-            <button class="region-btn" data-region="関東" onclick="filterClubs('関東',this)" style="background:rgba(255,120,0,0.15);color:#ff7a00;border:1px solid rgba(255,120,0,0.3);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">関東</button>
-            <button class="region-btn" data-region="北陸" onclick="filterClubs('北陸',this)" style="background:rgba(255,120,0,0.15);color:#ff7a00;border:1px solid rgba(255,120,0,0.3);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">北陸</button>
-            <button class="region-btn" data-region="東海" onclick="filterClubs('東海',this)" style="background:rgba(255,120,0,0.15);color:#ff7a00;border:1px solid rgba(255,120,0,0.3);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">東海</button>
-            <button class="region-btn" data-region="関西" onclick="filterClubs('関西',this)" style="background:rgba(255,120,0,0.15);color:#ff7a00;border:1px solid rgba(255,120,0,0.3);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">関西</button>
-            <button class="region-btn" data-region="中国・四国" onclick="filterClubs('中国・四国',this)" style="background:rgba(255,120,0,0.15);color:#ff7a00;border:1px solid rgba(255,120,0,0.3);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">中国・四国</button>
-            <button class="region-btn" data-region="九州" onclick="filterClubs('九州',this)" style="background:rgba(255,120,0,0.15);color:#ff7a00;border:1px solid rgba(255,120,0,0.3);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">九州</button>
-            <button class="region-btn active-region" data-region="all" onclick="filterClubs('all',this)" style="background:#ff7a00;color:white;border:1px solid #ff7a00;border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">すべて</button>
-          </div>
-          <p style="font-size:0.72rem;color:rgba(255,255,255,0.3);margin-top:0.5rem">※ 掲載クラブが増え次第、地域別に絞り込みができます</p>
-        </div>
-
         <!-- クラブテーブル（ページネーション付き） -->
         <div style="overflow-x:auto">
           <table id="clubTable" style="width:100%;border-collapse:collapse;font-size:0.88rem;color:rgba(255,255,255,0.85)">
@@ -725,6 +706,25 @@
 
         <!-- ページネーション -->
         <div id="clubPagination" style="display:flex;gap:0.5rem;justify-content:center;align-items:center;margin-top:1rem;flex-wrap:wrap"></div>
+
+        <!-- 地域フィルターボタン -->
+        <div style="margin-top:1.2rem;margin-bottom:1rem">
+          <p style="font-size:0.78rem;color:rgba(255,255,255,0.5);margin-bottom:0.6rem;display:flex;align-items:center;gap:0.4rem">
+            🔍 地域でクラブを探す
+          </p>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap" id="regionBtnWrap">
+            <button class="region-btn" data-region="北海道" onclick="filterClubs('北海道',this)" style="background:rgba(255,120,0,0.15);color:#ff7a00;border:1px solid rgba(255,120,0,0.3);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">北海道</button>
+            <button class="region-btn" data-region="東北" onclick="filterClubs('東北',this)" style="background:rgba(255,120,0,0.15);color:#ff7a00;border:1px solid rgba(255,120,0,0.3);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">東北</button>
+            <button class="region-btn" data-region="関東" onclick="filterClubs('関東',this)" style="background:rgba(255,120,0,0.15);color:#ff7a00;border:1px solid rgba(255,120,0,0.3);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">関東</button>
+            <button class="region-btn" data-region="北陸" onclick="filterClubs('北陸',this)" style="background:rgba(255,120,0,0.15);color:#ff7a00;border:1px solid rgba(255,120,0,0.3);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">北陸</button>
+            <button class="region-btn" data-region="東海" onclick="filterClubs('東海',this)" style="background:rgba(255,120,0,0.15);color:#ff7a00;border:1px solid rgba(255,120,0,0.3);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">東海</button>
+            <button class="region-btn" data-region="関西" onclick="filterClubs('関西',this)" style="background:rgba(255,120,0,0.15);color:#ff7a00;border:1px solid rgba(255,120,0,0.3);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">関西</button>
+            <button class="region-btn" data-region="中国・四国" onclick="filterClubs('中国・四国',this)" style="background:rgba(255,120,0,0.15);color:#ff7a00;border:1px solid rgba(255,120,0,0.3);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">中国・四国</button>
+            <button class="region-btn" data-region="九州" onclick="filterClubs('九州',this)" style="background:rgba(255,120,0,0.15);color:#ff7a00;border:1px solid rgba(255,120,0,0.3);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">九州</button>
+            <button class="region-btn active-region" data-region="all" onclick="filterClubs('all',this)" style="background:#ff7a00;color:white;border:1px solid #ff7a00;border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">すべて</button>
+          </div>
+          <p style="font-size:0.72rem;color:rgba(255,255,255,0.3);margin-top:0.5rem">※ 掲載クラブが増え次第、地域別に絞り込みができます</p>
+        </div>
 
         <!-- クラブ追加ボタン＋掲載同意コメント -->
         <div style="text-align:center;margin-top:1.5rem">
