@@ -520,6 +520,19 @@ body.focus-mode section.focus-target { display: block !important; }
   }
 }
 
+/* スマホでのクラブ一覧テーブル表示修正 */
+@media (max-width: 768px) {
+  #clubTableBody td,
+  #clubTableBody th {
+    padding: 0.4rem 0.3rem !important;
+    font-size: 0.72rem !important;
+  }
+  #clubTableBody td span {
+    font-size: 0.68rem !important;
+    padding: 0.1rem 0.3rem !important;
+  }
+}
+
 /* スマホでのスクロール制御 */
 body.focus-mode {
   overflow: hidden !important;
