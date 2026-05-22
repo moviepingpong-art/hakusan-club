@@ -318,11 +318,22 @@ function initContactForm() {
         mode: 'no-cors',
         body: formData
       });
-      // no-corsでは成功/失敗が判定できないため、送信完了とみなす
       form.reset();
-      document.getElementById('contactSuccess').style.display = 'block';
+      const success = document.getElementById('contactSuccess');
+      success.style.display = 'block';
       btn.style.display = 'none';
       document.getElementById('contact').scrollIntoView({ behavior:'smooth', block:'start' });
+
+      // フォームのどこかをクリック・タップしたら完了メッセージを非表示にして再送信可能に
+      form.addEventListener('click', function resetForm() {
+        success.style.display = 'none';
+        btn.innerHTML = '<span style="font-size:1.2rem">✉️</span> 送信する';
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.style.display = 'inline-flex';
+        form.removeEventListener('click', resetForm);
+      }, { once: true });
+
     } catch(err) {
       alert('送信に失敗しました。メールにてご連絡ください。\nhakusan.large@gmail.com');
       btn.innerHTML = '<span style="font-size:1.2rem">✉️</span> 送信する';
