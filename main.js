@@ -115,64 +115,10 @@ const CATEGORY_ICONS = {
 
 let photos = [
   {
-    "id": 1,
-    "src": "https://drive.google.com/thumbnail?id=1y_V5Pj4AZmCyIYdMbUWfj3e8GDa9EwvC&sz=w800",
-    "category": "atmosphere",
-    "caption": "IMG_2855"
-  },
-  {
-    "id": 2,
-    "src": "https://drive.google.com/thumbnail?id=1_QZSJb38ditFd5xM0RclXVv6RDHH7111&sz=w800",
-    "category": "atmosphere",
-    "caption": "IMG_2858"
-  },
-  {
-    "id": 3,
-    "src": "https://drive.google.com/thumbnail?id=1UvO4rfYz0swvfgmEaoX2Gof7ra5mKle-&sz=w800",
-    "category": "practice",
-    "caption": "614796618721919402"
-  },
-  {
-    "id": 4,
-    "src": "https://drive.google.com/thumbnail?id=1Y_GlL4UKbY9ywpEf0uFzs7FZGZ3LBNPu&sz=w800",
-    "category": "practice",
-    "caption": "9DDCC56B40EFA2C6944636A6DC6DB05984D1130E"
-  },
-  {
-    "id": 5,
-    "src": "https://drive.google.com/thumbnail?id=1rBHi4oj0sbs0fk_RWYe7a_Dne_fdutCP&sz=w800",
-    "category": "practice",
-    "caption": "E62BFC47D1DE00685FE43D71FA72D1FBECDC6C46"
-  },
-  {
-    "id": 6,
-    "src": "https://drive.google.com/thumbnail?id=199wQY9aK9kHLFp8uSwbwR2W4ucGbygVq&sz=w800",
-    "category": "practice",
-    "caption": "IMG_2856"
-  },
-  {
-    "id": 7,
-    "src": "https://drive.google.com/thumbnail?id=1JQ74O1k0bIH-DTYDJ7yJX1z3KRTY36wx&sz=w800",
-    "category": "practice",
-    "caption": "IMG_2857"
-  },
-  {
-    "id": 8,
-    "src": "https://drive.google.com/thumbnail?id=16fb7Q4ZS3zV0T8KvF-Zj8kCHKgNXaKqg&sz=w800",
-    "category": "match",
-    "caption": "IMG_2802"
-  },
-  {
-    "id": 9,
-    "src": "https://drive.google.com/thumbnail?id=14S67-yQkv_umKUIz_Z0c_ZjsCrohGkjM&sz=w800",
-    "category": "match",
-    "caption": "IMG_2839"
-  },
-  {
-    "id": 10,
+    "id": 1779454318110.0647,
     "src": "https://drive.google.com/thumbnail?id=1yGR9YRV0-nB9HvlbMTnDotNMqBT_2C3N&sz=w800",
     "category": "match",
-    "caption": "IMG_2834"
+    "caption": "2026/5  スポレク"
   }
 ];
 let currentCategory = 'all';
@@ -357,6 +303,59 @@ function copySaveCode() {
   textarea.select();
   document.execCommand('copy');
   alert('✅ コードをコピーしました！\nmain.jsの該当行を置き換えてGitHubにアップロードしてください。');
+}
+
+/* お知らせ管理 */
+function openNewsAdmin() {
+  const modal = document.getElementById('newsAdminModal');
+  if (!modal) return;
+  modal.style.display = 'flex';
+  document.getElementById('newsAdminPwInput').value = '';
+  document.getElementById('newsAdminPwError').style.display = 'none';
+  document.getElementById('newsAdminPwBox').style.display = 'block';
+  document.getElementById('newsAdminForm').style.display = 'none';
+  // 今日の日付をデフォルト設定
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('newsDateInput').value = today;
+}
+
+function checkNewsAdminPw() {
+  const pw = document.getElementById('newsAdminPwInput').value;
+  if (pw !== window.ADMIN_PW) {
+    document.getElementById('newsAdminPwError').style.display = 'block';
+    return;
+  }
+  document.getElementById('newsAdminPwBox').style.display = 'none';
+  document.getElementById('newsAdminForm').style.display = 'block';
+}
+
+function closeNewsAdmin() {
+  document.getElementById('newsAdminModal').style.display = 'none';
+}
+
+function generateNewsCode() {
+  const cat  = document.getElementById('newsCatInput').value;
+  const date = document.getElementById('newsDateInput').value;
+  const text = document.getElementById('newsTextInput').value.trim();
+  if (!date || !text) { alert('日付と内容を入力してください'); return; }
+
+  // 日付をYYYY/MM/DD形式に変換
+  const dateFormatted = date.replace(/-/g, '/');
+
+  // 新しいお知らせを先頭に追加した配列を生成
+  const newItem = `  { date:'${dateFormatted}', cat:'${cat}', text:'${text}' },`;
+  const currentItems = NEWS_LIST.map(item =>
+    `  { date:'${item.date}', cat:'${item.cat}', text:'${item.text}' },`
+  ).join('\n');
+  const newList = `const NEWS_LIST = [\n${newItem}\n${currentItems}\n];`;
+
+  const codeModal = document.getElementById('saveCodeModal');
+  const textarea  = document.getElementById('saveCodeText');
+  document.getElementById('newsAdminModal').style.display = 'none';
+  if (codeModal && textarea) {
+    textarea.value = `// main.jsの「const NEWS_LIST = [...]」の部分を以下に置き換えてGitHubにアップロードしてください\n\n${newList}`;
+    codeModal.style.display = 'flex';
+  }
 }
 
 /* お問い合わせフォーム送信処理 */
