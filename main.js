@@ -40,7 +40,6 @@ const ABOUT_PHOTO_URL = '';  // 例: 'https://drive.google.com/file/d/XXXX/view'
 const RECRUIT_PHOTO_URL = '';  // 例: 'https://drive.google.com/file/d/XXXX/view'
 
 const NEWS_LIST = [
-  { date:"2026/05/24", cat:"content", text:"ヒーローメニュー区画内に管理人川柳を追加しました。" },
   { date:'2026/05/22', cat:'gallery', text:'写真を追加しました。' },
   { date:'2026/05/21', cat:'site', text:'白山クラブ公式サイトを公開しました' },
 ];
@@ -195,7 +194,7 @@ function speakSenryu(senryu) {
   setTimeout(() => speakLine(0), 0);
 }
 
-/* 太鼓「ドドン!」の音をWeb Audio APIで生成 */
+/* 太鼓「ドドン!」の音をWeb Audio APIで生成（本格的な和太鼓風） */
 function playTaikoSound() {
   try {
     const AC = window.AudioContext || window.webkitAudioContext;
@@ -203,53 +202,86 @@ function playTaikoSound() {
     const ctx = new AC();
     const now = ctx.currentTime;
 
-    // 太鼓らしい音を3回（ド・ド・ン!）
-    const beats = [0, 0.18, 0.42];
-    const gains = [0.7, 0.7, 1.0];
+    // 全体音量を上げるためのマスターゲイン
+    const master = ctx.createGain();
+    master.gain.value = 1.4;
+    master.connect(ctx.destination);
 
-    beats.forEach((t, i) => {
-      // 低音のメイン波（80Hz → 35Hz に急降下）
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(80, now + t);
-      osc.frequency.exponentialRampToValueAtTime(35, now + t + 0.25);
+    // 太鼓の1打を生成する関数
+    function hitTaiko(when, intensity) {
+      // ▼1. 胴鳴り（メインの低音・周波数を素早く下げて「ドン」の感じを出す）
+      //    100Hz → 55Hz に下がり、0.6秒かけて減衰
+      const body = ctx.createOscillator();
+      const bodyGain = ctx.createGain();
+      body.type = 'sine';
+      body.frequency.setValueAtTime(110, when);
+      body.frequency.exponentialRampToValueAtTime(55, when + 0.08);
+      body.frequency.exponentialRampToValueAtTime(50, when + 0.6);
+      bodyGain.gain.setValueAtTime(0.0001, when);
+      bodyGain.gain.exponentialRampToValueAtTime(intensity * 0.9, when + 0.005); // 急峻なアタック
+      bodyGain.gain.exponentialRampToValueAtTime(0.001, when + 0.7);
+      body.connect(bodyGain).connect(master);
+      body.start(when);
+      body.stop(when + 0.75);
 
-      gain.gain.setValueAtTime(gains[i], now + t);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + t + 0.45);
-
-      osc.connect(gain).connect(ctx.destination);
-      osc.start(now + t);
-      osc.stop(now + t + 0.5);
-
-      // さらに低音を重ねて重量感を増す（45Hz → 25Hz）
-      const subOsc  = ctx.createOscillator();
+      // ▼2. サブベース（30Hz）で重量感を補強
+      const sub = ctx.createOscillator();
       const subGain = ctx.createGain();
-      subOsc.type   = 'sine';
-      subOsc.frequency.setValueAtTime(45, now + t);
-      subOsc.frequency.exponentialRampToValueAtTime(25, now + t + 0.3);
-      subGain.gain.setValueAtTime(gains[i] * 0.6, now + t);
-      subGain.gain.exponentialRampToValueAtTime(0.001, now + t + 0.5);
-      subOsc.connect(subGain).connect(ctx.destination);
-      subOsc.start(now + t);
-      subOsc.stop(now + t + 0.55);
+      sub.type = 'sine';
+      sub.frequency.setValueAtTime(40, when);
+      sub.frequency.exponentialRampToValueAtTime(28, when + 0.5);
+      subGain.gain.setValueAtTime(0.0001, when);
+      subGain.gain.exponentialRampToValueAtTime(intensity * 0.6, when + 0.01);
+      subGain.gain.exponentialRampToValueAtTime(0.001, when + 0.6);
+      sub.connect(subGain).connect(master);
+      sub.start(when);
+      sub.stop(when + 0.65);
 
-      // 低域寄りの打撃ノイズ（ローパスフィルタで高音を削る）
-      const buf = ctx.createBuffer(1, ctx.sampleRate * 0.08, ctx.sampleRate);
-      const data = buf.getChannelData(0);
-      for (let j = 0; j < data.length; j++) {
-        data[j] = (Math.random() * 2 - 1) * Math.exp(-j / (data.length * 0.25));
+      // ▼3. アタック音（打撃の瞬間の「パン」、皮を叩く音）
+      //    短いノイズバーストにバンドパスフィルタをかける
+      const attackBuf = ctx.createBuffer(1, ctx.sampleRate * 0.08, ctx.sampleRate);
+      const attackData = attackBuf.getChannelData(0);
+      for (let j = 0; j < attackData.length; j++) {
+        const t = j / attackData.length;
+        attackData[j] = (Math.random() * 2 - 1) * Math.exp(-t * 30);
       }
-      const noise  = ctx.createBufferSource();
-      noise.buffer = buf;
-      const filter = ctx.createBiquadFilter();
-      filter.type  = 'lowpass';
-      filter.frequency.value = 300;  // 300Hz以上をカット
-      const ngain  = ctx.createGain();
-      ngain.gain.setValueAtTime(gains[i] * 0.3, now + t);
-      noise.connect(filter).connect(ngain).connect(ctx.destination);
-      noise.start(now + t);
-    });
+      const attackSrc = ctx.createBufferSource();
+      attackSrc.buffer = attackBuf;
+      const attackFilter = ctx.createBiquadFilter();
+      attackFilter.type = 'bandpass';
+      attackFilter.frequency.value = 800;  // 中域でアタック感を出す
+      attackFilter.Q.value = 1.2;
+      const attackGain = ctx.createGain();
+      attackGain.gain.setValueAtTime(intensity * 0.5, when);
+      attackGain.gain.exponentialRampToValueAtTime(0.001, when + 0.08);
+      attackSrc.connect(attackFilter).connect(attackGain).connect(master);
+      attackSrc.start(when);
+
+      // ▼4. 胴の余韻（残響感を出すため、200Hzあたりに弱い共鳴を持たせたノイズ）
+      const tailBuf = ctx.createBuffer(1, ctx.sampleRate * 0.5, ctx.sampleRate);
+      const tailData = tailBuf.getChannelData(0);
+      for (let j = 0; j < tailData.length; j++) {
+        const t = j / tailData.length;
+        tailData[j] = (Math.random() * 2 - 1) * Math.exp(-t * 6);
+      }
+      const tailSrc = ctx.createBufferSource();
+      tailSrc.buffer = tailBuf;
+      const tailFilter = ctx.createBiquadFilter();
+      tailFilter.type = 'lowpass';
+      tailFilter.frequency.value = 250;
+      tailFilter.Q.value = 4;
+      const tailGain = ctx.createGain();
+      tailGain.gain.setValueAtTime(intensity * 0.35, when + 0.01);
+      tailGain.gain.exponentialRampToValueAtTime(0.001, when + 0.5);
+      tailSrc.connect(tailFilter).connect(tailGain).connect(master);
+      tailSrc.start(when);
+    }
+
+    // 「ド・ド・ドン!」のリズム
+    hitTaiko(now,        0.7);   // ド
+    hitTaiko(now + 0.20, 0.7);   // ド
+    hitTaiko(now + 0.50, 1.0);   // ドン!（強め）
+
   } catch (e) {
     console.warn('太鼓音の再生に失敗', e);
   }
