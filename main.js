@@ -170,7 +170,7 @@ function speakSenryu(senryu) {
   const voice = voices.length > 0 ? voices[Math.floor(Math.random() * voices.length)] : null;
 
   const lines = [senryu.upper, senryu.middle, senryu.lower];
-  const PAUSE_MS = 200;
+  const PAUSE_MS = 0;
 
   // ── Chrome の音声合成バグ対策 ──
   // 短いテキストや連続speakで突然 onend / onstart が来なくなることがある。
@@ -322,6 +322,38 @@ function playTaikoSound() {
 /* ブラウザによっては getVoices() が非同期で読み込まれるため事前にウォームアップ */
 if ('speechSynthesis' in window) {
   speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+}
+
+/* 川柳ボタンを少し遅れて追いかける「つかまえてー」文字 */
+function initSenryuChaser() {
+  const btn    = document.getElementById('senryuFloatBtn');
+  const chaser = document.getElementById('senryuChaser');
+  if (!btn || !chaser) return;
+
+  // ボタンが入っているヒーロー区画（position:relative の親）を取得
+  const hero = btn.offsetParent || btn.parentElement;
+  if (!hero) return;
+
+  // 追従するオフセット（ボタンの少し右下に表示）
+  const OFFSET_X = 60;
+  const OFFSET_Y = 60;
+
+  // 0.6秒の transition でゆっくり追いつくので、毎フレーム位置更新する必要はなく
+  // 0.3秒ごとに目標位置を更新するだけで「ふらふら追いかける」動きになる
+  function updateChaser() {
+    const btnRect  = btn.getBoundingClientRect();
+    const heroRect = hero.getBoundingClientRect();
+
+    // hero内での相対座標
+    const x = btnRect.left - heroRect.left + OFFSET_X;
+    const y = btnRect.top  - heroRect.top  + OFFSET_Y;
+
+    chaser.style.transform = `translate(${x}px, ${y}px)`;
+  }
+
+  // 初回位置決め＆周期更新
+  updateChaser();
+  setInterval(updateChaser, 300);
 }
 
 // カテゴリ設定
@@ -1786,6 +1818,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---- ギャラリー初期表示 ----
   renderGallery();
+
+  // ---- 川柳ボタン追従「つかまえてー」 ----
+  initSenryuChaser();
 
   // ---- スクロールフェードイン ----
   const observer = new IntersectionObserver(entries => {
