@@ -205,114 +205,21 @@ function speakSenryu(senryu) {
   }, 50);
 }
 
-/* AudioContextは使い回す（毎回作るとリソースを食う・モバイルで詰まる）。
-   resume()可能なuser-gestureの中で初回作成する必要があるため、グローバル変数で保持。 */
-let _audioCtx = null;
-function _getAudioContext() {
-  if (!_audioCtx) {
-    const AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC) return null;
-    _audioCtx = new AC();
-  }
-  return _audioCtx;
-}
-
-/* 太鼓「ドドン!」の音をWeb Audio APIで生成（本格的な和太鼓風） */
+/* 太鼓「ドドン!」をMP3で再生（iPhoneのマナーモード問題を回避するためHTML audio使用） */
+let _taikoAudio = null;
 function playTaikoSound() {
   try {
-    const ctx = _getAudioContext();
-    if (!ctx) return;
-
-    // モバイル等で suspended の場合は resume してから鳴らす
-    const startWhenReady = () => {
-      const now = ctx.currentTime;
-
-      // 全体音量を上げるためのマスターゲイン
-      const master = ctx.createGain();
-      master.gain.value = 1.4;
-      master.connect(ctx.destination);
-
-      // 太鼓の1打を生成する関数
-      function hitTaiko(when, intensity) {
-        // ▼1. 胴鳴り（メインの低音・周波数を素早く下げて「ドン」の感じを出す）
-        const body = ctx.createOscillator();
-        const bodyGain = ctx.createGain();
-        body.type = 'sine';
-        body.frequency.setValueAtTime(110, when);
-        body.frequency.exponentialRampToValueAtTime(55, when + 0.08);
-        body.frequency.exponentialRampToValueAtTime(50, when + 0.6);
-        bodyGain.gain.setValueAtTime(0.0001, when);
-        bodyGain.gain.exponentialRampToValueAtTime(intensity * 0.9, when + 0.005);
-        bodyGain.gain.exponentialRampToValueAtTime(0.001, when + 0.7);
-        body.connect(bodyGain).connect(master);
-        body.start(when);
-        body.stop(when + 0.75);
-
-        // ▼2. サブベース
-        const sub = ctx.createOscillator();
-        const subGain = ctx.createGain();
-        sub.type = 'sine';
-        sub.frequency.setValueAtTime(40, when);
-        sub.frequency.exponentialRampToValueAtTime(28, when + 0.5);
-        subGain.gain.setValueAtTime(0.0001, when);
-        subGain.gain.exponentialRampToValueAtTime(intensity * 0.6, when + 0.01);
-        subGain.gain.exponentialRampToValueAtTime(0.001, when + 0.6);
-        sub.connect(subGain).connect(master);
-        sub.start(when);
-        sub.stop(when + 0.65);
-
-        // ▼3. アタック音
-        const attackBuf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.08), ctx.sampleRate);
-        const attackData = attackBuf.getChannelData(0);
-        for (let j = 0; j < attackData.length; j++) {
-          const t = j / attackData.length;
-          attackData[j] = (Math.random() * 2 - 1) * Math.exp(-t * 30);
-        }
-        const attackSrc = ctx.createBufferSource();
-        attackSrc.buffer = attackBuf;
-        const attackFilter = ctx.createBiquadFilter();
-        attackFilter.type = 'bandpass';
-        attackFilter.frequency.value = 800;
-        attackFilter.Q.value = 1.2;
-        const attackGain = ctx.createGain();
-        attackGain.gain.setValueAtTime(intensity * 0.5, when);
-        attackGain.gain.exponentialRampToValueAtTime(0.001, when + 0.08);
-        attackSrc.connect(attackFilter).connect(attackGain).connect(master);
-        attackSrc.start(when);
-
-        // ▼4. 余韻
-        const tailBuf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.5), ctx.sampleRate);
-        const tailData = tailBuf.getChannelData(0);
-        for (let j = 0; j < tailData.length; j++) {
-          const t = j / tailData.length;
-          tailData[j] = (Math.random() * 2 - 1) * Math.exp(-t * 6);
-        }
-        const tailSrc = ctx.createBufferSource();
-        tailSrc.buffer = tailBuf;
-        const tailFilter = ctx.createBiquadFilter();
-        tailFilter.type = 'lowpass';
-        tailFilter.frequency.value = 250;
-        tailFilter.Q.value = 4;
-        const tailGain = ctx.createGain();
-        tailGain.gain.setValueAtTime(intensity * 0.35, when + 0.01);
-        tailGain.gain.exponentialRampToValueAtTime(0.001, when + 0.5);
-        tailSrc.connect(tailFilter).connect(tailGain).connect(master);
-        tailSrc.start(when);
-      }
-
-      // 「ド・ドン!」のリズム
-      hitTaiko(now,        0.75);
-      hitTaiko(now + 0.30, 1.0);
-    };
-
-    if (ctx.state === 'suspended') {
-      // モバイルでは初回は suspended なので resume を待つ
-      ctx.resume().then(startWhenReady).catch(err => {
-        console.warn('AudioContext resumeに失敗', err);
-        startWhenReady(); // 失敗しても試す
-      });
-    } else {
-      startWhenReady();
+    // <audio>要素を使い回す（毎回作るとモバイルで詰まる）
+    if (!_taikoAudio) {
+      _taikoAudio = new Audio('taiko.mp3');
+      _taikoAudio.preload = 'auto';
+      _taikoAudio.volume  = 1.0;
+    }
+    // 再生位置を頭に戻して再生
+    _taikoAudio.currentTime = 0;
+    const p = _taikoAudio.play();
+    if (p && typeof p.catch === 'function') {
+      p.catch(err => console.warn('太鼓音の再生に失敗', err));
     }
   } catch (e) {
     console.warn('太鼓音の再生に失敗', e);
