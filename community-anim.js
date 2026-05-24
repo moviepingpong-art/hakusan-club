@@ -204,6 +204,10 @@
      ============================================================ */
   function playIntro(video, canvas, content, floatBalls) {
 
+    /* スキップボタンを表示 */
+    const skipBtn = document.getElementById('communitySkipBtn');
+    if (skipBtn) skipBtn.style.display = 'block';
+
     /* 1) 動画フェードイン */
     video.currentTime = 0;
     video.muted       = true;          /* 必ずミュートで再生開始（自動再生ポリシー対策） */
@@ -218,6 +222,7 @@
         /* メニュー選択経由なので必ずユーザー操作済み → 音声ON */
         video.muted = false;
       }).catch(() => {
+        if (skipBtn) skipBtn.style.display = 'none';
         showContent(content, floatBalls);
       });
     }
@@ -241,6 +246,7 @@
     /* 3) 動画終了 → フェードアウト → コンテンツ表示 */
     video.addEventListener('ended', function onEnded() {
       video.removeEventListener('ended', onEnded);
+      if (skipBtn) skipBtn.style.display = 'none';
 
       if (!burstFired) {
         burstFired = true;
@@ -259,6 +265,32 @@
         showContent(content, floatBalls);
       }, FADE_OUT_DURATION * 1000);
     });
+
+    /* スキップ処理（グローバル関数として公開） */
+    window.skipCommunityIntro = function () {
+      /* スキップボタンを非表示 */
+      if (skipBtn) skipBtn.style.display = 'none';
+
+      /* 動画を停止 */
+      video.pause();
+
+      /* 球爆発アニメーションをスキップ演出として短く実行 */
+      if (!burstFired) {
+        burstFired = true;
+        playBurstSound();
+        startBurstAnimation(canvas, 0.4);
+      }
+
+      /* 動画をすぐフェードアウト */
+      video.style.transition = 'opacity 0.4s ease';
+      video.style.opacity    = '0';
+
+      /* 0.4秒後にコンテンツ表示 */
+      setTimeout(() => {
+        video.style.display = 'none';
+        showContent(content, floatBalls);
+      }, 400);
+    };
   }
 
   /* コンテンツ・浮遊球をフェードインで表示 */
