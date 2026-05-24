@@ -115,9 +115,6 @@ function playSenryu(senryu) {
   disp.innerHTML = '';
   if (meta) meta.textContent = senryu.date ? `（${senryu.date}）` : '';
 
-  // 進行中の音声をキャンセル
-  if ('speechSynthesis' in window) speechSynthesis.cancel();
-
   // 1) ドドン!太鼓の音
   playTaikoSound();
 
@@ -162,19 +159,18 @@ function showSenryuVertical(container, senryu) {
 
 /* Web Speech APIで川柳を読み上げ（5・7・5を一呼吸ずつ空けて読む） */
 function speakSenryu(senryu) {
-  if (!('speechSynthesis' in window)) return;
-
-  // 一度キャンセル
-  speechSynthesis.cancel();
+  if (!('speechSynthesis' in window)) {
+    console.warn('このブラウザは音声合成に対応していません');
+    return;
+  }
 
   // 日本語の声をランダム選択（男声/女声）
-  const voices = speechSynthesis.getVoices().filter(v => v.lang.startsWith('ja'));
-  const voice  = voices.length > 0 ? voices[Math.floor(Math.random() * voices.length)] : null;
+  let voices = speechSynthesis.getVoices().filter(v => v.lang.startsWith('ja'));
+  // 初回読み込み時はvoicesが空のことがあるので、その場合は声指定なし（デフォルト）で進める
+  const voice = voices.length > 0 ? voices[Math.floor(Math.random() * voices.length)] : null;
 
-  // 上句・中句・下句をそれぞれ別のutteranceとして順に話す
-  // utteranceは順番にキューに積まれるため、間（ま）はsetTimeoutで挿入
   const lines = [senryu.upper, senryu.middle, senryu.lower];
-  const PAUSE_MS = 700;  // 各句の間（ミリ秒）
+  const PAUSE_MS = 700;
 
   function speakLine(idx) {
     if (idx >= lines.length) return;
@@ -184,13 +180,18 @@ function speakSenryu(senryu) {
     u.pitch  = 1.0;
     u.volume = 1.0;
     if (voice) u.voice = voice;
-    // この句を読み終わったら、一呼吸おいて次の句へ
     u.onend = () => {
       setTimeout(() => speakLine(idx + 1), PAUSE_MS);
     };
+    u.onerror = (e) => {
+      console.warn('音声合成エラー', e);
+    };
     speechSynthesis.speak(u);
   }
-  speakLine(0);
+
+  // cancel直後のspeakは無視されることがあるため、少し遅らせて起動
+  speechSynthesis.cancel();
+  setTimeout(() => speakLine(0), 100);
 }
 
 /* 太鼓「ドドン!」の音をWeb Audio APIで生成 */
