@@ -187,7 +187,7 @@
     管理人<br>川柳
   </button>
 
-  <!-- ボタンを追いかける「つかまえてー」文字 -->
+  <!-- ボタンを追いかける「つかまえてー」文字＋絵文字行列 -->
   <div id="senryuChaser" aria-hidden="true"
     style="
       position:absolute;
@@ -206,6 +206,48 @@
       opacity:0.85;
     "
   >つかまえてー</div>
+
+  <!-- 絵文字行列（4キャラが時間差で連なって追いかける） -->
+  <div class="senryuChaserChar" data-chaser-index="1" aria-hidden="true"
+    style="
+      position:absolute;top:0;left:0;z-index:448;
+      pointer-events:none;
+      font-size:1.4rem;
+      transform:translate(0,0);
+      transition:transform 1.0s cubic-bezier(0.2,0.7,0.3,1);
+      filter:drop-shadow(0 1px 3px rgba(0,0,0,0.5));
+    "
+  >🏃‍♂️</div>
+  <div class="senryuChaserChar" data-chaser-index="2" aria-hidden="true"
+    style="
+      position:absolute;top:0;left:0;z-index:447;
+      pointer-events:none;
+      font-size:1.3rem;
+      transform:translate(0,0);
+      transition:transform 1.4s cubic-bezier(0.2,0.7,0.3,1);
+      filter:drop-shadow(0 1px 3px rgba(0,0,0,0.5));
+    "
+  >🐕</div>
+  <div class="senryuChaserChar" data-chaser-index="3" aria-hidden="true"
+    style="
+      position:absolute;top:0;left:0;z-index:446;
+      pointer-events:none;
+      font-size:1.2rem;
+      transform:translate(0,0);
+      transition:transform 1.8s cubic-bezier(0.2,0.7,0.3,1);
+      filter:drop-shadow(0 1px 3px rgba(0,0,0,0.5));
+    "
+  >🐈</div>
+  <div class="senryuChaserChar" data-chaser-index="4" aria-hidden="true"
+    style="
+      position:absolute;top:0;left:0;z-index:445;
+      pointer-events:none;
+      font-size:1.1rem;
+      transform:translate(0,0);
+      transition:transform 2.2s cubic-bezier(0.2,0.7,0.3,1);
+      filter:drop-shadow(0 1px 3px rgba(0,0,0,0.5));
+    "
+  >🐇</div>
 
   <style>
     /* ヒーロー区画内をふわふわ大きく回遊（translate値はheroのサイズに対する % で動く） */

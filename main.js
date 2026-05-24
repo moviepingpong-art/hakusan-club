@@ -231,7 +231,7 @@ if ('speechSynthesis' in window) {
   speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
 }
 
-/* 川柳ボタンを少し遅れて追いかける「つかまえてー」文字 */
+/* 川柳ボタンを少し遅れて追いかける「つかまえてー」文字＋絵文字行列 */
 function initSenryuChaser() {
   const btn    = document.getElementById('senryuFloatBtn');
   const chaser = document.getElementById('senryuChaser');
@@ -241,21 +241,34 @@ function initSenryuChaser() {
   const hero = btn.offsetParent || btn.parentElement;
   if (!hero) return;
 
-  // 追従するオフセット（ボタンの少し右下に表示）
-  const OFFSET_X = 60;
-  const OFFSET_Y = 60;
+  // 「つかまえてー」と4つの絵文字キャラを取得
+  const chars = Array.from(document.querySelectorAll('.senryuChaserChar'));
 
-  // 0.6秒の transition でゆっくり追いつくので、毎フレーム位置更新する必要はなく
-  // 0.3秒ごとに目標位置を更新するだけで「ふらふら追いかける」動きになる
+  // 各要素のオフセット（ボタンを基準にどれだけ右下にずらすか）
+  // index 0 = つかまえてー文字, 1〜4 = 絵文字
+  // 距離を段階的に増やして「行列」を作る
+  const offsets = [
+    { x: 60,  y: 60 },   // つかまえてー（先頭）
+    { x: 100, y: 90 },   // 🏃‍♂️
+    { x: 140, y: 110 },  // 🐕
+    { x: 175, y: 130 },  // 🐈
+    { x: 205, y: 145 },  // 🐇
+  ];
+
   function updateChaser() {
     const btnRect  = btn.getBoundingClientRect();
     const heroRect = hero.getBoundingClientRect();
+    const btnX = btnRect.left - heroRect.left;
+    const btnY = btnRect.top  - heroRect.top;
 
-    // hero内での相対座標
-    const x = btnRect.left - heroRect.left + OFFSET_X;
-    const y = btnRect.top  - heroRect.top  + OFFSET_Y;
+    // 1) 「つかまえてー」文字
+    chaser.style.transform = `translate(${btnX + offsets[0].x}px, ${btnY + offsets[0].y}px)`;
 
-    chaser.style.transform = `translate(${x}px, ${y}px)`;
+    // 2) 絵文字行列（各キャラの transition 時間が長いほど後から追いつく）
+    chars.forEach((el, idx) => {
+      const o = offsets[idx + 1] || offsets[offsets.length - 1];
+      el.style.transform = `translate(${btnX + o.x}px, ${btnY + o.y}px)`;
+    });
   }
 
   // 初回位置決め＆周期更新
