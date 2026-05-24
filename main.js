@@ -170,28 +170,61 @@ function speakSenryu(senryu) {
   const voice = voices.length > 0 ? voices[Math.floor(Math.random() * voices.length)] : null;
 
   const lines = [senryu.upper, senryu.middle, senryu.lower];
-  const PAUSE_MS = 400;
+  const PAUSE_MS = 200;
 
-  function speakLine(idx) {
-    if (idx >= lines.length) return;
-    const u = new SpeechSynthesisUtterance(lines[idx]);
+  // ── Chrome の音声合成バグ対策 ──
+  // 短いテキストや連続speakで突然 onend / onstart が来なくなることがある。
+  // 「ウォッチドッグ」として一定時間音声が動かなければ強制的に次へ進める。
+  function makeUtterance(text) {
+    const u = new SpeechSynthesisUtterance(text);
     u.lang   = 'ja-JP';
     u.rate   = 0.85;
     u.pitch  = 1.0;
     u.volume = 1.0;
     if (voice) u.voice = voice;
-    u.onend = () => {
+    return u;
+  }
+
+  function speakLine(idx) {
+    if (idx >= lines.length) return;
+    const u = makeUtterance(lines[idx]);
+
+    let advanced = false;
+    function goNext(label) {
+      if (advanced) return;
+      advanced = true;
       setTimeout(() => speakLine(idx + 1), PAUSE_MS);
-    };
-    u.onerror = (e) => {
-      console.warn('音声合成エラー', e);
-    };
+    }
+
+    u.onend   = () => goNext('end');
+    u.onerror = (e) => { console.warn('音声合成エラー', e); goNext('error'); };
+
+    // ウォッチドッグ：句の長さに見合った猶予時間内に終了しなかったら次へ
+    // (5音=2.5秒前後・7音=3.5秒前後を想定し、十分な上限として5秒+句の文字数*0.4秒)
+    const maxMs = 5000 + lines[idx].length * 400;
+    setTimeout(() => {
+      if (!advanced) {
+        // まだ話しているなら見送る。話していない（=失敗）なら強制次へ
+        if (!speechSynthesis.speaking && !speechSynthesis.pending) {
+          goNext('watchdog');
+        } else {
+          // 話しているがonendが来ない場合のさらなる猶予
+          setTimeout(() => goNext('watchdog-extra'), 2000);
+        }
+      }
+    }, maxMs);
+
     speechSynthesis.speak(u);
   }
 
-  // cancel直後のspeakは無視されることがあるため、ごく短い遅延を挟んで起動
-  speechSynthesis.cancel();
-  setTimeout(() => speakLine(0), 0);
+  // 既存の音声を停止し、Chromeのキュー状態をリセット
+  try { speechSynthesis.cancel(); } catch (_) {}
+
+  // cancel直後は内部状態が不安定なため少し待つ（cancel→pause→resumeで状態を確実にリセット）
+  setTimeout(() => {
+    try { speechSynthesis.resume(); } catch (_) {}
+    speakLine(0);
+  }, 50);
 }
 
 /* 太鼓「ドドン!」の音をWeb Audio APIで生成（本格的な和太鼓風） */
@@ -277,10 +310,9 @@ function playTaikoSound() {
       tailSrc.start(when);
     }
 
-    // 「ド・ド・ドン!」のリズム
-    hitTaiko(now,        0.7);   // ド
-    hitTaiko(now + 0.20, 0.7);   // ド
-    hitTaiko(now + 0.50, 1.0);   // ドン!（強め）
+    // 「ド・ドン!」のリズム
+    hitTaiko(now,        0.75);  // ド
+    hitTaiko(now + 0.30, 1.0);   // ドン!（強め）
 
   } catch (e) {
     console.warn('太鼓音の再生に失敗', e);
