@@ -40,11 +40,194 @@ const ABOUT_PHOTO_URL = '';  // 例: 'https://drive.google.com/file/d/XXXX/view'
 const RECRUIT_PHOTO_URL = '';  // 例: 'https://drive.google.com/file/d/XXXX/view'
 
 const NEWS_LIST = [
-  { date:'2026/05/23', cat:'site', text:'タイトル変更ーSEO対策\n白山ラージボール卓球クラブ' },
-  { date:'2026/05/23', cat:'site', text:'訪問者カウンターを設置' },
   { date:'2026/05/22', cat:'gallery', text:'写真を追加しました。' },
   { date:'2026/05/21', cat:'site', text:'白山クラブ公式サイトを公開しました' },
 ];
+
+/* ------------------------------------------------------------
+   管理人川柳リスト（新しいものを上に追加してください）
+   ------------------------------------------------------------ */
+const SENRYU_LIST = [
+  // 卓球テーマ
+  { date:'2026/05/24', upper:'ラージボール', middle:'追いつけたのに', lower:'空振りで' },
+  { date:'2026/05/17', upper:'サーブの時',   middle:'トスのルールに', lower:'悩む夜' },
+  { date:'2026/05/10', upper:'妻のスマッシュ', middle:'俺のドライブより', lower:'よく決まる' },
+  { date:'2026/05/03', upper:'練習日',     middle:'膝より先に',   lower:'心が折れ' },
+  { date:'2026/04/26', upper:'ピンポン玉', middle:'探せばいつも', lower:'冷蔵庫下' },
+  { date:'2026/04/19', upper:'ラケットを', middle:'新調したのに', lower:'腕変わらず' },
+  { date:'2026/04/12', upper:'試合前',     middle:'素振り百回',   lower:'寝てしまう' },
+  { date:'2026/04/05', upper:'卓球部',     middle:'平均年齢',     lower:'知らぬが花' },
+  // スポーツ全般
+  { date:'2026/03/29', upper:'三日坊主',   middle:'今度は本気と', lower:'毎月言い' },
+  { date:'2026/03/22', upper:'ジム通い',   middle:'会費だけ毎月', lower:'届く春' },
+  { date:'2026/03/15', upper:'健康診断',   middle:'数値だけ見て', lower:'ジム決意' },
+  { date:'2026/03/08', upper:'老眼鏡',     middle:'探すメガネを', lower:'かけている' },
+  { date:'2026/03/01', upper:'体力測定',   middle:'昨日の俺に',   lower:'また負ける' },
+  { date:'2026/02/22', upper:'階段で',     middle:'息より先に',   lower:'膝が鳴く' },
+  { date:'2026/02/15', upper:'健康法',     middle:'覚えるたびに', lower:'また忘れ' },
+];
+
+/* 川柳の状態管理 */
+let _currentSenryu     = null;
+let _currentSenryuMode = 'weekly';
+
+/* 川柳を開く（mode: 'weekly'=今週 / 'random'=過去ランダム） */
+function openSenryu(mode) {
+  if (!SENRYU_LIST || SENRYU_LIST.length === 0) return;
+
+  const modal = document.getElementById('senryuModal');
+  if (!modal) return;
+  modal.style.display = 'flex';
+
+  _currentSenryuMode = mode;
+  if (mode === 'weekly') {
+    _currentSenryu = SENRYU_LIST[0];  // 先頭が最新
+    document.getElementById('senryuTitle').textContent = '〜 今週の管理人川柳 〜';
+  } else {
+    // 今週分を除いてランダム選択（1件しかない場合は今週分）
+    const pool = SENRYU_LIST.length > 1 ? SENRYU_LIST.slice(1) : SENRYU_LIST;
+    _currentSenryu = pool[Math.floor(Math.random() * pool.length)];
+    document.getElementById('senryuTitle').textContent = '〜 過去からの一句 〜';
+  }
+  playSenryu(_currentSenryu);
+}
+
+function closeSenryu() {
+  const modal = document.getElementById('senryuModal');
+  if (!modal) return;
+  // 進行中の音声をキャンセル
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  modal.style.display = 'none';
+  // 表示エリアもクリア
+  const disp = document.getElementById('senryuDisplay');
+  if (disp) disp.innerHTML = '';
+}
+
+function replaySenryu() {
+  if (_currentSenryu) playSenryu(_currentSenryu);
+}
+
+/* 川柳を実際に再生する（太鼓→音声＋縦書き表示） */
+function playSenryu(senryu) {
+  const disp = document.getElementById('senryuDisplay');
+  const meta = document.getElementById('senryuMeta');
+  if (!disp) return;
+  disp.innerHTML = '';
+  if (meta) meta.textContent = senryu.date ? `（${senryu.date}）` : '';
+
+  // 進行中の音声をキャンセル
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+
+  // 1) ドドン!太鼓の音
+  playTaikoSound();
+
+  // 2) 太鼓の後に音声＋縦書き表示
+  setTimeout(() => {
+    showSenryuVertical(disp, senryu);
+    speakSenryu(senryu);
+  }, 900);
+}
+
+/* 縦書きで川柳を順次表示 */
+function showSenryuVertical(container, senryu) {
+  const lines = [senryu.upper, senryu.middle, senryu.lower];
+  container.innerHTML = '';
+
+  lines.forEach((text, idx) => {
+    const col = document.createElement('div');
+    col.style.cssText = `
+      writing-mode:vertical-rl;
+      -webkit-writing-mode:vertical-rl;
+      font-size:1.6rem;
+      font-weight:700;
+      color:#3a1a00;
+      letter-spacing:0.15em;
+      line-height:1.4;
+      opacity:0;
+      transform:translateY(-10px);
+      transition:opacity 0.5s ease, transform 0.5s ease;
+      min-height:200px;
+      text-shadow:1px 1px 2px rgba(255,255,255,0.6);
+    `;
+    col.textContent = text;
+    container.appendChild(col);
+
+    // 順次フェードイン（太鼓終わりから各行 0.6秒間隔）
+    setTimeout(() => {
+      col.style.opacity   = '1';
+      col.style.transform = 'translateY(0)';
+    }, idx * 600 + 100);
+  });
+}
+
+/* Web Speech APIで川柳を読み上げ */
+function speakSenryu(senryu) {
+  if (!('speechSynthesis' in window)) return;
+  const text = `${senryu.upper}　${senryu.middle}　${senryu.lower}`;
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang   = 'ja-JP';
+  utter.rate   = 0.85;   // ややゆっくり（川柳調）
+  utter.pitch  = 1.0;
+  utter.volume = 1.0;
+
+  // 日本語の声をランダム選択（男声/女声）
+  const voices = speechSynthesis.getVoices().filter(v => v.lang.startsWith('ja'));
+  if (voices.length > 0) {
+    utter.voice = voices[Math.floor(Math.random() * voices.length)];
+  }
+  speechSynthesis.speak(utter);
+}
+
+/* 太鼓「ドドン!」の音をWeb Audio APIで生成 */
+function playTaikoSound() {
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    const ctx = new AC();
+    const now = ctx.currentTime;
+
+    // 太鼓らしい音を3回（ド・ド・ン!）
+    const beats = [0, 0.18, 0.42];
+    const gains = [0.7, 0.7, 1.0];
+
+    beats.forEach((t, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      // 周波数を急降下させて打撃音っぽく
+      osc.frequency.setValueAtTime(180, now + t);
+      osc.frequency.exponentialRampToValueAtTime(60, now + t + 0.25);
+
+      gain.gain.setValueAtTime(gains[i], now + t);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + t + 0.35);
+
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(now + t);
+      osc.stop(now + t + 0.4);
+
+      // 高域ノイズで打撃の「パン」を加える
+      const buf = ctx.createBuffer(1, ctx.sampleRate * 0.08, ctx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let j = 0; j < data.length; j++) {
+        data[j] = (Math.random() * 2 - 1) * Math.exp(-j / (data.length * 0.25));
+      }
+      const noise = ctx.createBufferSource();
+      noise.buffer = buf;
+      const ngain = ctx.createGain();
+      ngain.gain.setValueAtTime(gains[i] * 0.4, now + t);
+      noise.connect(ngain).connect(ctx.destination);
+      noise.start(now + t);
+    });
+  } catch (e) {
+    console.warn('太鼓音の再生に失敗', e);
+  }
+}
+
+/* ブラウザによっては getVoices() が非同期で読み込まれるため事前にウォームアップ */
+if ('speechSynthesis' in window) {
+  speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+}
 
 // カテゴリ設定
 const NEWS_CAT = {
@@ -121,64 +304,10 @@ const CATEGORY_ICONS = {
 
 let photos = [
   {
-    "id": 1,
-    "src": "https://drive.google.com/thumbnail?id=1y_V5Pj4AZmCyIYdMbUWfj3e8GDa9EwvC&sz=w800",
-    "category": "atmosphere",
-    "caption": ""
-  },
-  {
-    "id": 2,
-    "src": "https://drive.google.com/thumbnail?id=1_QZSJb38ditFd5xM0RclXVv6RDHH7111&sz=w800",
-    "category": "atmosphere",
-    "caption": ""
-  },
-  {
-    "id": 3,
-    "src": "https://drive.google.com/thumbnail?id=1UvO4rfYz0swvfgmEaoX2Gof7ra5mKle-&sz=w800",
-    "category": "practice",
-    "caption": ""
-  },
-  {
-    "id": 4,
-    "src": "https://drive.google.com/thumbnail?id=1Y_GlL4UKbY9ywpEf0uFzs7FZGZ3LBNPu&sz=w800",
-    "category": "practice",
-    "caption": ""
-  },
-  {
-    "id": 5,
-    "src": "https://drive.google.com/thumbnail?id=1rBHi4oj0sbs0fk_RWYe7a_Dne_fdutCP&sz=w800",
-    "category": "practice",
-    "caption": ""
-  },
-  {
-    "id": 6,
-    "src": "https://drive.google.com/thumbnail?id=199wQY9aK9kHLFp8uSwbwR2W4ucGbygVq&sz=w800",
-    "category": "practice",
-    "caption": ""
-  },
-  {
-    "id": 7,
-    "src": "https://drive.google.com/thumbnail?id=1JQ74O1k0bIH-DTYDJ7yJX1z3KRTY36wx&sz=w800",
-    "category": "practice",
-    "caption": ""
-  },
-  {
-    "id": 8,
-    "src": "https://drive.google.com/thumbnail?id=14S67-yQkv_umKUIz_Z0c_ZjsCrohGkjM&sz=w800",
-    "category": "match",
-    "caption": "2026/5　スポレク2"
-  },
-  {
-    "id": 9,
-    "src": "https://drive.google.com/thumbnail?id=16fb7Q4ZS3zV0T8KvF-Zj8kCHKgNXaKqg&sz=w800",
-    "category": "match",
-    "caption": "2026/5　スポレク1"
-  },
-  {
-    "id": 10,
+    "id": 1779454318110.0647,
     "src": "https://drive.google.com/thumbnail?id=1yGR9YRV0-nB9HvlbMTnDotNMqBT_2C3N&sz=w800",
     "category": "match",
-    "caption": "2026/5　スポレク優勝"
+    "caption": "2026/5  スポレク"
   }
 ];
 let currentCategory = 'all';
