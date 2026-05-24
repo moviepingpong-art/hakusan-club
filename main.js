@@ -170,7 +170,7 @@ function speakSenryu(senryu) {
   const voice = voices.length > 0 ? voices[Math.floor(Math.random() * voices.length)] : null;
 
   const lines = [senryu.upper, senryu.middle, senryu.lower];
-  const PAUSE_MS = 700;
+  const PAUSE_MS = 400;
 
   function speakLine(idx) {
     if (idx >= lines.length) return;
@@ -189,9 +189,9 @@ function speakSenryu(senryu) {
     speechSynthesis.speak(u);
   }
 
-  // cancel直後のspeakは無視されることがあるため、少し遅らせて起動
+  // cancel直後のspeakは無視されることがあるため、ごく短い遅延を挟んで起動
   speechSynthesis.cancel();
-  setTimeout(() => speakLine(0), 100);
+  setTimeout(() => speakLine(0), 0);
 }
 
 /* 太鼓「ドドン!」の音をWeb Audio APIで生成 */
@@ -207,31 +207,46 @@ function playTaikoSound() {
     const gains = [0.7, 0.7, 1.0];
 
     beats.forEach((t, i) => {
+      // 低音のメイン波（80Hz → 35Hz に急降下）
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.type = 'sine';
-      // 周波数を急降下させて打撃音っぽく
-      osc.frequency.setValueAtTime(180, now + t);
-      osc.frequency.exponentialRampToValueAtTime(60, now + t + 0.25);
+      osc.frequency.setValueAtTime(80, now + t);
+      osc.frequency.exponentialRampToValueAtTime(35, now + t + 0.25);
 
       gain.gain.setValueAtTime(gains[i], now + t);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + t + 0.35);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + t + 0.45);
 
       osc.connect(gain).connect(ctx.destination);
       osc.start(now + t);
-      osc.stop(now + t + 0.4);
+      osc.stop(now + t + 0.5);
 
-      // 高域ノイズで打撃の「パン」を加える
+      // さらに低音を重ねて重量感を増す（45Hz → 25Hz）
+      const subOsc  = ctx.createOscillator();
+      const subGain = ctx.createGain();
+      subOsc.type   = 'sine';
+      subOsc.frequency.setValueAtTime(45, now + t);
+      subOsc.frequency.exponentialRampToValueAtTime(25, now + t + 0.3);
+      subGain.gain.setValueAtTime(gains[i] * 0.6, now + t);
+      subGain.gain.exponentialRampToValueAtTime(0.001, now + t + 0.5);
+      subOsc.connect(subGain).connect(ctx.destination);
+      subOsc.start(now + t);
+      subOsc.stop(now + t + 0.55);
+
+      // 低域寄りの打撃ノイズ（ローパスフィルタで高音を削る）
       const buf = ctx.createBuffer(1, ctx.sampleRate * 0.08, ctx.sampleRate);
       const data = buf.getChannelData(0);
       for (let j = 0; j < data.length; j++) {
         data[j] = (Math.random() * 2 - 1) * Math.exp(-j / (data.length * 0.25));
       }
-      const noise = ctx.createBufferSource();
+      const noise  = ctx.createBufferSource();
       noise.buffer = buf;
-      const ngain = ctx.createGain();
-      ngain.gain.setValueAtTime(gains[i] * 0.4, now + t);
-      noise.connect(ngain).connect(ctx.destination);
+      const filter = ctx.createBiquadFilter();
+      filter.type  = 'lowpass';
+      filter.frequency.value = 300;  // 300Hz以上をカット
+      const ngain  = ctx.createGain();
+      ngain.gain.setValueAtTime(gains[i] * 0.3, now + t);
+      noise.connect(filter).connect(ngain).connect(ctx.destination);
       noise.start(now + t);
     });
   } catch (e) {
