@@ -39,33 +39,11 @@ const ABOUT_PHOTO_URL = '';  // 例: 'https://drive.google.com/file/d/XXXX/view'
 /* --- メンバー募集セクションの写真（Google DriveのURLを貼り付けてください） --- */
 const RECRUIT_PHOTO_URL = '';  // 例: 'https://drive.google.com/file/d/XXXX/view'
 
-const NEWS_LIST = [
-  { date:'2026/05/22', cat:'gallery', text:'写真を追加しました。' },
-  { date:'2026/05/21', cat:'site', text:'白山クラブ公式サイトを公開しました' },
-];
-
 /* ------------------------------------------------------------
-   管理人川柳リスト（新しいものを上に追加してください）
+   お知らせデータと管理人川柳データは data.js に分離しました。
+   このファイルより先に data.js を読み込んでください（index.html参照）。
    ------------------------------------------------------------ */
-const SENRYU_LIST = [
-  // 卓球テーマ
-  { date:'2026/05/24', upper:'ラージボール', middle:'追いつけたのに', lower:'空振りで' },
-  { date:'2026/05/17', upper:'サーブの時',   middle:'トスのルールに', lower:'悩む夜' },
-  { date:'2026/05/10', upper:'妻のスマッシュ', middle:'俺のドライブより', lower:'よく決まる' },
-  { date:'2026/05/03', upper:'練習日',     middle:'膝より先に',   lower:'心が折れ' },
-  { date:'2026/04/26', upper:'ピンポン玉', middle:'探せばいつも', lower:'冷蔵庫下' },
-  { date:'2026/04/19', upper:'ラケットを', middle:'新調したのに', lower:'腕変わらず' },
-  { date:'2026/04/12', upper:'試合前',     middle:'素振り百回',   lower:'寝てしまう' },
-  { date:'2026/04/05', upper:'卓球部',     middle:'平均年齢',     lower:'知らぬが花' },
-  // スポーツ全般
-  { date:'2026/03/29', upper:'三日坊主',   middle:'今度は本気と', lower:'毎月言い' },
-  { date:'2026/03/22', upper:'ジム通い',   middle:'会費だけ毎月', lower:'届く春' },
-  { date:'2026/03/15', upper:'健康診断',   middle:'数値だけ見て', lower:'ジム決意' },
-  { date:'2026/03/08', upper:'老眼鏡',     middle:'探すメガネを', lower:'かけている' },
-  { date:'2026/03/01', upper:'体力測定',   middle:'昨日の俺に',   lower:'また負ける' },
-  { date:'2026/02/22', upper:'階段で',     middle:'息より先に',   lower:'膝が鳴く' },
-  { date:'2026/02/15', upper:'健康法',     middle:'覚えるたびに', lower:'また忘れ' },
-];
+
 
 /* 川柳の状態管理 */
 let _currentSenryu     = null;
@@ -429,14 +407,7 @@ const CATEGORY_ICONS = {
   match:      '🏆',
 };
 
-let photos = [
-  {
-    "id": 1779454318110.0647,
-    "src": "https://drive.google.com/thumbnail?id=1yGR9YRV0-nB9HvlbMTnDotNMqBT_2C3N&sz=w800",
-    "category": "match",
-    "caption": "2026/5  スポレク"
-  }
-];
+/* photos 配列は data.js で定義しています */
 let currentCategory = 'all';
 
 function renderGallery() {
