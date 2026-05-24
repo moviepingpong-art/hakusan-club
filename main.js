@@ -160,23 +160,37 @@ function showSenryuVertical(container, senryu) {
   });
 }
 
-/* Web Speech APIで川柳を読み上げ */
+/* Web Speech APIで川柳を読み上げ（5・7・5を一呼吸ずつ空けて読む） */
 function speakSenryu(senryu) {
   if (!('speechSynthesis' in window)) return;
-  const text = `${senryu.upper}　${senryu.middle}　${senryu.lower}`;
 
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang   = 'ja-JP';
-  utter.rate   = 0.85;   // ややゆっくり（川柳調）
-  utter.pitch  = 1.0;
-  utter.volume = 1.0;
+  // 一度キャンセル
+  speechSynthesis.cancel();
 
   // 日本語の声をランダム選択（男声/女声）
   const voices = speechSynthesis.getVoices().filter(v => v.lang.startsWith('ja'));
-  if (voices.length > 0) {
-    utter.voice = voices[Math.floor(Math.random() * voices.length)];
+  const voice  = voices.length > 0 ? voices[Math.floor(Math.random() * voices.length)] : null;
+
+  // 上句・中句・下句をそれぞれ別のutteranceとして順に話す
+  // utteranceは順番にキューに積まれるため、間（ま）はsetTimeoutで挿入
+  const lines = [senryu.upper, senryu.middle, senryu.lower];
+  const PAUSE_MS = 700;  // 各句の間（ミリ秒）
+
+  function speakLine(idx) {
+    if (idx >= lines.length) return;
+    const u = new SpeechSynthesisUtterance(lines[idx]);
+    u.lang   = 'ja-JP';
+    u.rate   = 0.85;
+    u.pitch  = 1.0;
+    u.volume = 1.0;
+    if (voice) u.voice = voice;
+    // この句を読み終わったら、一呼吸おいて次の句へ
+    u.onend = () => {
+      setTimeout(() => speakLine(idx + 1), PAUSE_MS);
+    };
+    speechSynthesis.speak(u);
   }
-  speechSynthesis.speak(utter);
+  speakLine(0);
 }
 
 /* 太鼓「ドドン!」の音をWeb Audio APIで生成 */

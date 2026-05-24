@@ -159,8 +159,8 @@
     aria-label="今週の管理人川柳"
     style="
       position:absolute;
-      top:55%;
-      left:1.2rem;
+      top:0;
+      left:0;
       z-index:450;
       width:78px;height:78px;
       border-radius:50%;
@@ -175,21 +175,46 @@
       text-align:center;
       cursor:pointer;
       box-shadow:0 6px 22px rgba(255,120,0,0.45),inset 0 -4px 10px rgba(0,0,0,0.18);
-      animation:senryuFloat 5.5s ease-in-out infinite;
-      transition:transform 0.25s;
+      animation:senryuWander 28s ease-in-out infinite, senryuSpin 6s ease-in-out infinite;
       padding:0;
+      will-change:transform;
     "
-    onmouseover="this.style.transform='scale(1.08)'"
-    onmouseout="this.style.transform='scale(1)'"
+    onmouseover="this.style.filter='brightness(1.15)'"
+    onmouseout="this.style.filter='brightness(1)'"
   >
     <span style="font-size:1.5rem;display:block;line-height:1;margin-bottom:0.18rem">🪭</span>
     管理人<br>川柳
   </button>
 
   <style>
-    @keyframes senryuFloat {
-      0%,100% { transform: translateY(0) rotate(-3deg); }
-      50%     { transform: translateY(-12px) rotate(3deg); }
+    /* ヒーロー区画内をふわふわ大きく回遊（translate値はheroのサイズに対する % で動く） */
+    @keyframes senryuWander {
+       0%   { transform: translate(10vw,  18vh); }
+      15%   { transform: translate(70vw,  10vh); }
+      30%   { transform: translate(82vw,  48vh); }
+      45%   { transform: translate(55vw,  68vh); }
+      60%   { transform: translate(15vw,  62vh); }
+      75%   { transform: translate( 5vw,  35vh); }
+      90%   { transform: translate(40vw,  22vh); }
+     100%   { transform: translate(10vw,  18vh); }
+    }
+    /* 同時に少し揺れ・回転（複合変形は別propertyで指定したいのでscale等は使わずrotateだけ別アニメに） */
+    @keyframes senryuSpin {
+      0%,100% { rotate: -6deg; }
+      50%     { rotate:  6deg; }
+    }
+    /* スマホは画面幅が狭いので移動幅を抑える */
+    @media (max-width: 600px) {
+      @keyframes senryuWander {
+         0%   { transform: translate( 8vw, 18vh); }
+        15%   { transform: translate(60vw, 12vh); }
+        30%   { transform: translate(65vw, 48vh); }
+        45%   { transform: translate(45vw, 65vh); }
+        60%   { transform: translate(10vw, 60vh); }
+        75%   { transform: translate( 5vw, 35vh); }
+        90%   { transform: translate(35vw, 22vh); }
+       100%   { transform: translate( 8vw, 18vh); }
+      }
     }
   </style>
 
