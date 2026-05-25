@@ -485,14 +485,7 @@
       <p class="section-desc">白山市若宮公園体育館を拠点に活動する、ラージボール卓球のクラブです。気持ちは若く、いつも全力で卓球を楽しんでいます。<br>白山クラブは、練習も大会も「卓球でつながること」を大切にしています。白山メンバーだけでなく、年齢や経験を超えて卓球を愛する仲間との交流を大切にする、オープンなクラブを目指しています。</p>
     </div>
     <div class="about-grid fade-in">
-      <div class="photo-placeholder" id="aboutPhoto">
-        <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-          <rect x="3" y="5" width="18" height="14" rx="2"/>
-          <circle cx="12" cy="12" r="3"/>
-          <path d="M3 9l3-3 3 3"/>
-        </svg>
-        <span class="ph-label">📸 集合写真・練習風景</span>
-      </div>
+      <div id="aboutPhoto" class="section-photo-strip" style="display:flex;gap:0.6rem;overflow-x:auto;overflow-y:hidden;padding:0.4rem 0;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;border-radius:12px"></div>
       <div class="about-text">
         <h3>🏓 クラブのあゆみ</h3>
         <p>平成15年3月3日に設立。白山市若宮公園体育館を拠点に活動を続け、現在は19名のメンバーが毎週元気に卓球を楽しんでいます。主力メンバーは県大会でも上位に入賞するなど、競技レベルの高さも自慢のひとつです。</p>
@@ -678,13 +671,7 @@
           </div>
         </li>
       </ul>
-      <div class="photo-placeholder" id="recruitPhoto">
-        <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-          <rect x="3" y="5" width="18" height="14" rx="2"/>
-          <circle cx="12" cy="12" r="3"/>
-        </svg>
-        <span class="ph-label">📸 練習・交流の様子</span>
-      </div>
+      <div id="recruitPhoto" class="section-photo-strip" style="display:flex;gap:0.6rem;overflow-x:auto;overflow-y:hidden;padding:0.4rem 0;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;border-radius:12px"></div>
     </div>
 
     <!-- 体験・見学ボタン -->
@@ -1600,53 +1587,6 @@
         <button onclick="closeNewsAdmin()"
           style="flex:1;background:#eee;color:#666;border:none;padding:0.6rem;border-radius:8px;font-size:0.9rem;cursor:pointer">キャンセル</button>
       </div>
-    </div>
-  </div>
-</div>
-
-<!-- セクション写真編集モーダル -->
-<div id="sectionPhotoModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center">
-  <div style="background:white;border-radius:16px;padding:2rem;width:90%;max-width:420px;box-shadow:0 8px 40px rgba(0,0,0,0.3)">
-    <h3 style="margin:0 0 1.2rem;font-size:1.1rem;color:#333">📸 写真を変更する</h3>
-    <div id="sectionPhotoPwBox">
-      <p style="font-size:0.85rem;color:#555;margin-bottom:0.8rem">🔒 パスワードを入力してください</p>
-      <input id="sectionPhotoPwInput" type="password" placeholder="パスワード"
-        style="width:100%;padding:0.6rem 1rem;border:2px solid #ddd;border-radius:8px;font-size:0.95rem;box-sizing:border-box;margin-bottom:0.6rem">
-      <p id="sectionPhotoPwError" style="color:#c62828;font-size:0.8rem;display:none;margin-bottom:0.6rem">パスワードが違います</p>
-      <div style="display:flex;gap:0.6rem">
-        <button onclick="checkSectionPhotoPw()"
-          style="flex:1;background:#0057ff;color:white;border:none;padding:0.6rem;border-radius:8px;font-size:0.9rem;font-weight:700;cursor:pointer">確認</button>
-        <button onclick="closeSectionPhotoModal()"
-          style="flex:1;background:#eee;color:#666;border:none;padding:0.6rem;border-radius:8px;font-size:0.9rem;cursor:pointer">キャンセル</button>
-      </div>
-    </div>
-    <div id="sectionPhotoUrlBox" style="display:none">
-      <p style="font-size:0.85rem;color:#555;margin-bottom:0.4rem">📌 Google DriveのURLを貼り付けてください</p>
-      <p style="font-size:0.75rem;color:#888;margin-bottom:0.8rem">写真を右クリック→「共有」→「リンクをコピー」</p>
-      <input id="sectionPhotoUrlInput" type="url" placeholder="https://drive.google.com/file/d/..."
-        style="width:100%;padding:0.6rem 1rem;border:2px solid #2e7d32;border-radius:8px;font-size:0.85rem;box-sizing:border-box;margin-bottom:0.8rem">
-      <div style="display:flex;gap:0.6rem">
-        <button onclick="saveSectionPhoto()"
-          style="flex:1;background:#2e7d32;color:white;border:none;padding:0.6rem;border-radius:8px;font-size:0.9rem;font-weight:700;cursor:pointer">📋 コードを生成</button>
-        <button onclick="closeSectionPhotoModal()"
-          style="flex:1;background:#eee;color:#666;border:none;padding:0.6rem;border-radius:8px;font-size:0.9rem;cursor:pointer">キャンセル</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- コード保存モーダル（フォトギャラリー・セクション写真共通） -->
-<div id="saveCodeModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center">
-  <div style="background:white;border-radius:16px;padding:2rem;width:90%;max-width:520px;box-shadow:0 8px 40px rgba(0,0,0,0.3)">
-    <h3 style="margin:0 0 0.6rem;font-size:1.1rem;color:#333">📋 main.jsに貼り付けてください</h3>
-    <p style="font-size:0.8rem;color:#666;margin-bottom:0.8rem">①コードをコピー → ②main.jsの該当行を置き換え → ③GitHubにアップロード</p>
-    <textarea id="saveCodeText" readonly
-      style="width:100%;height:140px;font-size:0.72rem;font-family:monospace;border:2px solid #ddd;border-radius:8px;padding:0.6rem;box-sizing:border-box;resize:none;margin-bottom:0.8rem;color:#333"></textarea>
-    <div style="display:flex;gap:0.6rem">
-      <button onclick="copySaveCode()"
-        style="flex:1;background:#0057ff;color:white;border:none;padding:0.6rem;border-radius:8px;font-size:0.9rem;font-weight:700;cursor:pointer">📋 コピーする</button>
-      <button onclick="closeSaveCodeModal()"
-        style="flex:1;background:#eee;color:#666;border:none;padding:0.6rem;border-radius:8px;font-size:0.9rem;cursor:pointer">閉じる</button>
     </div>
   </div>
 </div>

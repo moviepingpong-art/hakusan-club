@@ -33,12 +33,6 @@
 /* --- Google Apps Script Web API URL --- */
 const GAS_URL = 'https://script.google.com/macros/s/AKfycby6cvIHu_7d5caysgDYznj1nJITMyyKs8h6woNEHKZi0toKKPxVr5nO6xGJlVr9DCNI/exec';
 
-/* --- クラブ紹介セクションの写真（Google DriveのURLを貼り付けてください） --- */
-const ABOUT_PHOTO_URL = '';  // 例: 'https://drive.google.com/file/d/XXXX/view'
-
-/* --- メンバー募集セクションの写真（Google DriveのURLを貼り付けてください） --- */
-const RECRUIT_PHOTO_URL = '';  // 例: 'https://drive.google.com/file/d/XXXX/view'
-
 /* ------------------------------------------------------------
    お知らせデータと管理人川柳データは data.js に分離しました。
    このファイルより先に data.js を読み込んでください（index.html参照）。
@@ -452,85 +446,69 @@ function convertGoogleDriveUrl(url) {
   return url;
 }
 
-/* クラブ紹介・メンバー募集の写真を表示 */
+/* クラブ紹介・メンバー募集の写真ストリップを表示
+   - photos配列（data.js管理・GAS自動更新）から特定カテゴリの写真を取得
+   - 横スクロールで複数枚を表示
+   - 写真をタップで拡大表示（lightboxOpenを使用） */
 function renderSectionPhotos() {
-  if (ABOUT_PHOTO_URL) {
-    const el = document.getElementById('aboutPhoto');
-    if (el) {
-      el.innerHTML = `<img src="${convertGoogleDriveUrl(ABOUT_PHOTO_URL)}"
-        alt="集合写真・練習風景"
-        style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;display:block;cursor:pointer"
-        onclick="openSectionPhotoEdit('about')">`;
-    }
-  } else {
-    const el = document.getElementById('aboutPhoto');
-    if (el) el.onclick = () => openSectionPhotoEdit('about');
-  }
-  if (RECRUIT_PHOTO_URL) {
-    const el = document.getElementById('recruitPhoto');
-    if (el) {
-      el.innerHTML = `<img src="${convertGoogleDriveUrl(RECRUIT_PHOTO_URL)}"
-        alt="練習・交流の様子"
-        style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;display:block;cursor:pointer"
-        onclick="openSectionPhotoEdit('recruit')">`;
-    }
-  } else {
-    const el = document.getElementById('recruitPhoto');
-    if (el) el.onclick = () => openSectionPhotoEdit('recruit');
-  }
+  renderSectionPhotoStrip('aboutPhoto',   'groupphoto',  '集合写真・練習風景');
+  renderSectionPhotoStrip('recruitPhoto', 'interaction', '練習・交流の様子');
 }
 
-let sectionPhotoAuthed = false;
-let sectionPhotoTarget = '';
+function renderSectionPhotoStrip(elId, category, altText) {
+  const el = document.getElementById(elId);
+  if (!el) return;
 
-function openSectionPhotoEdit(target) {
-  sectionPhotoTarget = target;
-  const modal = document.getElementById('sectionPhotoModal');
-  if (modal) {
-    modal.style.display = 'flex';
-    document.getElementById('sectionPhotoPwInput').value = '';
-    document.getElementById('sectionPhotoUrlInput').value = '';
-    document.getElementById('sectionPhotoPwError').style.display = 'none';
-    document.getElementById('sectionPhotoUrlBox').style.display = 'none';
-    document.getElementById('sectionPhotoPwBox').style.display = 'block';
-  }
-}
+  // photos 配列から指定カテゴリだけ取り出し
+  const list = (typeof photos !== 'undefined' && Array.isArray(photos))
+    ? photos.filter(p => p.category === category)
+    : [];
 
-function checkSectionPhotoPw() {
-  const pw = document.getElementById('sectionPhotoPwInput').value;
-  if (pw !== window.ADMIN_PW) {
-    document.getElementById('sectionPhotoPwError').style.display = 'block';
+  if (list.length === 0) {
+    // まだ写真がない場合は控えめなプレースホルダー
+    el.innerHTML = `
+      <div style="
+        flex:1;min-height:200px;display:flex;flex-direction:column;
+        align-items:center;justify-content:center;
+        background:#e8edf8;border-radius:12px;color:#6b80c0;gap:0.5rem
+      ">
+        <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <rect x="3" y="5" width="18" height="14" rx="2"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+        <span style="font-size:0.85rem">📸 ${altText}</span>
+      </div>`;
     return;
   }
-  document.getElementById('sectionPhotoPwBox').style.display = 'none';
-  document.getElementById('sectionPhotoUrlBox').style.display = 'block';
+
+  el.innerHTML = list.map(p => `
+    <img src="${p.src}"
+      alt="${altText}"
+      loading="lazy"
+      onclick="openLightboxFromStrip('${p.src}','${(p.caption||altText).replace(/'/g, "\\'")}')"
+      style="
+        flex:0 0 auto;
+        width:280px;height:210px;
+        object-fit:cover;
+        border-radius:12px;
+        scroll-snap-align:start;
+        cursor:pointer;
+        box-shadow:0 2px 8px rgba(0,0,0,0.08);
+        transition:transform 0.2s;
+      "
+      onmouseover="this.style.transform='scale(1.02)'"
+      onmouseout="this.style.transform='scale(1)'">
+  `).join('');
 }
 
-function saveSectionPhoto() {
-  const url = document.getElementById('sectionPhotoUrlInput').value.trim();
-  if (!url) { alert('URLを入力してください'); return; }
-  const label = sectionPhotoTarget === 'about' ? 'ABOUT_PHOTO_URL' : 'RECRUIT_PHOTO_URL';
-  const code = `const ${label} = '${url}';`;
-  const codeModal = document.getElementById('saveCodeModal');
-  const textarea  = document.getElementById('saveCodeText');
-  document.getElementById('sectionPhotoModal').style.display = 'none';
-  if (codeModal && textarea) {
-    textarea.value = `// main.jsの「${label}」の行を以下に置き換えてGitHubにアップロードしてください\n${code}`;
-    codeModal.style.display = 'flex';
+/* セクション写真ストリップから拡大表示 */
+function openLightboxFromStrip(src, caption) {
+  if (typeof openLightbox === 'function') {
+    openLightbox(src, caption);
+  } else {
+    // フォールバック：新タブで開く
+    window.open(src, '_blank');
   }
-}
-
-function closeSectionPhotoModal() {
-  document.getElementById('sectionPhotoModal').style.display = 'none';
-}
-function closeSaveCodeModal() {
-  document.getElementById('saveCodeModal').style.display = 'none';
-}
-function copySaveCode() {
-  const textarea = document.getElementById('saveCodeText');
-  textarea.select();
-  document.execCommand('copy');
-  alert('✅ コードをコピーしました！\nmain.jsの該当行を置き換えてGitHubにアップロードしてください。');
 }
 
 /* お知らせ管理 */

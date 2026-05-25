@@ -331,7 +331,19 @@ section { padding: 6rem 1.5rem; }
 }
 .gallery-tab.active,
 .gallery-tab:hover { background: var(--primary); color: white; border-color: var(--primary); }
-.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-height: 680px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.4rem;
+  scrollbar-gutter: stable;
+}
+.gallery-grid::-webkit-scrollbar { width: 8px; }
+.gallery-grid::-webkit-scrollbar-track { background: var(--primary-pale); border-radius: 4px; }
+.gallery-grid::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
 .gallery-item {
   position: relative; border-radius: 10px; overflow: hidden;
   aspect-ratio: 4/3; background: var(--primary-pale);
@@ -511,7 +523,10 @@ footer .footer-logo {
   .recruit-grid,
   .features-grid,
   .schedule-card { grid-template-columns: 1fr; }
-  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-height: 540px;
+  }
   section { padding: 4rem 1.2rem; }
 }
 
