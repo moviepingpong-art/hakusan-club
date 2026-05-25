@@ -470,11 +470,25 @@ function renderSectionPhotoStrip(elId, category, altText) {
     ? photos.filter(p => p.category === category)
     : [];
 
+  // 見出しラベル（常に表示）
+  const headerHtml = `
+    <div style="
+      flex:0 0 100%;
+      width:100%;
+      font-size:0.85rem;
+      color:#4a5d8f;
+      font-weight:700;
+      letter-spacing:0.05em;
+      margin-bottom:0.4rem;
+      display:flex;align-items:center;gap:0.4rem;
+    ">📸 ${altText}</div>`;
+
   if (list.length === 0) {
     // まだ写真がない場合は控えめなプレースホルダー
-    el.innerHTML = `
+    el.style.flexWrap = 'wrap';
+    el.innerHTML = headerHtml + `
       <div style="
-        flex:1;min-height:200px;display:flex;flex-direction:column;
+        flex:1 1 100%;min-height:200px;display:flex;flex-direction:column;
         align-items:center;justify-content:center;
         background:#e8edf8;border-radius:12px;color:#6b80c0;gap:0.5rem
       ">
@@ -482,29 +496,63 @@ function renderSectionPhotoStrip(elId, category, altText) {
           <rect x="3" y="5" width="18" height="14" rx="2"/>
           <circle cx="12" cy="12" r="3"/>
         </svg>
-        <span style="font-size:0.85rem">📸 ${altText}</span>
+        <span style="font-size:0.85rem">写真は Google Drive に保存すると自動更新されます</span>
       </div>`;
     return;
   }
 
-  el.innerHTML = list.map(p => `
-    <img src="${p.src}"
-      alt="${altText}"
-      loading="lazy"
-      onclick="openLightboxFromStrip('${p.src}','${(p.caption||altText).replace(/'/g, "\\'")}')"
-      style="
-        flex:0 0 auto;
-        width:280px;height:210px;
-        object-fit:cover;
-        border-radius:12px;
-        scroll-snap-align:start;
-        cursor:pointer;
-        box-shadow:0 2px 8px rgba(0,0,0,0.08);
-        transition:transform 0.2s;
-      "
-      onmouseover="this.style.transform='scale(1.02)'"
-      onmouseout="this.style.transform='scale(1)'">
-  `).join('');
+  // 見出し＋横スクロールギャラリーを生成
+  el.style.flexWrap = 'wrap';
+  el.innerHTML = headerHtml + `
+    <div style="
+      flex:1 1 100%;
+      display:flex;
+      gap:0.6rem;
+      overflow-x:auto;
+      overflow-y:hidden;
+      padding:0.4rem 0;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+    ">
+      ${list.map(p => {
+        const cap = (p.caption || '').replace(/'/g, "\\'");
+        return `
+          <div style="
+            flex:0 0 auto;
+            width:280px;
+            scroll-snap-align:start;
+            position:relative;
+            border-radius:12px;
+            overflow:hidden;
+            cursor:pointer;
+            box-shadow:0 2px 8px rgba(0,0,0,0.08);
+            transition:transform 0.2s;
+          "
+            onclick="openLightboxFromStrip('${p.src}','${cap || altText}')"
+            onmouseover="this.style.transform='scale(1.02)'"
+            onmouseout="this.style.transform='scale(1)'"
+          >
+            <img src="${p.src}"
+              alt="${p.caption || altText}"
+              loading="lazy"
+              style="
+                width:100%;height:210px;
+                object-fit:cover;
+                display:block;
+              ">
+            ${p.caption ? `
+              <div style="
+                position:absolute;bottom:0;left:0;right:0;
+                background:linear-gradient(transparent,rgba(0,0,0,0.75));
+                color:white;
+                font-size:0.78rem;font-weight:600;
+                padding:1.5rem 0.8rem 0.6rem;
+                letter-spacing:0.03em;
+              ">${p.caption}</div>
+            ` : ''}
+          </div>`;
+      }).join('')}
+    </div>`;
 }
 
 /* セクション写真ストリップから拡大表示 */
