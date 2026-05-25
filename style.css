@@ -334,11 +334,11 @@ section { padding: 6rem 1.5rem; }
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+  gap: 1.4rem;
   max-height: 680px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 0.4rem;
+  padding: 0.8rem;
   scrollbar-gutter: stable;
 }
 .gallery-grid::-webkit-scrollbar { width: 8px; }
@@ -526,6 +526,8 @@ footer .footer-logo {
   .gallery-grid {
     grid-template-columns: repeat(2, 1fr);
     max-height: 540px;
+    gap: 1rem;
+    padding: 0.6rem;
   }
   section { padding: 4rem 1.2rem; }
 }
