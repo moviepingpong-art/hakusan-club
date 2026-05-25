@@ -387,16 +387,20 @@ window.MEMBER_PW = 'm-hakusan';
    2. ギャラリー
    ------------------------------------------------------------ */
 const CATEGORY_NAMES = {
-  atmosphere: 'クラブ紹介・雰囲気',
-  equipment:  '用具・施設',
-  practice:   '練習・技術',
-  match:      '試合・大会',
+  atmosphere:  'クラブ紹介・雰囲気',
+  equipment:   '用具・施設',
+  practice:    '練習・技術',
+  match:       '試合・大会',
+  groupphoto:  '集合写真・練習風景',
+  interaction: '練習・交流の様子',
 };
 const CATEGORY_ICONS = {
-  atmosphere: '😊',
-  equipment:  '🏓',
-  practice:   '🏋️',
-  match:      '🏆',
+  atmosphere:  '😊',
+  equipment:   '🏓',
+  practice:    '🏋️',
+  match:       '🏆',
+  groupphoto:  '📸',
+  interaction: '🤝',
 };
 
 /* photos 配列は data.js で定義しています */
@@ -516,6 +520,8 @@ function renderSectionPhotoStrip(elId, category, altText) {
     ">
       ${list.map(p => {
         const cap = (p.caption || '').replace(/'/g, "\\'");
+        const catIcon = CATEGORY_ICONS[p.category] || '📸';
+        const catName = CATEGORY_NAMES[p.category] || altText;
         return `
           <div style="
             flex:0 0 auto;
@@ -540,16 +546,18 @@ function renderSectionPhotoStrip(elId, category, altText) {
                 object-fit:cover;
                 display:block;
               ">
-            ${p.caption ? `
-              <div style="
-                position:absolute;bottom:0;left:0;right:0;
-                background:linear-gradient(transparent,rgba(0,0,0,0.75));
-                color:white;
-                font-size:0.78rem;font-weight:600;
-                padding:1.5rem 0.8rem 0.6rem;
-                letter-spacing:0.03em;
-              ">${p.caption}</div>
-            ` : ''}
+            <div style="
+              position:absolute;bottom:0;left:0;right:0;
+              background:linear-gradient(transparent,rgba(0,0,0,0.75));
+              color:white;
+              font-size:0.76rem;
+              padding:1.5rem 0.8rem 0.6rem;
+              letter-spacing:0.03em;
+            ">
+              ${catIcon} ${catName}${p.caption
+                ? `<br><strong style="font-size:0.85rem;letter-spacing:0.03em">${p.caption}</strong>`
+                : ''}
+            </div>
           </div>`;
       }).join('')}
     </div>`;
