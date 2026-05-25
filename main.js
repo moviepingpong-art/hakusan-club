@@ -449,13 +449,6 @@ function filterGallery(cat, btn) {
   renderGallery();
 }
 
-// Google DriveのURLを直接表示用URLに変換する
-function convertGoogleDriveUrl(url) {
-  const match = url.match(/\/file\/d\/([^\/]+)/);
-  if (match) return 'https://drive.google.com/thumbnail?id=' + match[1] + '&sz=w800';
-  return url;
-}
-
 /* クラブ紹介・メンバー募集の写真ストリップを表示
    - photos配列（data.js管理・GAS自動更新）から特定カテゴリの写真を取得
    - 横スクロールで複数枚を表示
