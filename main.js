@@ -231,6 +231,51 @@ if ('speechSynthesis' in window) {
   speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
 }
 
+/* ヒーロー区画のイントロ要素（ロゴ・オレンジタグ）の表示制御
+   - 初回アクセス時：3秒後にロゴとオレンジタグをフェードアウト→DOMから削除
+   - セッション中の再訪：最初から非表示
+   - sessionStorageでセッション内のフラグ管理 */
+function initHeroIntro() {
+  const elements = document.querySelectorAll('.intro-element');
+  if (elements.length === 0) return;
+
+  const SEEN_KEY = 'hakusan_intro_seen';
+  const seen = sessionStorage.getItem(SEEN_KEY) === '1';
+
+  if (seen) {
+    // 既に見た → 最初から消す（transition抜きで即非表示）
+    elements.forEach(el => {
+      el.style.display = 'none';
+    });
+    return;
+  }
+
+  // 3秒後にフェードアウト開始
+  setTimeout(() => {
+    elements.forEach(el => {
+      // 現在の高さを取得して固定（max-heightアニメーションのため）
+      const h = el.offsetHeight;
+      el.style.maxHeight = h + 'px';
+      // 次フレームでアニメーション開始（フェード＋縮む）
+      requestAnimationFrame(() => {
+        el.style.opacity      = '0';
+        el.style.maxHeight    = '0';
+        el.style.marginTop    = '0';
+        el.style.marginBottom = '0';
+        el.style.transform    = 'translateY(-10px)';
+      });
+    });
+
+    // アニメーション終了後にDOM上から完全に消す
+    setTimeout(() => {
+      elements.forEach(el => { el.style.display = 'none'; });
+    }, 900);
+
+    // セッション内の「見た」フラグ記録
+    sessionStorage.setItem(SEEN_KEY, '1');
+  }, 3000);
+}
+
 /* 川柳ボタンを少し遅れて追いかける「つかまえてー」文字＋絵文字行列 */
 function initSenryuChaser() {
   const btn    = document.getElementById('senryuFloatBtn');
@@ -1745,6 +1790,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---- 川柳ボタン追従「つかまえてー」 ----
   initSenryuChaser();
+
+  // ---- ヒーロー区画のイントロ要素（ロゴ・オレンジタグ）処理 ----
+  initHeroIntro();
 
   // ---- スクロールフェードイン ----
   const observer = new IntersectionObserver(entries => {
