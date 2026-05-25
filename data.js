@@ -105,5 +105,11 @@ let photos = [
     "src": "https://drive.google.com/thumbnail?id=1yGR9YRV0-nB9HvlbMTnDotNMqBT_2C3N&sz=w800",
     "category": "match",
     "caption": "2026/5　スポレク優勝"
+  },
+  {
+    "id": 11,
+    "src": "https://drive.google.com/thumbnail?id=1yRrbwj8XWEfiUFLtzy1cWA6WaUO0jzmw&sz=w800",
+    "category": "interaction",
+    "caption": ""
   }
 ];
