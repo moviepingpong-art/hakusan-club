@@ -400,7 +400,7 @@ const CATEGORY_ICONS = {
   practice:    '🏋️',
   match:       '🏆',
   groupphoto:  '📸',
-  interaction: '🤝',
+  interaction: '📸',
 };
 
 /* photos 配列は data.js で定義しています */
