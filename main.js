@@ -402,13 +402,19 @@ const CATEGORY_ICONS = {
 /* photos 配列は data.js で定義しています */
 let currentCategory = 'all';
 
+/* フォトギャラリーで表示するカテゴリのみ（groupphoto/interactionはセクション写真用なので除外） */
+const GALLERY_CATEGORIES = ['atmosphere', 'equipment', 'practice', 'match'];
+
 function renderGallery() {
   const grid = document.getElementById('galleryGrid');
   if (!grid) return;
 
+  // ギャラリー対象カテゴリのみに絞り込む（セクション写真は除外）
+  const galleryPhotos = photos.filter(p => GALLERY_CATEGORIES.includes(p.category));
+
   const filtered = currentCategory === 'all'
-    ? photos
-    : photos.filter(p => p.category === currentCategory);
+    ? galleryPhotos
+    : galleryPhotos.filter(p => p.category === currentCategory);
 
   if (filtered.length === 0) {
     grid.innerHTML = `
