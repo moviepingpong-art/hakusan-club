@@ -249,28 +249,26 @@ if ('speechSynthesis' in window) {
   speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
 }
 
-/* 桜音声モーダルの開閉 */
-function openSakuraAudio() {
-  const modal = document.getElementById('sakuraAudioModal');
+/* 桜音声のトグル再生（タップで再生/停止） */
+function toggleSakuraAudio() {
   const audio = document.getElementById('sakuraAudioEl');
-  if (!modal || !audio) return;
-  modal.style.display = 'flex';
-  audio.currentTime = 0;
-  const p = audio.play();
-  if (p && typeof p.catch === 'function') p.catch(() => {});
-}
-function closeSakuraAudio() {
-  const modal = document.getElementById('sakuraAudioModal');
-  const audio = document.getElementById('sakuraAudioEl');
-  if (!modal) return;
-  modal.style.display = 'none';
-  if (audio) {
+  const label = document.getElementById('sakuraAudioTrigger');
+  if (!audio) return;
+
+  if (audio.paused) {
+    audio.currentTime = 0;
+    const p = audio.play();
+    if (p && typeof p.catch === 'function') p.catch(() => {});
+    if (label) label.textContent = '🌸 再生中…（タップで停止）';
+    // 再生終了で文言を元に戻す
+    audio.onended = () => {
+      if (label) label.textContent = '🌸 タップで桜の音色';
+    };
+  } else {
     audio.pause();
     audio.currentTime = 0;
+    if (label) label.textContent = '🌸 タップで桜の音色';
   }
-}
-function closeSakuraAudioIfBackdrop(event) {
-  if (event.target.id === 'sakuraAudioModal') closeSakuraAudio();
 }
 
 /* ヒーロー区画のイントロ要素（ロゴ・オレンジタグ）の表示制御
