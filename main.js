@@ -262,12 +262,12 @@ function toggleSakuraAudio() {
     if (label) label.textContent = '🌸 再生中…（タップで停止）';
     // 再生終了で文言を元に戻す
     audio.onended = () => {
-      if (label) label.textContent = '🌸 タップで桜の音色';
+      if (label) label.textContent = '🌸 タップで音声再生';
     };
   } else {
     audio.pause();
     audio.currentTime = 0;
-    if (label) label.textContent = '🌸 タップで桜の音色';
+    if (label) label.textContent = '🌸 タップで音声再生';
   }
 }
 
