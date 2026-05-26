@@ -249,29 +249,28 @@ if ('speechSynthesis' in window) {
   speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
 }
 
-/* 桜動画モーダルの開閉 */
-function openSakuraVideo() {
-  const modal = document.getElementById('sakuraVideoModal');
-  const video = document.getElementById('sakuraVideoEl');
-  if (!modal || !video) return;
+/* 桜音声モーダルの開閉 */
+function openSakuraAudio() {
+  const modal = document.getElementById('sakuraAudioModal');
+  const audio = document.getElementById('sakuraAudioEl');
+  if (!modal || !audio) return;
   modal.style.display = 'flex';
-  // 自動再生を試みる（失敗してもユーザーがコントロールから再生可能）
-  video.currentTime = 0;
-  const p = video.play();
+  audio.currentTime = 0;
+  const p = audio.play();
   if (p && typeof p.catch === 'function') p.catch(() => {});
 }
-function closeSakuraVideo() {
-  const modal = document.getElementById('sakuraVideoModal');
-  const video = document.getElementById('sakuraVideoEl');
+function closeSakuraAudio() {
+  const modal = document.getElementById('sakuraAudioModal');
+  const audio = document.getElementById('sakuraAudioEl');
   if (!modal) return;
   modal.style.display = 'none';
-  if (video) {
-    video.pause();
-    video.currentTime = 0;
+  if (audio) {
+    audio.pause();
+    audio.currentTime = 0;
   }
 }
-function closeSakuraVideoIfBackdrop(event) {
-  if (event.target.id === 'sakuraVideoModal') closeSakuraVideo();
+function closeSakuraAudioIfBackdrop(event) {
+  if (event.target.id === 'sakuraAudioModal') closeSakuraAudio();
 }
 
 /* ヒーロー区画のイントロ要素（ロゴ・オレンジタグ）の表示制御

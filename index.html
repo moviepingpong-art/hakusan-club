@@ -459,7 +459,7 @@
     <div id="quickMenu" style="display:grid;grid-template-columns:repeat(2,1fr);gap:0.7rem;margin:1rem auto 0;max-width:480px;width:100%;position:relative;z-index:10"></div>
 
     <!-- ムービー再生ボタン -->
-    <button onclick="openSakuraVideo()" aria-label="桜の下、仲間との語らい動画を再生"
+    <button onclick="openSakuraAudio()" aria-label="桜の音色を再生"
       style="
         display:flex;align-items:center;justify-content:center;gap:0.6rem;
         margin:1.2rem auto 0;
@@ -480,25 +480,32 @@
       "
       onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 8px 28px rgba(255,107,0,0.55)'"
       onmouseout="this.style.transform='';this.style.boxShadow='0 6px 20px rgba(255,107,0,0.4)'">
-      <span style="font-size:1.1rem">▶</span>
-      <span>🌸 桜の下、仲間との語らい</span>
+      <span style="font-size:1.1rem">🔊</span>
+      <span>🌸 桜の音色を聴く</span>
     </button>
   </div>
 </section>
 
-<!-- 桜動画モーダル -->
-<div id="sakuraVideoModal" onclick="closeSakuraVideoIfBackdrop(event)" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;padding:1rem">
-  <div style="position:relative;width:100%;max-width:720px;background:#000;border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.6)">
-    <button onclick="closeSakuraVideo()" aria-label="閉じる"
-      style="position:absolute;top:0.6rem;right:0.6rem;z-index:2;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.65);border:none;color:white;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
-    <video id="sakuraVideoEl" controls playsinline preload="metadata"
-      style="width:100%;height:auto;display:block;background:#000">
-      <source src="sakura.mp4" type="video/mp4">
-      お使いのブラウザは動画再生に対応していません。
-    </video>
-    <div style="background:linear-gradient(135deg,#fff8f0 0%,#ffe8d2 100%);padding:0.9rem 1.2rem;color:#5c2a00">
-      <div style="font-size:0.95rem;font-weight:700;letter-spacing:0.05em">🌸 桜の下、仲間との語らい</div>
-      <div style="font-size:0.78rem;color:#8a4d1d;margin-top:0.2rem">白山ラージボール卓球クラブ</div>
+<!-- 桜音声モーダル -->
+<div id="sakuraAudioModal" onclick="closeSakuraAudioIfBackdrop(event)" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;padding:1rem">
+  <div style="position:relative;width:100%;max-width:420px;background:linear-gradient(135deg,#fff5e8 0%,#ffe0b8 100%);border-radius:16px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,0.6)">
+    <button onclick="closeSakuraAudio()" aria-label="閉じる"
+      style="position:absolute;top:0.6rem;right:0.6rem;z-index:2;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.55);border:none;color:white;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
+
+    <!-- 桜のビジュアル -->
+    <div style="padding:2rem 1.5rem 1rem;text-align:center;background:linear-gradient(180deg,rgba(255,182,193,0.3) 0%,rgba(255,228,196,0.2) 100%)">
+      <div id="sakuraEmoji" style="font-size:4.5rem;line-height:1;letter-spacing:0.4rem;filter:drop-shadow(0 4px 8px rgba(255,105,180,0.3))">🌸🌸🌸</div>
+      <div style="margin-top:0.8rem;font-size:0.95rem;font-weight:700;color:#7a3a00;letter-spacing:0.06em">桜の下、仲間との語らい</div>
+      <div style="margin-top:0.3rem;font-size:0.75rem;color:#a8581d">白山ラージボール卓球クラブ</div>
+    </div>
+
+    <!-- 音声プレイヤー -->
+    <div style="padding:1.2rem 1.5rem 1.8rem;background:white">
+      <audio id="sakuraAudioEl" controls preload="metadata" style="width:100%;display:block">
+        <source src="sakura.mp3" type="audio/mpeg">
+        お使いのブラウザは音声再生に対応していません。
+      </audio>
+      <p style="text-align:center;margin:0.9rem 0 0;font-size:0.78rem;color:#888;letter-spacing:0.03em">▶ ボタンで再生できます</p>
     </div>
   </div>
 </div>
