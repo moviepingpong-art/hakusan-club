@@ -228,8 +228,8 @@
   <!-- 訪問者カウンターはクイックメニュー中央に配置（下のquickMenu付近に移動） -->
 
   <!-- 管理人川柳ふわふわボタン -->
-  <button id="senryuFloatBtn" onclick="openSenryu('weekly')"
-    aria-label="今週の管理人川柳"
+  <button id="senryuFloatBtn" onclick="openSenryu('daily')"
+    aria-label="本日の管理人川柳"
     style="
       position:absolute;
       top:0;
@@ -384,7 +384,7 @@
         HAKUSAN CLUB
       </div>
       <div id="senryuTitle" style="font-size:1.05rem;color:#5c2a00;font-weight:700;margin-bottom:1rem;letter-spacing:0.05em">
-        〜 今週の管理人川柳 〜
+        〜 本日の管理人川柳 〜
       </div>
 
       <!-- 縦書き川柳表示エリア -->
@@ -404,11 +404,11 @@
 
       <!-- 操作ボタン -->
       <div style="display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap">
-        <button onclick="openSenryu('weekly')" style="
+        <button onclick="openSenryu('daily')" style="
           padding:0.55rem 1.2rem;border-radius:50px;border:2px solid #c63d00;
           background:#c63d00;color:#fff;font-weight:700;font-size:0.82rem;cursor:pointer;
           letter-spacing:0.05em
-        ">📅 今週の川柳</button>
+        ">📅 本日の川柳</button>
         <button onclick="openSenryu('random')" style="
           padding:0.55rem 1.2rem;border-radius:50px;border:2px solid #c63d00;
           background:#fff;color:#c63d00;font-weight:700;font-size:0.82rem;cursor:pointer;

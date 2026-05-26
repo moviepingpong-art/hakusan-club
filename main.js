@@ -41,9 +41,24 @@ const GAS_URL = 'https://script.google.com/macros/s/AKfycby6cvIHu_7d5caysgDYznj1
 
 /* 川柳の状態管理 */
 let _currentSenryu     = null;
-let _currentSenryuMode = 'weekly';
+let _currentSenryuMode = 'daily';
 
-/* 川柳を開く（mode: 'weekly'=今週 / 'random'=過去ランダム） */
+/* 本日の川柳のインデックスを計算
+   - 基準日（2026/1/1）からの経過日数 % SENRYU_LIST.length
+   - 配列順に毎日1つずつ進み、リスト末尾まで来たら自動でループ */
+function getTodaysSenryuIndex() {
+  const baseDate = new Date(2026, 0, 1); // 2026/1/1（月は0始まり）
+  const today    = new Date();
+  // 時刻部分を切り捨て（日付のみで比較）
+  today.setHours(0, 0, 0, 0);
+  baseDate.setHours(0, 0, 0, 0);
+  const diffDays = Math.floor((today - baseDate) / (1000 * 60 * 60 * 24));
+  // 負数（基準日より前）も対応
+  const len = SENRYU_LIST.length;
+  return ((diffDays % len) + len) % len;
+}
+
+/* 川柳を開く（mode: 'daily'=本日 / 'random'=過去ランダム） */
 function openSenryu(mode) {
   if (!SENRYU_LIST || SENRYU_LIST.length === 0) return;
 
@@ -52,13 +67,16 @@ function openSenryu(mode) {
   modal.style.display = 'flex';
 
   _currentSenryuMode = mode;
-  if (mode === 'weekly') {
-    _currentSenryu = SENRYU_LIST[0];  // 先頭が最新
-    document.getElementById('senryuTitle').textContent = '〜 今週の管理人川柳 〜';
+  if (mode === 'daily' || mode === 'weekly') {  // 'weekly'は旧名・互換性のため残す
+    _currentSenryu = SENRYU_LIST[getTodaysSenryuIndex()];
+    document.getElementById('senryuTitle').textContent = '〜 本日の管理人川柳 〜';
   } else {
-    // 今週分を除いてランダム選択（1件しかない場合は今週分）
-    const pool = SENRYU_LIST.length > 1 ? SENRYU_LIST.slice(1) : SENRYU_LIST;
-    _currentSenryu = pool[Math.floor(Math.random() * pool.length)];
+    // 本日分を除いてランダム選択
+    const todayIdx = getTodaysSenryuIndex();
+    const pool = SENRYU_LIST.filter((_, i) => i !== todayIdx);
+    _currentSenryu = pool.length > 0
+      ? pool[Math.floor(Math.random() * pool.length)]
+      : SENRYU_LIST[todayIdx];
     document.getElementById('senryuTitle').textContent = '〜 過去からの一句 〜';
   }
   playSenryu(_currentSenryu);
@@ -85,7 +103,13 @@ function playSenryu(senryu) {
   const meta = document.getElementById('senryuMeta');
   if (!disp) return;
   disp.innerHTML = '';
-  if (meta) meta.textContent = senryu.date ? `（${senryu.date}）` : '';
+  if (meta) {
+    // 配列の中での番号を表示（1-indexed）
+    const idx = SENRYU_LIST.indexOf(senryu);
+    meta.textContent = idx >= 0
+      ? `（第${idx + 1}首 / 全${SENRYU_LIST.length}首）`
+      : '';
+  }
 
   // 1) ドドン!太鼓の音
   playTaikoSound();
