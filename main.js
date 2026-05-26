@@ -249,6 +249,31 @@ if ('speechSynthesis' in window) {
   speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
 }
 
+/* 桜動画モーダルの開閉 */
+function openSakuraVideo() {
+  const modal = document.getElementById('sakuraVideoModal');
+  const video = document.getElementById('sakuraVideoEl');
+  if (!modal || !video) return;
+  modal.style.display = 'flex';
+  // 自動再生を試みる（失敗してもユーザーがコントロールから再生可能）
+  video.currentTime = 0;
+  const p = video.play();
+  if (p && typeof p.catch === 'function') p.catch(() => {});
+}
+function closeSakuraVideo() {
+  const modal = document.getElementById('sakuraVideoModal');
+  const video = document.getElementById('sakuraVideoEl');
+  if (!modal) return;
+  modal.style.display = 'none';
+  if (video) {
+    video.pause();
+    video.currentTime = 0;
+  }
+}
+function closeSakuraVideoIfBackdrop(event) {
+  if (event.target.id === 'sakuraVideoModal') closeSakuraVideo();
+}
+
 /* ヒーロー区画のイントロ要素（ロゴ・オレンジタグ）の表示制御
    - 初回アクセス時：3秒後にロゴとオレンジタグをフェードアウト→DOMから削除
    - セッション中の再訪：最初から非表示
