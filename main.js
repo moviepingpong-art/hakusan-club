@@ -1091,6 +1091,69 @@ function exitFocusMode() {
   history.replaceState(null, '', location.pathname);
 }
 
+/* ORANGE HUB のメニューカードから各セクションを開く */
+function openOrangeSection(section) {
+  // メニューカードを隠す
+  const menu = document.getElementById('orangeHubMenu');
+  if (menu) menu.style.display = 'none';
+
+  // コンテンツエリアを表示
+  const area = document.getElementById('orangeHubContentArea');
+  if (area) area.style.display = 'block';
+
+  // 該当セクション以外を隠す
+  const sectionMap = {
+    map:      'community-map',
+    voices:   'community-voices',
+    omake:    'community-omake',
+    deepdive: 'community-deepdive',
+  };
+  Object.keys(sectionMap).forEach(s => {
+    const el = document.getElementById(sectionMap[s]);
+    if (el) el.style.display = s === section ? 'block' : 'none';
+  });
+
+  // 地図を初期化（必要があれば）
+  if (section === 'map' && typeof renderMap === 'function' && typeof CLUB_DATA !== 'undefined') {
+    setTimeout(() => {
+      const centerLat = typeof HAKUSAN_LAT !== 'undefined' ? HAKUSAN_LAT : 36.5134;
+      const centerLng = typeof HAKUSAN_LNG !== 'undefined' ? HAKUSAN_LNG : 136.5625;
+      renderMap(CLUB_DATA, centerLat, centerLng, 11);
+    }, 50);
+  }
+
+  // ORANGE HUB セクションの上部にスクロール
+  const community = document.getElementById('community');
+  if (community) {
+    setTimeout(() => {
+      community.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+/* ORANGE HUB のメニュー画面に戻る */
+function closeOrangeSection() {
+  // すべてのサブセクションを隠す
+  ['community-map', 'community-voices', 'community-omake', 'community-deepdive'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+
+  // コンテンツエリアを隠す
+  const area = document.getElementById('orangeHubContentArea');
+  if (area) area.style.display = 'none';
+
+  // メニューカードを表示
+  const menu = document.getElementById('orangeHubMenu');
+  if (menu) menu.style.display = 'grid';
+
+  // ORANGE HUB セクションの上部にスクロール
+  const community = document.getElementById('community');
+  if (community) {
+    community.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
 function showCommunityTab(tab) {
   const tabMap = {
     map:      'community-map',

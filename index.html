@@ -917,16 +917,132 @@
       <ruby><span style="color:#ffffff;text-shadow:0 3px 12px rgba(255,107,53,0.5)">HUB</span><rt style="font-size:0.28em;font-weight:400;letter-spacing:0.15em;color:#7a3a00;font-family:'Noto Sans JP',sans-serif">ハブ</rt></ruby>
     </div>
 
-    <!-- タブ切り替え -->
-    <div style="display:flex;gap:0.8rem;margin-bottom:1.5rem;flex-wrap:wrap;position:relative;z-index:201">
-      <button onclick="showCommunityTab('map');event.stopPropagation();" id="tab-map" style="padding:0.7rem 1.4rem;border-radius:50px;border:2px solid #c63d00;background:#c63d00;color:white;font-weight:700;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:0.05em;transition:all 0.2s;box-shadow:0 3px 10px rgba(198,61,0,0.4)">🗾 全国クラブマップ</button>
-      <button onclick="showCommunityTab('voices');event.stopPropagation();" id="tab-voices" style="padding:0.7rem 1.4rem;border-radius:50px;border:2px solid rgba(255,255,255,0.95);background:rgba(255,255,255,0.85);color:#7a3a00;font-weight:700;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:0.05em;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.08)">💬 ORANGE VOICES</button>
-      <button onclick="showCommunityTab('deepdive');event.stopPropagation();" id="tab-deepdive" style="padding:0.7rem 1.4rem;border-radius:50px;border:2px solid rgba(255,255,255,0.95);background:rgba(255,255,255,0.85);color:#7a3a00;font-weight:700;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:0.05em;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.08)">🔬 DEEP DIVE</button>
-      <button onclick="showCommunityTab('omake');event.stopPropagation();" id="tab-omake" style="padding:0.7rem 1.4rem;border-radius:50px;border:2px solid rgba(255,255,255,0.95);background:rgba(255,255,255,0.85);color:#7a3a00;font-weight:700;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:0.05em;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.08)">🎉 おまけ</button>
+    <!-- メニューカード（4つ・初期表示時のみ） -->
+    <div id="orangeHubMenu" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;margin-bottom:1.5rem;position:relative;z-index:201">
+      <button onclick="openOrangeSection('map');event.stopPropagation();" style="
+        display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5rem;
+        padding:2rem 1rem;
+        background:linear-gradient(135deg,rgba(255,255,255,0.95),rgba(255,245,230,0.95));
+        border:3px solid rgba(255,255,255,0.95);
+        border-radius:20px;
+        cursor:pointer;
+        box-shadow:0 8px 24px rgba(124,46,0,0.15);
+        transition:transform 0.2s,box-shadow 0.2s;
+        font-family:inherit;
+        text-align:center;
+      "
+      onmouseover="this.style.transform='translateY(-4px) scale(1.02)';this.style.boxShadow='0 12px 32px rgba(124,46,0,0.25)'"
+      onmouseout="this.style.transform='';this.style.boxShadow='0 8px 24px rgba(124,46,0,0.15)'">
+        <span style="font-size:3rem;line-height:1">🗾</span>
+        <span style="font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:700;color:#c63d00;letter-spacing:0.05em">全国クラブマップ</span>
+        <span style="font-size:0.78rem;color:#8a4d1d;line-height:1.5">全国の仲間と地図でつながる</span>
+      </button>
+
+      <button onclick="openOrangeSection('voices');event.stopPropagation();" style="
+        display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5rem;
+        padding:2rem 1rem;
+        background:linear-gradient(135deg,rgba(255,255,255,0.95),rgba(255,245,230,0.95));
+        border:3px solid rgba(255,255,255,0.95);
+        border-radius:20px;
+        cursor:pointer;
+        box-shadow:0 8px 24px rgba(124,46,0,0.15);
+        transition:transform 0.2s,box-shadow 0.2s;
+        font-family:inherit;
+        text-align:center;
+      "
+      onmouseover="this.style.transform='translateY(-4px) scale(1.02)';this.style.boxShadow='0 12px 32px rgba(124,46,0,0.25)'"
+      onmouseout="this.style.transform='';this.style.boxShadow='0 8px 24px rgba(124,46,0,0.15)'">
+        <span style="font-size:3rem;line-height:1">💬</span>
+        <span style="font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:700;color:#c63d00;letter-spacing:0.05em">ORANGE VOICES</span>
+        <span style="font-size:0.78rem;color:#8a4d1d;line-height:1.5">みんなのひとこと投稿</span>
+      </button>
+
+      <button onclick="openOrangeSection('deepdive');event.stopPropagation();" style="
+        display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5rem;
+        padding:2rem 1rem;
+        background:linear-gradient(135deg,rgba(255,255,255,0.95),rgba(255,245,230,0.95));
+        border:3px solid rgba(255,255,255,0.95);
+        border-radius:20px;
+        cursor:pointer;
+        box-shadow:0 8px 24px rgba(124,46,0,0.15);
+        transition:transform 0.2s,box-shadow 0.2s;
+        font-family:inherit;
+        text-align:center;
+      "
+      onmouseover="this.style.transform='translateY(-4px) scale(1.02)';this.style.boxShadow='0 12px 32px rgba(124,46,0,0.25)'"
+      onmouseout="this.style.transform='';this.style.boxShadow='0 8px 24px rgba(124,46,0,0.15)'">
+        <span style="font-size:3rem;line-height:1">🔬</span>
+        <span style="font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:700;color:#c63d00;letter-spacing:0.05em">DEEP DIVE</span>
+        <span style="font-size:0.78rem;color:#8a4d1d;line-height:1.5">ラージボール徹底解剖</span>
+      </button>
+
+      <button onclick="openOrangeSection('omake');event.stopPropagation();" style="
+        display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5rem;
+        padding:2rem 1rem;
+        background:linear-gradient(135deg,rgba(255,255,255,0.95),rgba(255,245,230,0.95));
+        border:3px solid rgba(255,255,255,0.95);
+        border-radius:20px;
+        cursor:pointer;
+        box-shadow:0 8px 24px rgba(124,46,0,0.15);
+        transition:transform 0.2s,box-shadow 0.2s;
+        font-family:inherit;
+        text-align:center;
+      "
+      onmouseover="this.style.transform='translateY(-4px) scale(1.02)';this.style.boxShadow='0 12px 32px rgba(124,46,0,0.25)'"
+      onmouseout="this.style.transform='';this.style.boxShadow='0 8px 24px rgba(124,46,0,0.15)'">
+        <span style="font-size:3rem;line-height:1">🎉</span>
+        <span style="font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:700;color:#c63d00;letter-spacing:0.05em">お楽しみ</span>
+        <span style="font-size:0.78rem;color:#8a4d1d;line-height:1.5">豆知識・おみくじ・効果音</span>
+      </button>
     </div>
 
+    <!-- 中身表示エリア（初期は非表示） -->
+    <div id="orangeHubContentArea" style="display:none">
+      <!-- 戻るボタン（上部・該当セクション開いた時のみ表示） -->
+      <div id="orangeHubBackBar" style="display:flex;gap:0.8rem;justify-content:space-between;align-items:center;margin-bottom:1.2rem;flex-wrap:wrap;position:relative;z-index:201">
+        <button onclick="closeOrangeSection()" style="
+          display:flex;align-items:center;gap:0.5rem;
+          padding:0.7rem 1.4rem;
+          background:linear-gradient(135deg,#c63d00,#ff7a00);
+          color:white;
+          border:none;
+          border-radius:50px;
+          font-weight:700;
+          font-size:0.92rem;
+          cursor:pointer;
+          font-family:'Noto Sans JP',sans-serif;
+          letter-spacing:0.03em;
+          box-shadow:0 4px 12px rgba(198,61,0,0.4);
+          transition:transform 0.2s,box-shadow 0.2s;
+        "
+        onmouseover="this.style.transform='translateX(-3px)';this.style.boxShadow='0 6px 18px rgba(198,61,0,0.5)'"
+        onmouseout="this.style.transform='';this.style.boxShadow='0 4px 12px rgba(198,61,0,0.4)'">
+          ← ORANGE HUB に戻る
+        </button>
+
+        <button onclick="window.scrollTo({top:0,behavior:'smooth'})" style="
+          display:flex;align-items:center;gap:0.5rem;
+          padding:0.7rem 1.4rem;
+          background:linear-gradient(135deg,#0057ff,#3a7fff);
+          color:white;
+          border:none;
+          border-radius:50px;
+          font-weight:700;
+          font-size:0.92rem;
+          cursor:pointer;
+          font-family:'Noto Sans JP',sans-serif;
+          letter-spacing:0.03em;
+          box-shadow:0 4px 12px rgba(0,87,255,0.4);
+          transition:transform 0.2s,box-shadow 0.2s;
+        "
+        onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 6px 18px rgba(0,87,255,0.5)'"
+        onmouseout="this.style.transform='';this.style.boxShadow='0 4px 12px rgba(0,87,255,0.4)'">
+          🏠 トップメニューに戻る
+        </button>
+      </div>
+
     <!-- 全国クラブマップ -->
-    <div id="community-map" style="display:block">
+    <div id="community-map" style="display:none">
       <div style="background:rgba(255,255,255,0.92);border:2px solid rgba(255,255,255,0.95);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:0 8px 24px rgba(124,46,0,0.15)" id="clubListCard">
         <h3 style="color:#c63d00;font-family:'Oswald',sans-serif;font-size:1.1rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem">🗾 全国ラージボールクラブ一覧</h3>
 
@@ -1119,6 +1235,8 @@
     </div>
   </div>
     </div>
+
+    </div><!-- /orangeHubContentArea -->
 
   </div>
 </section>
