@@ -998,48 +998,6 @@
 
     <!-- 中身表示エリア（初期は非表示） -->
     <div id="orangeHubContentArea" style="display:none">
-      <!-- 戻るボタン（上部・該当セクション開いた時のみ表示） -->
-      <div id="orangeHubBackBar" style="display:flex;gap:0.8rem;justify-content:space-between;align-items:center;margin-bottom:1.2rem;flex-wrap:wrap;position:relative;z-index:201">
-        <button onclick="closeOrangeSection()" style="
-          display:flex;align-items:center;gap:0.5rem;
-          padding:0.7rem 1.4rem;
-          background:linear-gradient(135deg,#c63d00,#ff7a00);
-          color:white;
-          border:none;
-          border-radius:50px;
-          font-weight:700;
-          font-size:0.92rem;
-          cursor:pointer;
-          font-family:'Noto Sans JP',sans-serif;
-          letter-spacing:0.03em;
-          box-shadow:0 4px 12px rgba(198,61,0,0.4);
-          transition:transform 0.2s,box-shadow 0.2s;
-        "
-        onmouseover="this.style.transform='translateX(-3px)';this.style.boxShadow='0 6px 18px rgba(198,61,0,0.5)'"
-        onmouseout="this.style.transform='';this.style.boxShadow='0 4px 12px rgba(198,61,0,0.4)'">
-          ← ORANGE HUB に戻る
-        </button>
-
-        <button onclick="window.scrollTo({top:0,behavior:'smooth'})" style="
-          display:flex;align-items:center;gap:0.5rem;
-          padding:0.7rem 1.4rem;
-          background:linear-gradient(135deg,#0057ff,#3a7fff);
-          color:white;
-          border:none;
-          border-radius:50px;
-          font-weight:700;
-          font-size:0.92rem;
-          cursor:pointer;
-          font-family:'Noto Sans JP',sans-serif;
-          letter-spacing:0.03em;
-          box-shadow:0 4px 12px rgba(0,87,255,0.4);
-          transition:transform 0.2s,box-shadow 0.2s;
-        "
-        onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 6px 18px rgba(0,87,255,0.5)'"
-        onmouseout="this.style.transform='';this.style.boxShadow='0 4px 12px rgba(0,87,255,0.4)'">
-          🏠 トップメニューに戻る
-        </button>
-      </div>
 
     <!-- 全国クラブマップ -->
     <div id="community-map" style="display:none">
@@ -1234,6 +1192,29 @@
       <button onclick="openViewer('video')" style="flex:1;min-width:180px;background:linear-gradient(135deg,#b71c1c,#c62828);color:white;border:none;border-radius:10px;padding:0.9rem;cursor:pointer;font-size:0.9rem;font-weight:700;box-shadow:0 3px 10px rgba(183,28,28,0.35)">🎬 動画を再生する</button>
     </div>
   </div>
+    </div>
+
+    <!-- 左下：ORANGE HUBに戻るボタン -->
+    <div style="margin-top:2rem;display:flex;justify-content:flex-start">
+      <button onclick="closeOrangeSection()" style="
+        display:flex;align-items:center;gap:0.5rem;
+        padding:0.8rem 1.6rem;
+        background:linear-gradient(135deg,#c63d00,#ff7a00);
+        color:white;
+        border:none;
+        border-radius:50px;
+        font-weight:700;
+        font-size:0.95rem;
+        cursor:pointer;
+        font-family:'Noto Sans JP',sans-serif;
+        letter-spacing:0.03em;
+        box-shadow:0 4px 14px rgba(198,61,0,0.45);
+        transition:transform 0.2s,box-shadow 0.2s;
+      "
+      onmouseover="this.style.transform='translateX(-4px)';this.style.boxShadow='0 6px 20px rgba(198,61,0,0.55)'"
+      onmouseout="this.style.transform='';this.style.boxShadow='0 4px 14px rgba(198,61,0,0.45)'">
+        ← ORANGE HUB に戻る
+      </button>
     </div>
 
     </div><!-- /orangeHubContentArea -->
