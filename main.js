@@ -1101,6 +1101,10 @@ function openOrangeSection(section) {
   const area = document.getElementById('orangeHubContentArea');
   if (area) area.style.display = 'block';
 
+  // フローティング戻るボタンを表示
+  const backFloat = document.getElementById('orangeHubBackFloat');
+  if (backFloat) backFloat.style.display = 'flex';
+
   // 該当セクション以外を隠す
   const sectionMap = {
     map:      'community-map',
@@ -1113,13 +1117,19 @@ function openOrangeSection(section) {
     if (el) el.style.display = s === section ? 'block' : 'none';
   });
 
-  // 地図を初期化（必要があれば）
-  if (section === 'map' && typeof renderMap === 'function' && typeof CLUB_DATA !== 'undefined') {
+  // 地図を初期化・再描画
+  if (section === 'map') {
     setTimeout(() => {
-      const centerLat = typeof HAKUSAN_LAT !== 'undefined' ? HAKUSAN_LAT : 36.5134;
-      const centerLng = typeof HAKUSAN_LNG !== 'undefined' ? HAKUSAN_LNG : 136.5625;
-      renderMap(CLUB_DATA, centerLat, centerLng, 11);
-    }, 50);
+      // 既存の地図があればサイズを再計算（display:noneだった後の表示修正）
+      if (window._clubLeafletMap && typeof window._clubLeafletMap.invalidateSize === 'function') {
+        window._clubLeafletMap.invalidateSize();
+      } else if (typeof renderMap === 'function' && typeof CLUB_DATA !== 'undefined') {
+        // 地図がまだ作られていない場合は新規作成
+        const centerLat = typeof HAKUSAN_LAT !== 'undefined' ? HAKUSAN_LAT : 36.5134;
+        const centerLng = typeof HAKUSAN_LNG !== 'undefined' ? HAKUSAN_LNG : 136.5625;
+        renderMap(CLUB_DATA, centerLat, centerLng, 11);
+      }
+    }, 150);
   }
 
   // ORANGE HUB セクションの上部にスクロール
@@ -1142,6 +1152,10 @@ function closeOrangeSection() {
   // コンテンツエリアを隠す
   const area = document.getElementById('orangeHubContentArea');
   if (area) area.style.display = 'none';
+
+  // フローティング戻るボタンを隠す
+  const backFloat = document.getElementById('orangeHubBackFloat');
+  if (backFloat) backFloat.style.display = 'none';
 
   // メニューカードを表示
   const menu = document.getElementById('orangeHubMenu');
