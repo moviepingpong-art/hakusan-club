@@ -221,7 +221,7 @@ let photos = [
     "id": 11,
     "src": "https://drive.google.com/thumbnail?id=1UrjFB9027WCPaiS8--TG-n9joMTJtI5b&sz=w800",
     "category": "interaction",
-    "caption": ""
+    "caption": "兼六クラブさん"
   },
   {
     "id": 12,
