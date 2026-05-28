@@ -58,6 +58,55 @@ function getTodaysSenryuIndex() {
   return ((diffDays % len) + len) % len;
 }
 
+/* ====================================================
+   📝 今月のひとこと（季節のあいさつ・毎月切り替え）
+   ==================================================== */
+const MONTHLY_GREETINGS = [
+  { /* 1月 */ icon:'🎍', title:'新春のごあいさつ',
+    msg:'新春のお慶びを申し上げます。本年も白山クラブをよろしくお願いいたします。寒さに負けず、元気にラリーを楽しみましょう。' },
+  { /* 2月 */ icon:'🌱', title:'立春のごあいさつ',
+    msg:'立春を迎え、寒さの中にも春の気配を感じる頃となりました。体育館で身体を温めながら、ラージボールを楽しみましょう。' },
+  { /* 3月 */ icon:'🌸', title:'弥生のごあいさつ',
+    msg:'桜のつぼみがふくらむ季節となりました。年度末で何かと慌ただしい時期ですが、新しい仲間との出会いも楽しみです。' },
+  { /* 4月 */ icon:'🌷', title:'卯月のごあいさつ',
+    msg:'桜咲く季節、ラージボールも軽やかに弾みます。新年度のはじまり、新しい目標を立てて練習に取り組みましょう。' },
+  { /* 5月 */ icon:'🍃', title:'皐月のごあいさつ',
+    msg:'新緑が美しい季節となりました。窓の外の景色も楽しみながら、爽やかな気分でラケットを振りましょう。' },
+  { /* 6月 */ icon:'☔', title:'水無月のごあいさつ',
+    msg:'梅雨入りの季節。雨で外出しにくい日も、体育館で爽やかな汗を流せばリフレッシュできます。一緒にラリーしませんか。' },
+  { /* 7月 */ icon:'🎋', title:'文月のごあいさつ',
+    msg:'夏本番、暑さが厳しくなってまいりました。水分補給をしっかりとって、無理せず元気にラリーを続けましょう。' },
+  { /* 8月 */ icon:'🌻', title:'葉月のごあいさつ',
+    msg:'暑い日が続きますが、冷房の効いた体育館で快適に練習しています。夏バテに負けず、楽しくラージボールを。' },
+  { /* 9月 */ icon:'🌾', title:'長月のごあいさつ',
+    msg:'スポーツの秋がやってまいりました。涼しくなってラケットを振るのも気持ちよい季節。心地よい汗を流しましょう。' },
+  { /* 10月 */ icon:'🍂', title:'神無月のごあいさつ',
+    msg:'紅葉が美しい季節となりました。気持ちよくラケットを振れる毎日です。大会の予定もあり、いっそう力が入ります。' },
+  { /* 11月 */ icon:'🍁', title:'霜月のごあいさつ',
+    msg:'朝晩の冷え込みが増してまいりました。準備運動を念入りに、ケガなく楽しく練習しましょう。' },
+  { /* 12月 */ icon:'❄️', title:'師走のごあいさつ',
+    msg:'今年も白山クラブをご愛顧いただきありがとうございました。良い年末年始をお迎えください。来年もよろしくお願いいたします。' },
+];
+
+/* 今月のひとことを開く */
+function openMonthlyGreeting() {
+  const modal = document.getElementById('monthlyGreetingModal');
+  if (!modal) return;
+  const now = new Date();
+  const m = now.getMonth(); // 0-11
+  const g = MONTHLY_GREETINGS[m];
+
+  document.getElementById('mgIcon').textContent  = g.icon;
+  document.getElementById('mgTitle').textContent = g.title;
+  document.getElementById('mgMsg').textContent   = g.msg;
+  document.getElementById('mgMonth').textContent = `${m + 1}月`;
+  modal.style.display = 'flex';
+}
+function closeMonthlyGreeting() {
+  const modal = document.getElementById('monthlyGreetingModal');
+  if (modal) modal.style.display = 'none';
+}
+
 /* 川柳を開く（mode: 'daily'=本日 / 'random'=過去ランダム） */
 function openSenryu(mode) {
   if (!SENRYU_LIST || SENRYU_LIST.length === 0) return;
