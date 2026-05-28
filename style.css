@@ -139,8 +139,11 @@ nav a:hover::after    { transform: scaleX(1); }
 }
 @media (max-width: 600px) {
   .hero-catch {
-    margin: 1.2rem 0 0.6rem;
-    gap: 0.45rem;
+    margin: 0.8rem 0 0.4rem;
+    gap: 0.35rem;
+  }
+  .hero-catch-main {
+    line-height: 1.45;
   }
 }
 
