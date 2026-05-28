@@ -1097,6 +1097,12 @@ function openOrangeSection(section) {
   const menu = document.getElementById('orangeHubMenu');
   if (menu) menu.style.display = 'none';
 
+  // タイトル類を隠す
+  const headline = document.getElementById('orangeHubHeadline');
+  if (headline) headline.style.display = 'none';
+  const title = document.getElementById('orangeHubTitle');
+  if (title) title.style.display = 'none';
+
   // コンテンツエリアを表示
   const area = document.getElementById('orangeHubContentArea');
   if (area) area.style.display = 'block';
@@ -1160,6 +1166,12 @@ function closeOrangeSection() {
   // メニューカードを表示
   const menu = document.getElementById('orangeHubMenu');
   if (menu) menu.style.display = 'grid';
+
+  // タイトル類を再表示
+  const headline = document.getElementById('orangeHubHeadline');
+  if (headline) headline.style.display = 'block';
+  const title = document.getElementById('orangeHubTitle');
+  if (title) title.style.display = 'flex';
 
   // ORANGE HUB セクションの上部にスクロール
   const community = document.getElementById('community');
