@@ -900,10 +900,10 @@ function renderTablePage(page) {
   _currentPage = page;
   const total  = _filteredRows.length;
 
-  // 全件をスクロール表示（ページネーション廃止・3件超はtbodyスクロール）
+  // 全件をスクロール表示（ページネーション廃止・3件超はラップdivでスクロール）
   document.querySelectorAll('#clubTableBody tr[data-lat]').forEach(r => r.style.display = 'none');
   _filteredRows.forEach((r) => {
-    r.style.display = 'table';
+    r.style.display = '';
   });
 
   const noResult = document.getElementById('noClubResult');
@@ -911,10 +911,6 @@ function renderTablePage(page) {
 
   const pagi = document.getElementById('clubPagination');
   if (pagi) pagi.innerHTML = '';
-
-  // tbodyを先頭にスクロール
-  const tbody = document.getElementById('clubTableBody');
-  if (tbody) tbody.scrollTop = 0;
 }
 
 function _renderTablePageOLD(page) {
