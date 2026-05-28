@@ -1401,7 +1401,7 @@ function drawTrivia() {
   currentTrivia = TRIVIAS[Math.floor(Math.random() * TRIVIAS.length)];
   const box = document.getElementById('triviaBox');
   const ans = document.getElementById('triviaAnswer');
-  box.innerHTML = `<p style="color:white;font-size:0.9rem;line-height:1.8">${currentTrivia.text}</p>`;
+  box.innerHTML = `<p style="color:#4a2200;font-size:0.9rem;line-height:1.8;font-weight:500">${currentTrivia.text}</p>`;
   ans.style.display = 'none';
   document.getElementById('trueBtn').style.display = 'inline-block';
   document.getElementById('lieBtn').style.display  = 'inline-block';
@@ -1412,15 +1412,15 @@ function answerTrivia(userSaysTrue) {
   const ans     = document.getElementById('triviaAnswer');
   const correct = userSaysTrue === !currentTrivia.isLie;
   if (correct) {
-    ans.style.background = 'rgba(76,175,80,0.2)';
-    ans.style.color      = '#a5d6a7';
+    ans.style.background = 'rgba(76,175,80,0.15)';
+    ans.style.color      = '#2e7d32';
     ans.style.border     = '1px solid #4caf50';
     ans.innerHTML        = currentTrivia.isLie
       ? '❌ 正解！これは嘘でした！現在のラージボールもサーブは16cm以上のトスが必要です😄'
       : '✅ 正解！本当のことでした！さすが！';
   } else {
-    ans.style.background = 'rgba(239,83,80,0.2)';
-    ans.style.color      = '#ef9a9a';
+    ans.style.background = 'rgba(239,83,80,0.15)';
+    ans.style.color      = '#c62828';
     ans.style.border     = '1px solid #ef5350';
     ans.innerHTML        = currentTrivia.isLie
       ? '😅 残念！実はこれが嘘でした！騙されましたね〜'
@@ -1458,8 +1458,8 @@ function drawFortune() {
     <div style="font-size:2.5rem;margin-bottom:0.5rem">${f.emoji}</div>
     <div style="font-family:'Oswald',sans-serif;font-size:1.6rem;font-weight:700;
                 color:${f.color};margin-bottom:0.6rem">${f.rank}</div>
-    <p style="color:rgba(255,255,255,0.85);font-size:0.85rem;line-height:1.8">${f.msg}</p>
-    <p style="color:rgba(255,255,255,0.3);font-size:0.7rem;margin-top:0.6rem">
+    <p style="color:#4a2200;font-size:0.85rem;line-height:1.8;font-weight:500">${f.msg}</p>
+    <p style="color:#8a4d1d;font-size:0.7rem;margin-top:0.6rem">
       ${today.getMonth() + 1}月${today.getDate()}日の運勢
     </p>`;
 }
