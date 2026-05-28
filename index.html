@@ -359,44 +359,46 @@
       <p class="hero-catch-main">本気で勝ちに行く人も、<br>汗を流して楽しみたい人も。</p>
       <p class="hero-catch-close">ともに卓球を楽しみましょう。</p>
     </div>
-    <!-- 今月のひとこと＆管理人川柳（横2列） -->
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0.7rem;margin:1.2rem auto 0;max-width:480px;width:100%;position:relative;z-index:10">
+    <!-- 今月のひとこと＆管理人川柳（横2列・特別コーナー） -->
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0.7rem;margin:0.6rem auto 0;max-width:480px;width:100%;position:relative;z-index:10">
       <button onclick="openMonthlyGreeting()" style="
-        display:flex;align-items:center;justify-content:center;gap:0.4rem;
-        padding:0.7rem 0.5rem;
-        background:linear-gradient(135deg,rgba(76,175,80,0.18),rgba(76,175,80,0.08));
-        border:1.5px solid rgba(165,214,167,0.5);
-        border-radius:14px;
+        display:flex;align-items:center;justify-content:center;gap:0.45rem;
+        padding:0.85rem 0.6rem;
+        background:linear-gradient(135deg,#66bb6a,#43a047);
+        border:none;
+        border-radius:50px;
         color:#fff;
         font-family:'Noto Sans JP',sans-serif;
-        font-size:0.82rem;
+        font-size:0.88rem;
         font-weight:700;
         letter-spacing:0.03em;
         cursor:pointer;
-        transition:background 0.2s,transform 0.15s;
+        box-shadow:0 4px 14px rgba(67,160,71,0.45);
+        transition:transform 0.15s,box-shadow 0.2s;
       "
-      onmouseover="this.style.background='linear-gradient(135deg,rgba(76,175,80,0.32),rgba(76,175,80,0.18))';this.style.transform='translateY(-2px)'"
-      onmouseout="this.style.background='linear-gradient(135deg,rgba(76,175,80,0.18),rgba(76,175,80,0.08))';this.style.transform=''">
-        <span>📝</span>
+      onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 6px 20px rgba(67,160,71,0.6)'"
+      onmouseout="this.style.transform='';this.style.boxShadow='0 4px 14px rgba(67,160,71,0.45)'">
+        <span style="font-size:1.1rem">📝</span>
         <span>今月のひとこと</span>
       </button>
       <button onclick="openSenryu('daily')" style="
-        display:flex;align-items:center;justify-content:center;gap:0.4rem;
-        padding:0.7rem 0.5rem;
-        background:linear-gradient(135deg,rgba(255,120,0,0.25),rgba(255,170,80,0.1));
-        border:1.5px solid rgba(255,180,120,0.5);
-        border-radius:14px;
+        display:flex;align-items:center;justify-content:center;gap:0.45rem;
+        padding:0.85rem 0.6rem;
+        background:linear-gradient(135deg,#ffa726,#fb8c00);
+        border:none;
+        border-radius:50px;
         color:#fff;
         font-family:'Noto Sans JP',sans-serif;
-        font-size:0.82rem;
+        font-size:0.88rem;
         font-weight:700;
         letter-spacing:0.03em;
         cursor:pointer;
-        transition:background 0.2s,transform 0.15s;
+        box-shadow:0 4px 14px rgba(251,140,0,0.45);
+        transition:transform 0.15s,box-shadow 0.2s;
       "
-      onmouseover="this.style.background='linear-gradient(135deg,rgba(255,120,0,0.4),rgba(255,170,80,0.22))';this.style.transform='translateY(-2px)'"
-      onmouseout="this.style.background='linear-gradient(135deg,rgba(255,120,0,0.25),rgba(255,170,80,0.1))';this.style.transform=''">
-        <span>📜</span>
+      onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 6px 20px rgba(251,140,0,0.6)'"
+      onmouseout="this.style.transform='';this.style.boxShadow='0 4px 14px rgba(251,140,0,0.45)'">
+        <span style="font-size:1.1rem">📜</span>
         <span>管理人川柳</span>
       </button>
     </div>
