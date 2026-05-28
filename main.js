@@ -899,6 +899,27 @@ function initClubMap() {
 function renderTablePage(page) {
   _currentPage = page;
   const total  = _filteredRows.length;
+
+  // 全件をスクロール表示（ページネーション廃止・3件超はtbodyスクロール）
+  document.querySelectorAll('#clubTableBody tr[data-lat]').forEach(r => r.style.display = 'none');
+  _filteredRows.forEach((r) => {
+    r.style.display = 'table';
+  });
+
+  const noResult = document.getElementById('noClubResult');
+  if (noResult) noResult.style.display = total === 0 ? 'block' : 'none';
+
+  const pagi = document.getElementById('clubPagination');
+  if (pagi) pagi.innerHTML = '';
+
+  // tbodyを先頭にスクロール
+  const tbody = document.getElementById('clubTableBody');
+  if (tbody) tbody.scrollTop = 0;
+}
+
+function _renderTablePageOLD(page) {
+  _currentPage = page;
+  const total  = _filteredRows.length;
   const pages  = Math.ceil(total / CLUBS_PER_PAGE);
   const start  = (page - 1) * CLUBS_PER_PAGE;
   const end    = start + CLUBS_PER_PAGE;
