@@ -365,51 +365,6 @@ function initHeroIntro() {
   }, 3000);
 }
 
-/* 川柳ボタンを少し遅れて追いかける「つかまえてー」文字＋絵文字行列 */
-function initSenryuChaser() {
-  const btn    = document.getElementById('senryuFloatBtn');
-  const chaser = document.getElementById('senryuChaser');
-  if (!btn || !chaser) return;
-
-  // ボタンが入っているヒーロー区画（position:relative の親）を取得
-  const hero = btn.offsetParent || btn.parentElement;
-  if (!hero) return;
-
-  // 「つかまえてー」と4つの絵文字キャラを取得
-  const chars = Array.from(document.querySelectorAll('.senryuChaserChar'));
-
-  // 各要素のオフセット（ボタンを基準にどれだけ右下にずらすか）
-  // index 0 = つかまえてー文字, 1〜4 = 絵文字
-  // 距離を段階的に増やして「行列」を作る
-  const offsets = [
-    { x: 60,  y: 60 },   // つかまえてー（先頭）
-    { x: 100, y: 90 },   // 🏃‍♂️
-    { x: 140, y: 110 },  // 🐕
-    { x: 175, y: 130 },  // 🐈
-    { x: 205, y: 145 },  // 🐇
-  ];
-
-  function updateChaser() {
-    const btnRect  = btn.getBoundingClientRect();
-    const heroRect = hero.getBoundingClientRect();
-    const btnX = btnRect.left - heroRect.left;
-    const btnY = btnRect.top  - heroRect.top;
-
-    // 1) 「つかまえてー」文字
-    chaser.style.transform = `translate(${btnX + offsets[0].x}px, ${btnY + offsets[0].y}px)`;
-
-    // 2) 絵文字行列（各キャラの transition 時間が長いほど後から追いつく）
-    chars.forEach((el, idx) => {
-      const o = offsets[idx + 1] || offsets[offsets.length - 1];
-      el.style.transform = `translate(${btnX + o.x}px, ${btnY + o.y}px)`;
-    });
-  }
-
-  // 初回位置決め＆周期更新
-  updateChaser();
-  setInterval(updateChaser, 300);
-}
-
 // カテゴリ設定
 const NEWS_CAT = {
   site:    { icon:'🔧', label:'サイト更新', color:'#0057ff', bg:'rgba(0,87,255,0.07)', border:'rgba(0,87,255,0.2)' },
@@ -910,10 +865,8 @@ function closeClubRequestModal() {
 const HAKUSAN_LAT = 36.5134;
 const HAKUSAN_LNG = 136.5625;
 
-/* テーブルのページネーション設定 */
-const CLUBS_PER_PAGE = 8;
-let   _currentPage   = 1;
-let   _filteredRows  = [];
+/* クラブテーブルのフィルタ状態 */
+let _filteredRows = [];
 
 function flyToClub(lat, lng) {
   /* 地図インスタンスが生成済みなら即移動、まだなら待機 */
@@ -946,61 +899,14 @@ function initClubMap() {
 }
 
 function renderTablePage(page) {
-  _currentPage = page;
-  const total  = _filteredRows.length;
+  const total = _filteredRows.length;
 
-  // 全件をスクロール表示（ページネーション廃止・3件超はラップdivでスクロール）
+  // 全件をスクロール表示（3件超はラップdivでスクロール）
   document.querySelectorAll('#clubTableBody tr[data-lat]').forEach(r => r.style.display = 'none');
-  _filteredRows.forEach((r) => {
-    r.style.display = '';
-  });
+  _filteredRows.forEach((r) => { r.style.display = ''; });
 
   const noResult = document.getElementById('noClubResult');
   if (noResult) noResult.style.display = total === 0 ? 'block' : 'none';
-
-  const pagi = document.getElementById('clubPagination');
-  if (pagi) pagi.innerHTML = '';
-}
-
-function _renderTablePageOLD(page) {
-  _currentPage = page;
-  const total  = _filteredRows.length;
-  const pages  = Math.ceil(total / CLUBS_PER_PAGE);
-  const start  = (page - 1) * CLUBS_PER_PAGE;
-  const end    = start + CLUBS_PER_PAGE;
-
-  document.querySelectorAll('#clubTableBody tr[data-lat]').forEach(r => r.style.display = 'none');
-  _filteredRows.forEach((r, i) => {
-    r.style.display = (i >= start && i < end) ? '' : 'none';
-  });
-
-  const noResult = document.getElementById('noClubResult');
-  if (noResult) noResult.style.display = total === 0 ? 'block' : 'none';
-
-  const pagi = document.getElementById('clubPagination');
-  if (!pagi) return;
-  if (pages <= 1) { pagi.innerHTML = ''; return; }
-
-  let html = '';
-  const btn = (label, p, active, disabled) =>
-    `<button onclick="renderTablePage(${p})"
-      style="min-width:32px;padding:0.35rem 0.65rem;border-radius:6px;
-             border:1px solid ${active?'#ff7a00':'rgba(255,120,0,0.3)'};
-             background:${active?'#ff7a00':'transparent'};color:${active?'white':'#ff7a00'};
-             font-size:0.8rem;cursor:${disabled?'default':'pointer'};font-weight:700;
-             opacity:${disabled?'0.4':'1'}"
-      ${disabled?'disabled':''}>${label}</button>`;
-
-  html += btn('◀', Math.max(1,page-1), false, page===1);
-  for (let p = 1; p <= pages; p++) {
-    if (pages <= 7 || Math.abs(p-page) <= 2 || p === 1 || p === pages) {
-      html += btn(p, p, p===page, false);
-    } else if (Math.abs(p-page) === 3) {
-      html += `<span style="color:rgba(255,255,255,0.3);padding:0 0.2rem">…</span>`;
-    }
-  }
-  html += btn('▶', Math.min(pages,page+1), false, page===pages);
-  pagi.innerHTML = html;
 }
 
 /* ---- 地図の初回生成（以後は再生成しない） ---- */
@@ -1132,7 +1038,8 @@ function enterFocusMode(sectionId) {
   if (exitBtn)       exitBtn.classList.add('visible');
   if (backToTopWrap) backToTopWrap.style.display = 'none';
   if (sectionId === 'community') {
-    showCommunityTab('map');
+    /* ORANGE HUB を開いた時はメニューカード表示状態に戻す */
+    if (typeof closeOrangeSection === 'function') closeOrangeSection();
     /* メニュー選択時は動画あり・音声ありで再生 */
     setTimeout(() => {
       if (window._communityPlayWithVideo) window._communityPlayWithVideo();
@@ -1244,25 +1151,6 @@ function closeOrangeSection() {
   if (community) {
     community.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-}
-
-function showCommunityTab(tab) {
-  const tabMap = {
-    map:      'community-map',
-    voices:   'community-voices',
-    omake:    'community-omake',
-    deepdive: 'community-deepdive',
-  };
-  Object.keys(tabMap).forEach(t => {
-    const el  = document.getElementById(tabMap[t]);
-    const btn = document.getElementById('tab-' + t);
-    if (el)  el.style.display = t === tab ? 'block' : 'none';
-    if (btn) {
-      btn.style.background  = t === tab ? '#ff7a00'               : 'rgba(255,255,255,0.05)';
-      btn.style.color       = t === tab ? 'white'                 : 'rgba(255,255,255,0.8)';
-      btn.style.borderColor = t === tab ? '#ff7a00'               : 'rgba(255,255,255,0.3)';
-    }
-  });
 }
 
 function filterClubs(region, clickedBtn) {
@@ -2022,9 +1910,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---- ギャラリー初期表示 ----
   renderGallery();
 
-  // ---- 川柳ボタン追従「つかまえてー」 ----
-  initSenryuChaser();
-
   // ---- ヒーロー区画のイントロ要素（ロゴ・オレンジタグ）処理 ----
   initHeroIntro();
 
@@ -2138,7 +2023,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---- クラブマップ・Orange HUB 初期化 ----
   initClubMap();
-  showCommunityTab('map');
 
   // ---- 星フィールド ----
   initStars();
