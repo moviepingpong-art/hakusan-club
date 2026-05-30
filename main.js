@@ -59,6 +59,56 @@ function getTodaysSenryuIndex() {
 }
 
 /* ====================================================
+   🏓 大会カウントダウン（部員カレンダー×Drive連携データ）
+   ==================================================== */
+function renderTournamentCountdown() {
+  const el = document.getElementById('tournamentCountdown');
+  const txt = document.getElementById('tournamentCountdownText');
+  if (!el || !txt) return;
+
+  // data.js の TOURNAMENT_LIST（GASが書き込む）。無ければ非表示。
+  if (typeof TOURNAMENT_LIST === 'undefined' || !Array.isArray(TOURNAMENT_LIST) || TOURNAMENT_LIST.length === 0) {
+    el.style.display = 'none';
+    return;
+  }
+
+  // 今日以降の大会だけ抽出し、日付の近い順に並べる
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const upcoming = TOURNAMENT_LIST
+    .map(t => ({ ...t, _d: new Date(t.date) }))
+    .filter(t => !isNaN(t._d) && t._d >= today)
+    .sort((a, b) => a._d - b._d);
+
+  if (upcoming.length === 0) {
+    el.style.display = 'none';
+    return;
+  }
+
+  const next = upcoming[0];
+  const diffDays = Math.ceil((next._d - today) / (1000 * 60 * 60 * 24));
+
+  // 表示テキスト
+  let label;
+  if (diffDays === 0)      label = '本日開催！';
+  else if (diffDays === 1) label = '明日開催！';
+  else                     label = `次の大会まで あと${diffDays}日`;
+  txt.textContent = label;
+
+  // リンク（要項PDFがあれば開く、なければ部員カレンダーへ）
+  if (next.pdf) {
+    el.href = next.pdf;
+    el.target = '_blank';
+  } else {
+    el.href = '#calendar';
+    el.target = '_self';
+  }
+
+  el.style.display = 'inline-flex';
+}
+
+/* ====================================================
    📝 今月のひとこと（季節のあいさつ・毎月切り替え）
    ==================================================== */
 const MONTHLY_GREETINGS = [
@@ -1900,6 +1950,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---- お知らせ初期表示 ----
   renderNews();
+
+  // ---- 大会カウントダウン ----
+  renderTournamentCountdown();
 
   // ---- クラブ紹介・メンバー募集の写真表示 ----
   renderSectionPhotos();
