@@ -204,25 +204,25 @@ let photos = [
     "id": 8,
     "src": "https://drive.google.com/thumbnail?id=1RIJASatiAk-Blx8HeZdVM8VzUwiVE-CA&sz=w800",
     "category": "match",
-    "caption": "ゆーりんピック2026"
+    "caption": "2026/5/30ゆーりんピック"
   },
   {
     "id": 9,
     "src": "https://drive.google.com/thumbnail?id=14S67-yQkv_umKUIz_Z0c_ZjsCrohGkjM&sz=w800",
     "category": "match",
-    "caption": "2026/5　スポレク2"
+    "caption": "2026/5/10スポレク2"
   },
   {
     "id": 10,
-    "src": "https://drive.google.com/thumbnail?id=16fb7Q4ZS3zV0T8KvF-Zj8kCHKgNXaKqg&sz=w800",
+    "src": "https://drive.google.com/thumbnail?id=1yGR9YRV0-nB9HvlbMTnDotNMqBT_2C3N&sz=w800",
     "category": "match",
-    "caption": "2026/5　スポレク1"
+    "caption": "2026/5/10スポレク優勝"
   },
   {
     "id": 11,
-    "src": "https://drive.google.com/thumbnail?id=1yGR9YRV0-nB9HvlbMTnDotNMqBT_2C3N&sz=w800",
+    "src": "https://drive.google.com/thumbnail?id=16fb7Q4ZS3zV0T8KvF-Zj8kCHKgNXaKqg&sz=w800",
     "category": "match",
-    "caption": "2026/5　スポレク優勝"
+    "caption": "2026/5/10スポレク1"
   },
   {
     "id": 12,
