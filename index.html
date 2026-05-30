@@ -337,8 +337,8 @@
       <ruby><span class="accent-txt">白山</span><rt style="font-size:0.3em;letter-spacing:0.15em;opacity:0.85;font-family:'Noto Sans JP',sans-serif;font-weight:400;line-height:0.9">はくさん</rt></ruby>ラージボール卓球クラブ
       <span class="sub">— みんなで楽しむ、生涯スポーツ —</span>
     </h1>
-    <!-- 訪問者カウンター -->
-    <div style="margin-top:0.6rem;display:flex;justify-content:center">
+    <!-- 訪問者カウンター ＆ 大会カウントダウン（横並び） -->
+    <div style="margin-top:0.6rem;display:flex;justify-content:center;align-items:stretch;gap:0.6rem;flex-wrap:wrap">
       <div style="
         display:inline-flex;
         align-items:center;
@@ -353,6 +353,30 @@
           alt="訪問者数"
           style="display:block;border-radius:4px;height:20px">
       </div>
+
+      <!-- 大会カウントダウン（JSが内容を埋める。大会がなければ非表示） -->
+      <a id="tournamentCountdown" href="#" target="_blank" rel="noopener" style="
+        display:none;
+        align-items:center;
+        gap:0.4rem;
+        background:linear-gradient(135deg,#ff8c1e,#fb6a00);
+        border:1.5px solid rgba(255,255,255,0.6);
+        border-radius:10px;
+        padding:0.3rem 0.8rem;
+        box-shadow:0 4px 14px rgba(251,106,0,0.4);
+        text-decoration:none;
+        color:#fff;
+        font-family:'Noto Sans JP',sans-serif;
+        font-size:0.78rem;
+        font-weight:700;
+        white-space:nowrap;
+        transition:transform 0.15s;
+      "
+      onmouseover="this.style.transform='translateY(-2px)'"
+      onmouseout="this.style.transform=''">
+        <span style="font-size:0.95rem">🏓</span>
+        <span id="tournamentCountdownText">次の大会まで</span>
+      </a>
     </div>
     <div class="hero-catch">
       <p class="hero-catch-sub">硬式経験者、大歓迎！</p>
@@ -992,6 +1016,12 @@
                 <td style="padding:0.6rem 0.8rem"><span style="background:rgba(255,120,0,0.2);color:#ff7a00;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
                 <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#ff7a00;" onclick="flyToClub(36.35519673736004,136.4191410779788,'南加賀クラブ','粟津公園体育館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🍊 南加賀クラブ</td>
                 <td style="padding:0.6rem 0.8rem;cursor:pointer;color:#4a2200;" onclick="openMap(36.35519673736004,136.4191410779788,'粟津公園体育館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">📍 粟津公園体育館</td>
+                <td style="padding:0.6rem 0.8rem;color:#8a4d1d">—</td>
+              </tr>
+              <tr data-region="北陸" data-lat="37.0428" data-lng="136.9683" data-name="七尾スターズ" data-address="七尾総合市民体育館" style="border-bottom:1px solid rgba(0,0,0,0.08)">
+                <td style="padding:0.6rem 0.8rem"><span style="background:rgba(255,120,0,0.2);color:#ff7a00;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
+                <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#ff7a00;" onclick="flyToClub(37.0428,136.9683,'七尾スターズ','七尾総合市民体育館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🍊 七尾スターズ</td>
+                <td style="padding:0.6rem 0.8rem;cursor:pointer;color:#4a2200;" onclick="openMap(37.0428,136.9683,'七尾総合市民体育館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">📍 七尾総合市民体育館</td>
                 <td style="padding:0.6rem 0.8rem;color:#8a4d1d">—</td>
               </tr>
             </tbody>
