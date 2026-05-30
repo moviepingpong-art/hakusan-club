@@ -222,7 +222,7 @@ let photos = [
     "id": 11,
     "src": "https://drive.google.com/thumbnail?id=1tFdwbHuL8SInlqP5nrkZvd-52nOEVzbn&sz=w800",
     "category": "interaction",
-    "caption": "能美クラブさん"
+    "caption": "能美クラブさん（石川総合スポーツセンター）"
   },
   {
     "id": 12,
@@ -234,6 +234,6 @@ let photos = [
     "id": 13,
     "src": "https://drive.google.com/thumbnail?id=1yRrbwj8XWEfiUFLtzy1cWA6WaUO0jzmw&sz=w800",
     "category": "interaction",
-    "caption": "万葉クラブさん"
+    "caption": ""
   }
 ];
