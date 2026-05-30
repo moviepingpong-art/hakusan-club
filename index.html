@@ -11,6 +11,9 @@
         var v = new URLSearchParams(location.search).get('view');
         if (v) {
           document.documentElement.setAttribute('data-preload-view', v);
+          /* ?view= で開いた = 外部ページから戻った時。
+             community-anim.js の自動イントロ（動画・球アニメ）を抑制するフラグ */
+          window.__arrivedViaView = v;
           /* 安全策：JSが動かなくても3秒後に必ず表示を戻す */
           setTimeout(function(){
             document.documentElement.removeAttribute('data-preload-view');

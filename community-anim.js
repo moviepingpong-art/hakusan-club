@@ -166,6 +166,15 @@
       playIntro(video, canvas, content, floatBalls);
     };
 
+    /* 外部ページ（map.html / deepdive.html）から戻った時に呼ばれる
+       （動画なし・球アニメなし・コンテンツを即表示） */
+    window._communityShowInstant = () => {
+      played = true;
+      observer.disconnect();
+      clearTimeout(dwellTimer);
+      showContent(content, floatBalls);
+    };
+
     let dwellTimer = null;
 
     const observer = new IntersectionObserver(entries => {
@@ -187,7 +196,15 @@
       });
     }, { threshold: 0.25 });
 
-    observer.observe(section);
+    /* 外部ページ（map.html / deepdive.html）から ?view=community で戻ってきた場合は、
+       自動イントロ（動画・球アニメ）を一切行わず、コンテンツを即表示する。
+       observer も動かさない（球アニメの自動再生を防ぐ）。 */
+    if (window.__arrivedViaView === 'community') {
+      played = true;
+      showContent(content, floatBalls);
+    } else {
+      observer.observe(section);
+    }
   }
 
   /* ============================================================
