@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>フォトギャラリー｜白山ラージボール卓球クラブ - 練習・試合・大会の風景</title>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-62E06GLKBV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-62E06GLKBV');
+  </script>
+
+  <!-- SEO -->
+  <meta name="description" content="白山ラージボール卓球クラブの活動を写真でご紹介。練習・試合・大会・他クラブとの交流など、日々の様子を雰囲気・用具・練習・試合のカテゴリ別にご覧いただけます。">
+  <meta name="keywords" content="白山クラブ 写真,ラージボール 練習風景,ラージボール 試合,卓球 ギャラリー,スポレク 卓球,白山市 卓球">
+
+  <!-- OGP -->
+  <meta property="og:title" content="フォトギャラリー｜白山ラージボール卓球クラブ">
+  <meta property="og:description" content="練習・試合・大会の様子を写真でご紹介。白山ラージボール卓球クラブの活動アルバム。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://moviepingpong-art.github.io/hakusan-club/gallery.html">
+  <meta property="og:image" content="https://moviepingpong-art.github.io/hakusan-club/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="白山クラブ フォトギャラリー">
+  <meta property="og:site_name" content="白山ラージボール卓球クラブ">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="フォトギャラリー｜白山ラージボール卓球クラブ">
+  <meta name="twitter:description" content="練習・試合・大会の様子を写真でご紹介。">
+  <meta name="twitter:image" content="https://moviepingpong-art.github.io/hakusan-club/og-image.jpg">
+  <link rel="canonical" href="https://moviepingpong-art.github.io/hakusan-club/gallery.html">
+
+  <!-- favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
+  <meta name="theme-color" content="#0057ff">
+
+  <!-- 構造化データ（JSON-LD）：ImageGallery -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    "name": "白山ラージボール卓球クラブ フォトギャラリー",
+    "description": "白山クラブの練習・試合・大会・交流の様子を写真でご紹介します。",
+    "url": "https://moviepingpong-art.github.io/hakusan-club/gallery.html",
+    "image": "https://moviepingpong-art.github.io/hakusan-club/og-image.jpg",
+    "author": {
+      "@type": "Organization",
+      "name": "白山ラージボール卓球クラブ",
+      "url": "https://moviepingpong-art.github.io/hakusan-club/"
+    },
+    "about": [
+      { "@type": "Thing", "name": "ラージボール卓球" },
+      { "@type": "Thing", "name": "白山クラブの活動" }
+    ]
+  }
+  </script>
+
+  <!-- パンくず構造化データ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "白山ラージボール卓球クラブ", "item": "https://moviepingpong-art.github.io/hakusan-club/" },
+      { "@type": "ListItem", "position": 2, "name": "フォトギャラリー", "item": "https://moviepingpong-art.github.io/hakusan-club/gallery.html" }
+    ]
+  }
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共通スクリプト -->
+  <script src="images.js" defer></script>
+  <script src="data.js" defer></script>
+  <script src="main.js" defer></script>
+
+  <!-- ページ専用スタイル -->
+  <style>
+    body.gallery-page {
+      background: linear-gradient(180deg, #f5f8ff 0%, #eaf0ff 100%);
+      min-height: 100vh;
+    }
+    .gallery-hero {
+      background: linear-gradient(135deg, #0057ff 0%, #4080ff 60%, #66a0ff 100%);
+      color: white;
+      padding: 4.5rem 1.5rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .gallery-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.15), transparent 50%),
+                  radial-gradient(circle at 70% 80%, rgba(255,255,255,0.1), transparent 50%);
+      pointer-events: none;
+    }
+    .gallery-hero-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-bottom: 0.6rem;
+      position: relative;
+      z-index: 1;
+    }
+    .gallery-hero h1 {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: clamp(1.4rem, 5vw, 2.2rem);
+      font-weight: 900;
+      line-height: 1.4;
+      margin: 0 0 0.8rem;
+      letter-spacing: 0.05em;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 1;
+    }
+    .gallery-hero p {
+      font-size: clamp(0.85rem, 2.5vw, 1rem);
+      line-height: 1.9;
+      opacity: 0.95;
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .gallery-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 50px;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      position: relative;
+      z-index: 1;
+    }
+    .gallery-content-wrap {
+      max-width: 1000px;
+      margin: -1.5rem auto 0;
+      padding: 0 1rem 4rem;
+      position: relative;
+      z-index: 2;
+    }
+    .gallery-back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: white;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.45rem 1rem;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 50px;
+      transition: background 0.2s;
+    }
+    .gallery-back-link:hover {
+      background: rgba(255,255,255,0.25);
+    }
+    .gallery-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 6px 24px rgba(0, 87, 255, 0.1);
+      border: 1px solid rgba(0, 87, 255, 0.08);
+    }
+    .gallery-header {
+      background: linear-gradient(135deg, #0057ff, #4080ff) !important;
+    }
+  </style>
+</head>
+
+<body class="gallery-page">
+
+<!-- HEADER -->
+<header class="gallery-header">
+  <a href="index.html" class="logo">
+    <img data-img="1" src="" class="logo-img" alt="白山クラブ ロゴ">
+    <span class="logo-text">白山クラブ <span class="dot">●</span> Large Ball</span>
+  </a>
+  <nav id="globalNav"></nav>
+</header>
+
+<!-- ページヒーロー -->
+<section class="gallery-hero">
+  <p class="gallery-hero-label">Photo Gallery</p>
+  <h1>📸 フォトギャラリー</h1>
+  <p>練習・試合・大会・他クラブとの交流など、<br>白山クラブの日々の活動を写真でご紹介します。</p>
+  <span class="gallery-hero-badge">📷 写真は毎週月曜日に自動更新</span>
+</section>
+
+<!-- メインコンテンツ -->
+<div class="gallery-content-wrap">
+
+  <div class="gallery-card">
+    <!-- カテゴリタブ -->
+    <div class="gallery-tabs">
+      <button class="gallery-tab active" onclick="filterGallery('all',this)">すべて</button>
+      <button class="gallery-tab" onclick="filterGallery('atmosphere',this)">😊 クラブ紹介・雰囲気</button>
+      <button class="gallery-tab" onclick="filterGallery('equipment',this)">🏓 用具・施設</button>
+      <button class="gallery-tab" onclick="filterGallery('practice',this)">🏋️ 練習・技術</button>
+      <button class="gallery-tab" onclick="filterGallery('match',this)">🏆 試合・大会</button>
+    </div>
+
+    <!-- 写真グリッド -->
+    <div class="gallery-grid" id="galleryGrid"></div>
+
+    <!-- 説明 -->
+    <div style="margin-top:2rem;padding:1rem 1.2rem;background:rgba(0,87,255,0.05);border-left:3px solid #0057ff;border-radius:6px">
+      <p style="font-size:0.82rem;color:#444;margin:0;line-height:1.7">
+        💡 <strong>写真について</strong>：写真はGoogle Driveフォルダから毎週月曜日に自動更新されます。<br>
+        練習・試合の様子を順次追加していきます。
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo" style="display:flex;align-items:center;justify-content:center;gap:0.8rem;margin-bottom:0.8rem">
+    <img data-img="1" src="" style="width:54px;height:54px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.4)" alt="白山クラブロゴ">
+    <span>白山クラブ ● Large Ball</span>
+  </div>
+  <p>若宮公園体育館 2F ／ 毎週月・水曜日 19:00〜21:30</p>
+  <p style="margin-top:0.4rem">📧 hakusan.large@gmail.com</p>
+  <p style="margin-top:1rem">設立：平成15年3月3日　／　©2026 白山クラブ（ラージボール卓球）</p>
+</footer>
+
+<!-- ライトボックス -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<!-- クラブ案内に戻る（左下固定フロート） -->
+<a href="index.html?view=clubinfo" style="
+  display:inline-flex;
+  position:fixed;
+  bottom:1.5rem;
+  left:1.2rem;
+  z-index:9090;
+  align-items:center;
+  gap:0.4rem;
+  padding:0.7rem 1.3rem;
+  background:linear-gradient(135deg,#0057ff,#4080ff);
+  color:white;
+  border:2px solid rgba(255,255,255,0.85);
+  border-radius:50px;
+  font-weight:700;
+  font-size:0.85rem;
+  cursor:pointer;
+  text-decoration:none;
+  font-family:'Noto Sans JP',sans-serif;
+  letter-spacing:0.03em;
+  box-shadow:0 6px 18px rgba(0,87,255,0.5);
+  transition:transform 0.2s,box-shadow 0.2s;
+"
+onmouseover="this.style.transform='translateX(-3px)';this.style.boxShadow='0 8px 24px rgba(0,87,255,0.6)'"
+onmouseout="this.style.transform='';this.style.boxShadow='0 6px 18px rgba(0,87,255,0.5)'">
+  ← クラブ案内に戻る
+</a>
+
+</body>
+</html>
