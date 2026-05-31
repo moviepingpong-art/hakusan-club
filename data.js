@@ -247,7 +247,7 @@ let photos = [
     "id": 15,
     "src": "https://drive.google.com/thumbnail?id=1yRrbwj8XWEfiUFLtzy1cWA6WaUO0jzmw&sz=w800",
     "category": "interaction",
-    "caption": ""
+    "caption": "万葉クラブさん"
   },
   {
     "id": 16,
