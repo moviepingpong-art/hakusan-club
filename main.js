@@ -2130,8 +2130,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(location.search);
   const viewParam = urlParams.get('view');
   if (viewParam && document.getElementById(viewParam)) {
-    history.replaceState({ focusMode: true, sectionId: viewParam }, '', '?view=' + viewParam);
+    history.replaceState({ focusMode: true, sectionId: viewParam }, '', location.search);
     enterFocusMode(viewParam);
+    /* ?tab= が指定されていれば、クラブ案内の該当タブを開く（共有リンク用） */
+    const tabParam = urlParams.get('tab');
+    if (viewParam === 'clubinfo' && tabParam) {
+      const tabBtn = document.querySelector(`.clubinfo-tab[onclick*="'${tabParam}'"]`);
+      if (typeof showClubInfoTab === 'function') {
+        showClubInfoTab(tabParam, tabBtn || null);
+      }
+    }
   }
   /* プリロード時の画面隠しを解除（focus-mode適用後に表示） */
   document.documentElement.removeAttribute('data-preload-view');
