@@ -281,30 +281,11 @@ onmouseout="this.style.transform='';this.style.boxShadow='0 6px 18px rgba(0,87,2
 </a>
 
 <!-- トップに戻る（右下固定・スクロール時表示） -->
-<div id="backToTopWrap" style="position:fixed;bottom:1.5rem;right:1.2rem;z-index:9000;display:flex;flex-direction:column;align-items:center;gap:0.3rem;opacity:0;transform:translateY(20px);transition:opacity 0.3s,transform 0.3s;pointer-events:none">
+<div id="backToTopWrap" style="position:fixed;bottom:1.5rem;right:1.2rem;z-index:9000;display:flex;flex-direction:column;align-items:center;gap:0.3rem">
   <span style="font-size:0.62rem;color:rgba(255,255,255,0.8);background:rgba(0,0,0,0.55);padding:0.15rem 0.5rem;border-radius:4px;letter-spacing:0.05em;white-space:nowrap">トップに戻る</span>
   <button onclick="location.href='index.html'" style="width:48px;height:48px;background:#0057ff;color:white;border:none;border-radius:50%;cursor:pointer;font-size:1.2rem;box-shadow:0 4px 16px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;transition:background 0.2s,transform 0.2s"
     onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">▲</button>
 </div>
-
-<script>
-  /* スクロールすると右下のトップに戻るボタンを表示 */
-  (function(){
-    var wrap = document.getElementById('backToTopWrap');
-    if (!wrap) return;
-    window.addEventListener('scroll', function(){
-      if (window.scrollY > 300) {
-        wrap.style.opacity = '1';
-        wrap.style.transform = 'translateY(0)';
-        wrap.style.pointerEvents = 'auto';
-      } else {
-        wrap.style.opacity = '0';
-        wrap.style.transform = 'translateY(20px)';
-        wrap.style.pointerEvents = 'none';
-      }
-    });
-  })();
-</script>
 
 </body>
 </html>
