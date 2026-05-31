@@ -1097,6 +1097,14 @@ function showClubInfoTab(tab, clickedBtn) {
   if (clickedBtn) clickedBtn.classList.add('active');
   if (tab === 'gallery') renderGallery();
   if (tab === 'matches') renderChampions();
+  /* クラブ案内がフォーカス表示中なら、URL欄を共有可能な形に更新（再読み込みなし） */
+  if (document.body.classList.contains('focus-mode') && tab !== 'gallery') {
+    history.replaceState(
+      { focusMode: true, sectionId: 'clubinfo' },
+      '',
+      '?view=clubinfo&tab=' + tab
+    );
+  }
 }
 
 /* ============================================================
@@ -1109,7 +1117,8 @@ function enterFocusMode(sectionId, playVideo) {
   target.classList.add('focus-target');
   document.body.classList.add('focus-mode');
   window.scrollTo({ top: 0, behavior: 'instant' });
-  history.pushState({ focusMode: true, sectionId }, '', '?view=' + sectionId);
+  const initialUrl = sectionId === 'clubinfo' ? '?view=clubinfo&tab=about' : '?view=' + sectionId;
+  history.pushState({ focusMode: true, sectionId }, '', initialUrl);
   const exitBtn       = document.getElementById('focusExitBtn');
   const backToTopWrap = document.getElementById('backToTopWrap');
   if (exitBtn)       exitBtn.classList.add('visible');
