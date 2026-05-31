@@ -447,9 +447,39 @@ section { padding: 6rem 1.5rem; }
 .match-divider           { width: 1px; height: 40px; background: var(--border); }
 .match-info .mi-title    { font-size: 0.95rem; font-weight: 700; color: var(--text-dark); }
 .match-info .mi-place    { font-size: 0.8rem; color: var(--text-light); margin-top: 0.2rem; }
-.match-result            { margin-left: auto; font-size: 0.8rem; padding: 0.3em 1em; border-radius: 4px; font-weight: 700; }
+.match-result            { margin-left: auto; font-size: 0.8rem; padding: 0.3em 1em; border-radius: 4px; font-weight: 700; white-space: nowrap; }
 .match-result.win        { background: var(--primary-pale); color: var(--primary); }
 .match-result.scheduled  { background: #fff8e1; color: #b07800; }
+
+/* スマホ：大会結果カードを縦並びにして結果ラベルの縦潰れを防ぐ */
+@media (max-width: 768px) {
+  .match-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 1rem 1.2rem;
+  }
+  .match-card .match-date {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    min-width: 0;
+    text-align: left;
+  }
+  .match-card .match-date .my { margin-top: 0; }
+  .match-card .match-divider { display: none; }
+  .match-card .match-info { width: 100%; }
+  /* 結果ラベルを左寄せにし、横書きで折り返す */
+  .match-card .match-result {
+    margin-left: 0;
+    white-space: normal;
+    align-self: flex-start;
+  }
+  .match-card > div[style*="margin-left:auto"] {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+}
 .match-placeholder {
   background: var(--card); border: 2px dashed var(--border); border-radius: 10px;
   padding: 3rem; text-align: center; color: var(--text-light); font-size: 0.9rem;
