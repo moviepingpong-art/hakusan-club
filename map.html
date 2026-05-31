@@ -534,19 +534,32 @@ onmouseout="this.style.transform='';this.style.boxShadow='0 6px 18px rgba(198,61
   ← ORANGE HUB に戻る
 </a>
 
-<!-- トップに戻る（右下固定・スクロール時表示） -->
-<div id="backToTopWrap" style="position:fixed!important;bottom:1.5rem;right:1.2rem;z-index:99999;display:flex;flex-direction:column;align-items:center;gap:0.3rem">
-  <span style="font-size:0.62rem;color:rgba(255,255,255,0.8);background:rgba(0,0,0,0.55);padding:0.15rem 0.5rem;border-radius:4px;letter-spacing:0.05em;white-space:nowrap">トップに戻る</span>
-  <button onclick="location.href='index.html'" style="width:48px;height:48px;background:#c63d00;color:white;border:none;border-radius:50%;cursor:pointer;font-size:1.2rem;box-shadow:0 4px 16px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;transition:background 0.2s,transform 0.2s"
-    onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">▲</button>
-</div>
 
 <script>
-  /* トップに戻るボタンを必ず body 直下に配置し、position:fixed を確実に効かせる */
+  /* トップに戻るボタンを <html> 直下に生成し、祖先のtransform等の影響を完全に排除して固定表示する */
   (function(){
-    var wrap = document.getElementById('backToTopWrap');
-    if (wrap && wrap.parentNode !== document.body) {
-      document.body.appendChild(wrap);
+    function makeBtn(){
+      if (document.getElementById('backToTopFixed')) return;
+      var wrap = document.createElement('div');
+      wrap.id = 'backToTopFixed';
+      wrap.style.cssText = 'position:fixed;bottom:1.5rem;right:1.2rem;z-index:2147483647;display:flex;flex-direction:column;align-items:center;gap:0.3rem;pointer-events:auto';
+      var label = document.createElement('span');
+      label.textContent = 'トップに戻る';
+      label.style.cssText = 'font-size:0.62rem;color:rgba(255,255,255,0.9);background:rgba(0,0,0,0.55);padding:0.15rem 0.5rem;border-radius:4px;letter-spacing:0.05em;white-space:nowrap';
+      var btn = document.createElement('button');
+      btn.textContent = '▲';
+      btn.style.cssText = 'width:48px;height:48px;background:#c63d00;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:1.2rem;box-shadow:0 4px 16px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;transition:transform 0.2s';
+      btn.onclick = function(){ location.href = 'index.html'; };
+      btn.onmouseover = function(){ btn.style.transform = 'translateY(-3px)'; };
+      btn.onmouseout  = function(){ btn.style.transform = ''; };
+      wrap.appendChild(label);
+      wrap.appendChild(btn);
+      document.documentElement.appendChild(wrap);
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', makeBtn);
+    } else {
+      makeBtn();
     }
   })();
 </script>
