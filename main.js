@@ -542,6 +542,32 @@ function renderGallery() {
     </div>`).join('');
 }
 
+/* 🏆 栄光の記録：championsカテゴリの写真を試合・大会タブに表示 */
+function renderChampions() {
+  const section = document.getElementById('championsSection');
+  const grid    = document.getElementById('championsGrid');
+  if (!section || !grid) return;
+  if (typeof photos === 'undefined' || !Array.isArray(photos)) { section.style.display = 'none'; return; }
+
+  const champs = photos.filter(p => p.category === 'champions');
+  if (champs.length === 0) {
+    /* 写真がまだ無いときはセクションごと隠す */
+    section.style.display = 'none';
+    grid.innerHTML = '';
+    return;
+  }
+
+  section.style.display = 'block';
+  grid.innerHTML = champs.map(photo => `
+    <div class="champions-item${photo.caption ? ' has-title' : ''}"
+         onclick="openLightbox('${photo.src}')">
+      <img src="${photo.src}" alt="${photo.caption || '栄光の記録'}">
+      ${photo.caption
+        ? `<div class="champions-label">🏆 <strong>${photo.caption}</strong></div>`
+        : ''}
+    </div>`).join('');
+}
+
 function filterGallery(cat, btn) {
   currentCategory = cat;
   document.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'));
@@ -1070,12 +1096,13 @@ function showClubInfoTab(tab, clickedBtn) {
   document.querySelectorAll('.clubinfo-tab').forEach(btn => btn.classList.remove('active'));
   if (clickedBtn) clickedBtn.classList.add('active');
   if (tab === 'gallery') renderGallery();
+  if (tab === 'matches') renderChampions();
 }
 
 /* ============================================================
    フォーカスモード
    ============================================================ */
-function enterFocusMode(sectionId) {
+function enterFocusMode(sectionId, playVideo) {
   document.querySelectorAll('section').forEach(sec => sec.classList.remove('focus-target'));
   const target = document.getElementById(sectionId);
   if (!target) return;
@@ -1090,10 +1117,17 @@ function enterFocusMode(sectionId) {
   if (sectionId === 'community') {
     /* ORANGE HUB を開いた時はメニューカード表示状態に戻す */
     if (typeof closeOrangeSection === 'function') closeOrangeSection();
-    /* メニュー選択時は動画あり・音声ありで再生 */
-    setTimeout(() => {
-      if (window._communityPlayWithVideo) window._communityPlayWithVideo();
-    }, 50);
+    if (playVideo) {
+      /* メニュー選択時のみ動画あり・音声あり・球アニメありで再生 */
+      setTimeout(() => {
+        if (window._communityPlayWithVideo) window._communityPlayWithVideo();
+      }, 50);
+    } else {
+      /* 外部ページから戻った時は動画も球アニメも流さず即コンテンツ表示 */
+      setTimeout(() => {
+        if (window._communityShowInstant) window._communityShowInstant();
+      }, 50);
+    }
   }
 }
 
@@ -1103,6 +1137,9 @@ function exitFocusMode() {
   const exitBtn       = document.getElementById('focusExitBtn');
   const backToTopWrap = document.getElementById('backToTopWrap');
   if (exitBtn)       exitBtn.classList.remove('visible');
+  /* クラブ案内に戻るフロートボタンも隠す */
+  const clubinfoBack = document.getElementById('clubinfoBackFloat');
+  if (clubinfoBack) clubinfoBack.style.display = 'none';
   if (backToTopWrap) {
     backToTopWrap.style.display  = 'flex';
     /* トップへ戻るためscrollY=0→ボタンは非表示が正しい */
@@ -2032,7 +2069,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const a     = document.createElement('a');
       a.href      = '#' + sec.id;
       a.textContent = (icon ? icon + ' ' : '') + label;
-      a.addEventListener('click', e => { e.preventDefault(); enterFocusMode(sec.id); });
+      a.addEventListener('click', e => { e.preventDefault(); enterFocusMode(sec.id, true); });
       navEl.appendChild(a);
     });
   }
@@ -2065,7 +2102,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       a.addEventListener('click', e => {
         e.preventDefault();
-        enterFocusMode(id);
+        enterFocusMode(id, true);
       });
       a.innerHTML =
         `<span style="font-size:1.4rem;flex-shrink:0">${icon}</span>` +
@@ -2096,5 +2133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     history.replaceState({ focusMode: true, sectionId: viewParam }, '', '?view=' + viewParam);
     enterFocusMode(viewParam);
   }
+  /* プリロード時の画面隠しを解除（focus-mode適用後に表示） */
+  document.documentElement.removeAttribute('data-preload-view');
 
 });
