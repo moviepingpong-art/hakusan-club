@@ -420,11 +420,20 @@ onmouseout="this.style.transform='';this.style.boxShadow='0 6px 18px rgba(198,61
 </a>
 
 <!-- トップに戻る（右下固定・スクロール時表示） -->
-<div id="backToTopWrap" style="position:fixed;bottom:1.5rem;right:1.2rem;z-index:9000;display:flex;flex-direction:column;align-items:center;gap:0.3rem">
+<div id="backToTopWrap" style="position:fixed!important;bottom:1.5rem;right:1.2rem;z-index:99999;display:flex;flex-direction:column;align-items:center;gap:0.3rem">
   <span style="font-size:0.62rem;color:rgba(255,255,255,0.8);background:rgba(0,0,0,0.55);padding:0.15rem 0.5rem;border-radius:4px;letter-spacing:0.05em;white-space:nowrap">トップに戻る</span>
   <button onclick="location.href='index.html'" style="width:48px;height:48px;background:#ff8f00;color:#1a1a4e;border:none;border-radius:50%;cursor:pointer;font-size:1.2rem;box-shadow:0 4px 16px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;transition:background 0.2s,transform 0.2s"
     onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">▲</button>
 </div>
 
+<script>
+  /* トップに戻るボタンを必ず body 直下に配置し、position:fixed を確実に効かせる */
+  (function(){
+    var wrap = document.getElementById('backToTopWrap');
+    if (wrap && wrap.parentNode !== document.body) {
+      document.body.appendChild(wrap);
+    }
+  })();
+</script>
 </body>
 </html>
