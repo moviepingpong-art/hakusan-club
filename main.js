@@ -1089,14 +1089,13 @@ function renderMap(clubs, centerLat, centerLng, zoom) {
 }
 
 function showClubInfoTab(tab, clickedBtn) {
-  ['about', 'schedule', 'matches', 'gallery'].forEach(t => {
+  ['about', 'schedule', 'gallery'].forEach(t => {
     const panel = document.getElementById('clubinfo-' + t);
     if (panel) panel.style.display = t === tab ? 'block' : 'none';
   });
   document.querySelectorAll('.clubinfo-tab').forEach(btn => btn.classList.remove('active'));
   if (clickedBtn) clickedBtn.classList.add('active');
   if (tab === 'gallery') renderGallery();
-  if (tab === 'matches') renderChampions();
   /* クラブ案内がフォーカス表示中なら、URL欄を共有可能な形に更新（再読み込みなし） */
   if (document.body.classList.contains('focus-mode') && tab !== 'gallery') {
     history.replaceState(
@@ -2144,6 +2143,11 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ?tab= が指定されていれば、クラブ案内の該当タブを開く（共有リンク用） */
     const tabParam = urlParams.get('tab');
     if (viewParam === 'clubinfo' && tabParam) {
+      /* 大会結果は専用ページに移行したのでリダイレクト（旧共有リンク対応） */
+      if (tabParam === 'matches') {
+        location.href = 'matches.html';
+        return;
+      }
       const tabBtn = document.querySelector(`.clubinfo-tab[onclick*="'${tabParam}'"]`);
       if (typeof showClubInfoTab === 'function') {
         showClubInfoTab(tabParam, tabBtn || null);
