@@ -211,49 +211,49 @@ let photos = [
     "id": 9,
     "src": "https://drive.google.com/thumbnail?id=1ad63JMDzhKK_BNGbir5MTcWao3FwtSYc&sz=w800",
     "category": "match",
-    "caption": ""
+    "caption": "2026/5/31ゆーりんピック２"
   },
   {
     "id": 10,
     "src": "https://drive.google.com/thumbnail?id=1U8-D6wQ1HdsfhWdtt0hoMHMDdmoknc3W&sz=w800",
     "category": "match",
-    "caption": ""
+    "caption": "2026/5/31ゆーりんピック１"
   },
   {
     "id": 11,
-    "src": "https://drive.google.com/thumbnail?id=1RIJASatiAk-Blx8HeZdVM8VzUwiVE-CA&sz=w800",
-    "category": "match",
-    "caption": "2026/5/30ゆーりんピック"
-  },
-  {
-    "id": 12,
     "src": "https://drive.google.com/thumbnail?id=14S67-yQkv_umKUIz_Z0c_ZjsCrohGkjM&sz=w800",
     "category": "match",
     "caption": "2026/5/10スポレク2"
   },
   {
-    "id": 13,
+    "id": 12,
     "src": "https://drive.google.com/thumbnail?id=16fb7Q4ZS3zV0T8KvF-Zj8kCHKgNXaKqg&sz=w800",
     "category": "match",
     "caption": "2026/5/10スポレク1"
   },
   {
-    "id": 14,
+    "id": 13,
     "src": "https://drive.google.com/thumbnail?id=1tFdwbHuL8SInlqP5nrkZvd-52nOEVzbn&sz=w800",
     "category": "interaction",
     "caption": "能美クラブさん（石川総合スポーツセンター）"
   },
   {
-    "id": 15,
+    "id": 14,
     "src": "https://drive.google.com/thumbnail?id=1UrjFB9027WCPaiS8--TG-n9joMTJtI5b&sz=w800",
     "category": "interaction",
     "caption": "兼六クラブさん"
   },
   {
-    "id": 16,
+    "id": 15,
     "src": "https://drive.google.com/thumbnail?id=1yRrbwj8XWEfiUFLtzy1cWA6WaUO0jzmw&sz=w800",
     "category": "interaction",
     "caption": ""
+  },
+  {
+    "id": 16,
+    "src": "https://drive.google.com/thumbnail?id=1RIJASatiAk-Blx8HeZdVM8VzUwiVE-CA&sz=w800",
+    "category": "champions",
+    "caption": "2026/5/30ゆーりんピック70代優勝"
   },
   {
     "id": 17,
