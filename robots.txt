@@ -1,0 +1,7 @@
+# 白山ラージボール卓球クラブ robots.txt
+# すべての検索エンジンにすべてのページのクロールを許可
+User-agent: *
+Allow: /
+
+# サイトマップの場所
+Sitemap: https://moviepingpong-art.github.io/hakusan-club/sitemap.xml
