@@ -24,6 +24,55 @@
   </script>
   <style>
     html[data-preload-view] body { visibility: hidden; }
+
+    /* 訪問者カウンター＝BGM再生ボタン（やさしく明滅＋脈動） */
+    @keyframes bgmGlowPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(120,180,255,0.7); transform: scale(1); border-color: rgba(255,255,255,0.85); }
+      50%  { box-shadow: 0 0 18px 6px rgba(120,180,255,0.95); transform: scale(1.07); border-color: #aee0ff; }
+      100% { box-shadow: 0 0 0 0 rgba(120,180,255,0.7); transform: scale(1); border-color: rgba(255,255,255,0.85); }
+    }
+    .bgm-visitor-btn {
+      display: inline-flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: center;
+      gap: 0.55rem;
+      background: transparent;
+      border: none;
+      padding: 0.2rem;
+      cursor: pointer;
+      transition: transform 0.12s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .bgm-visitor-btn:active { transform: scale(0.95); }
+    .bgm-visitor-btn .bgm-side-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      line-height: 1.2;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .bgm-visitor-btn .bgm-counter-box {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255,255,255,0.95);
+      border: 1.5px solid rgba(255,255,255,0.85);
+      border-radius: 8px;
+      padding: 0.3rem 0.6rem;
+      animation: bgmGlowPulse 2.4s ease-in-out infinite;
+    }
+    /* 再生中はカウンター箱の明滅を止めてオレンジ枠に */
+    .bgm-visitor-btn.playing .bgm-counter-box {
+      animation: none !important;
+      border-color: #fb6a00 !important;
+      box-shadow: 0 4px 14px rgba(251,106,0,0.6);
+    }
   </style>
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-62E06GLKBV"></script>
@@ -136,62 +185,6 @@
     .article-body table tr:last-child td { border-bottom: none; }
     .article-body .closing { margin-top: 2.5rem; padding: 1.8rem; background: linear-gradient(135deg, rgba(255,111,0,0.15), rgba(229,57,53,0.08)); border: 1px solid rgba(255,143,0,0.35); border-radius: 12px; text-align: center; }
     .article-body .closing strong { font-size: 1.05rem; color: #ffd54f; display: block; margin-bottom: 0.4rem; }
-
-    /* 訪問者カウンター＝BGM再生ボタン（やさしく明滅＋脈動） */
-    @keyframes bgmGlowPulse {
-      0%   { box-shadow: 0 4px 14px rgba(0,0,0,0.35), 0 0 0 0 rgba(120,170,255,0.0); transform: scale(1); }
-      50%  { box-shadow: 0 6px 18px rgba(0,0,0,0.4), 0 0 16px 4px rgba(120,170,255,0.55); transform: scale(1.035); }
-      100% { box-shadow: 0 4px 14px rgba(0,0,0,0.35), 0 0 0 0 rgba(120,170,255,0.0); transform: scale(1); }
-    }
-    .bgm-visitor-btn {
-      display: inline-flex !important;
-      flex-direction: row !important;
-      align-items: center !important;
-      justify-content: center;
-      gap: 0.55rem;
-      background: transparent;
-      border: none;
-      padding: 0.2rem;
-      cursor: pointer;
-      transition: transform 0.12s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    @keyframes bgmGradShift {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    .bgm-visitor-btn:active { transform: scale(0.95); }
-    .bgm-visitor-btn .bgm-side-label {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Noto Sans JP', sans-serif;
-      font-weight: 700;
-      font-size: 0.7rem;
-      color: #fff;
-      letter-spacing: 0.05em;
-      line-height: 1.2;
-      text-align: center;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-      white-space: nowrap;
-    }
-    .bgm-visitor-btn .bgm-counter-box {
-      display: inline-flex;
-      align-items: center;
-      background: rgba(255,255,255,0.95);
-      border: 1.5px solid rgba(255,255,255,0.85);
-      border-radius: 8px;
-      padding: 0.3rem 0.6rem;
-      animation: bgmGlowPulse 2.4s ease-in-out infinite;
-    }
-    /* 再生中はカウンター箱の明滅を止めてオレンジ枠に */
-    .bgm-visitor-btn.playing .bgm-counter-box {
-      animation: none !important;
-      border-color: #fb6a00 !important;
-      box-shadow: 0 4px 14px rgba(251,106,0,0.6);
-    }
   </style>
   <div class="article-body">
   
