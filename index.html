@@ -188,8 +188,8 @@
     }
     /* 再生中はカウンター箱の明滅を止めてオレンジ枠に */
     .bgm-visitor-btn.playing .bgm-counter-box {
-      animation: none;
-      border-color: #fb6a00;
+      animation: none !important;
+      border-color: #fb6a00 !important;
       box-shadow: 0 4px 14px rgba(251,106,0,0.6);
     }
   </style>
@@ -417,13 +417,13 @@
     <!-- 訪問者カウンター ＆ 大会カウントダウン（横並び） -->
     <div style="margin-top:0.6rem;display:flex;justify-content:center;align-items:stretch;gap:0.6rem;flex-wrap:wrap">
       <button type="button" class="bgm-visitor-btn" onclick="toggleTopBgm(this)" aria-label="タップでBGM再生" style="display:inline-flex;flex-direction:row;align-items:center;gap:0.55rem;background:transparent;border:none;padding:0.2rem;box-shadow:none">
-        <span class="bgm-side-label">タ<br>ッ<br>プ</span>
-        <span class="bgm-counter-box" style="display:inline-flex;align-items:center;background:rgba(255,255,255,0.95);border:1.5px solid rgba(255,255,255,0.85);border-radius:8px;padding:0.3rem 0.6rem">
+        <span class="bgm-side-label" style="color:rgba(255,255,255,0.4);text-shadow:none">タ<br>ッ<br>プ</span>
+        <span class="bgm-counter-box" style="display:inline-flex;align-items:center;background:rgba(255,255,255,0.95);border:1.5px solid rgba(255,255,255,0.85);border-radius:8px;padding:0.3rem 0.6rem;animation:bgmGlowPulse 2.4s ease-in-out infinite">
           <img src="https://hits.sh/moviepingpong-art.github.io/hakusan-club.svg?style=flat&label=%F0%9F%91%A5%20%E8%A8%AA%E5%95%8F%E8%80%85&color=0057ff&labelColor=f0f4ff&extraCount=0"
             alt="訪問者数"
             style="display:block;border-radius:4px;height:20px">
         </span>
-        <span class="bgm-side-label">B<br>G<br>M</span>
+        <span class="bgm-side-label" style="color:rgba(255,255,255,0.4);text-shadow:none">B<br>G<br>M</span>
       </button>
       <audio id="topBgmAudio" src="top-bgm.mp3" loop preload="none"></audio>
 
