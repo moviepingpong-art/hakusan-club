@@ -158,7 +158,6 @@
       animation: bgmGlowPulse 2.4s ease-in-out infinite, bgmGradShift 5s ease infinite;
       transition: transform 0.12s;
       -webkit-tap-highlight-color: transparent;
-      writing-mode: horizontal-tb;
     }
     @keyframes bgmGradShift {
       0%   { background-position: 0% 50%; }
@@ -167,10 +166,10 @@
     }
     .bgm-visitor-btn:active { transform: scale(0.95); }
     .bgm-visitor-btn .bgm-side-label {
-      writing-mode: vertical-rl;
-      -webkit-writing-mode: vertical-rl;
-      text-orientation: upright;
-      -webkit-text-orientation: upright;
+      writing-mode: vertical-rl !important;
+      -webkit-writing-mode: vertical-rl !important;
+      text-orientation: upright !important;
+      -webkit-text-orientation: upright !important;
       font-family: 'Noto Sans JP', sans-serif;
       font-weight: 700;
       font-size: 0.62rem;
