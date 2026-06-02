@@ -145,7 +145,9 @@
     }
     .bgm-visitor-btn {
       display: inline-flex;
+      flex-direction: row;
       align-items: stretch;
+      justify-content: center;
       gap: 0.4rem;
       background: linear-gradient(135deg, #1565ff, #4f8bff, #1565ff);
       background-size: 200% 200%;
@@ -156,6 +158,7 @@
       animation: bgmGlowPulse 2.4s ease-in-out infinite, bgmGradShift 5s ease infinite;
       transition: transform 0.12s;
       -webkit-tap-highlight-color: transparent;
+      writing-mode: horizontal-tb;
     }
     @keyframes bgmGradShift {
       0%   { background-position: 0% 50%; }
@@ -165,16 +168,19 @@
     .bgm-visitor-btn:active { transform: scale(0.95); }
     .bgm-visitor-btn .bgm-side-label {
       writing-mode: vertical-rl;
+      -webkit-writing-mode: vertical-rl;
       text-orientation: upright;
+      -webkit-text-orientation: upright;
       font-family: 'Noto Sans JP', sans-serif;
       font-weight: 700;
       font-size: 0.62rem;
       color: #fff;
       letter-spacing: 0.05em;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      line-height: 1.1;
+      text-align: center;
+      align-self: center;
       text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+      white-space: nowrap;
     }
     .bgm-visitor-btn .bgm-counter-box {
       display: inline-flex;
