@@ -146,6 +146,20 @@
 <section class="matches-hero">
   <h1>🏆 大会結果</h1>
   <p>出場した大会の結果や今後の予定を掲載しています。</p>
+  <button id="bgmToggleBtn" onclick="toggleBgm()" style="
+    margin-top:1rem;position:relative;z-index:1;
+    display:inline-flex;align-items:center;gap:0.5rem;
+    padding:0.5rem 1.2rem;
+    background:rgba(255,255,255,0.92);color:#1e1ba8;
+    border:none;border-radius:50px;
+    font-family:'Noto Sans JP',sans-serif;font-weight:700;font-size:0.9rem;
+    cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,0.25);
+    transition:transform 0.15s,background 0.2s;"
+    onmouseover="this.style.transform='translateY(-2px)'"
+    onmouseout="this.style.transform=''">
+    <span id="bgmIcon">▶</span><span id="bgmLabel">BGMを再生</span>
+  </button>
+  <audio id="bgmAudio" src="bgm.mp3" loop preload="none"></audio>
 </section>
 
 <!-- メインコンテンツ -->
@@ -247,6 +261,7 @@
   <p>若宮公園体育館 2F ／ 毎週月・水曜日 19:00〜21:30</p>
   <p style="margin-top:0.4rem">📧 hakusan.large@gmail.com</p>
   <p style="margin-top:1rem">設立：平成15年3月3日　／　©2026 白山クラブ（ラージボール卓球）</p>
+  <p style="margin-top:0.5rem;font-size:0.7rem;opacity:0.6">BGM: 3FREEBGM</p>
 </footer>
 
 <!-- ライトボックス（栄光の記録の写真拡大用） -->
@@ -308,6 +323,26 @@
       render();
     }
   })();
+
+  /* BGM 再生／停止トグル */
+  function toggleBgm(){
+    var audio = document.getElementById('bgmAudio');
+    var icon  = document.getElementById('bgmIcon');
+    var label = document.getElementById('bgmLabel');
+    if (!audio) return;
+    if (audio.paused) {
+      audio.play().then(function(){
+        icon.textContent  = '⏸';
+        label.textContent = 'BGMを停止';
+      }).catch(function(){
+        /* 再生できなかった場合（ファイル未配置など）は何もしない */
+      });
+    } else {
+      audio.pause();
+      icon.textContent  = '▶';
+      label.textContent = 'BGMを再生';
+    }
+  }
 </script>
 
 </body>
