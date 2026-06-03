@@ -79,18 +79,18 @@
       border-color: #fb6a00 !important;
     }
 
-    /* BGM再生中の背景演出（最下層・薄くゆっくり動く） */
+    /* BGM再生中の背景演出（青背景の前・コンテンツの後ろ） */
     #bgmBgLayer {
-      position: fixed;
+      position: absolute;
       inset: 0;
-      z-index: -1;
+      z-index: 0;
       background: url('top-bg-lake.jpg') center center / cover no-repeat;
       opacity: 0;
       transition: opacity 1.5s ease;
       pointer-events: none;
     }
-    body.bgm-playing #bgmBgLayer {
-      opacity: 0.38;
+    .hero.bgm-playing #bgmBgLayer {
+      opacity: 0.45;
       animation: bgmBgDrift 40s ease-in-out infinite alternate;
     }
     @keyframes bgmBgDrift {
@@ -284,9 +284,6 @@
 </head>
 <body>
 
-<!-- BGM再生中の背景演出（最下層・通常は非表示） -->
-<div id="bgmBgLayer" aria-hidden="true"></div>
-
 <!-- HEADER -->
 <header>
   <a href="#" class="logo">
@@ -300,6 +297,7 @@
 
 <!-- HERO -->
 <section class="hero" id="heroSection">
+  <div id="bgmBgLayer" aria-hidden="true"></div>
   <canvas id="heroCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;display:none"></canvas>
   <div class="hero-bg-shape s1"></div>
   <div class="hero-bg-shape s2"></div>
@@ -1778,16 +1776,17 @@ onmouseout="this.style.transform='';this.style.boxShadow='0 6px 18px rgba(198,61
   /* トップページ：訪問者ボタンをタップでBGM再生／停止 */
   function toggleTopBgm(btn){
     var audio = document.getElementById('topBgmAudio');
+    var hero = document.getElementById('heroSection');
     if (!audio) return;
     if (audio.paused) {
       audio.play().then(function(){
         btn.classList.add('playing');
-        document.body.classList.add('bgm-playing');
+        if (hero) hero.classList.add('bgm-playing');
       }).catch(function(){});
     } else {
       audio.pause();
       btn.classList.remove('playing');
-      document.body.classList.remove('bgm-playing');
+      if (hero) hero.classList.remove('bgm-playing');
     }
   }
 </script>
