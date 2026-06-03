@@ -84,18 +84,37 @@
       position: absolute;
       inset: 0;
       z-index: 0;
-      background: url('top-bg-lake.jpg') center center / cover no-repeat;
       opacity: 0;
       transition: opacity 1.5s ease;
       pointer-events: none;
     }
     .hero.bgm-playing #bgmBgLayer {
       opacity: 0.22;
-      animation: bgmBgDrift 40s ease-in-out infinite alternate;
     }
-    @keyframes bgmBgDrift {
-      0%   { transform: scale(1.05) translate(0, 0); }
-      100% { transform: scale(1.18) translate(-2%, -1.5%); }
+    #bgmBgLayer .bgm-bg-slide {
+      position: absolute;
+      inset: 0;
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      opacity: 0;
+    }
+    #bgmBgLayer .slide1 { background-image: url('top-bg-lake.jpg'); }
+    #bgmBgLayer .slide2 { background-image: url('top-bg-sunset.jpg'); }
+    #bgmBgLayer .slide3 { background-image: url('top-bg-snow.jpg'); }
+    /* 再生中だけ、3枚を10秒ずつ時間差でフェード（合計30秒でループ） */
+    .hero.bgm-playing #bgmBgLayer .bgm-bg-slide {
+      animation: bgmSlideFade 30s ease-in-out infinite;
+    }
+    .hero.bgm-playing #bgmBgLayer .slide1 { animation-delay: 0s; }
+    .hero.bgm-playing #bgmBgLayer .slide2 { animation-delay: 10s; }
+    .hero.bgm-playing #bgmBgLayer .slide3 { animation-delay: 20s; }
+    @keyframes bgmSlideFade {
+      0%    { opacity: 0; transform: scale(1.05); }
+      5%    { opacity: 1; }
+      28%   { opacity: 1; }
+      33%   { opacity: 0; transform: scale(1.12); }
+      100%  { opacity: 0; transform: scale(1.05); }
     }
   </style>
   <!-- Google Analytics -->
@@ -297,7 +316,11 @@
 
 <!-- HERO -->
 <section class="hero" id="heroSection">
-  <div id="bgmBgLayer" aria-hidden="true"></div>
+  <div id="bgmBgLayer" aria-hidden="true">
+    <div class="bgm-bg-slide slide1"></div>
+    <div class="bgm-bg-slide slide2"></div>
+    <div class="bgm-bg-slide slide3"></div>
+  </div>
   <canvas id="heroCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;display:none"></canvas>
   <div class="hero-bg-shape s1"></div>
   <div class="hero-bg-shape s2"></div>
