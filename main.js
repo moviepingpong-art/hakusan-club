@@ -1844,106 +1844,6 @@ function launchFireworks() {
 }
 
 
-/* ------------------------------------------------------------
-   13. 追加レポート管理
-   ------------------------------------------------------------ */
-function showReportPwBox() {
-  document.getElementById('reportPwInput').value        = '';
-  document.getElementById('reportPwError').style.display = 'none';
-  document.getElementById('reportForm').style.display   = 'none';
-  const box = document.getElementById('reportPwBox');
-  box.style.display = 'block';
-  setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
-}
-
-function checkReportPw() {
-  const pw = document.getElementById('reportPwInput').value;
-  if (pw !== window.ADMIN_PW) {
-    document.getElementById('reportPwError').style.display = 'block';
-    document.getElementById('reportPwInput').value = '';
-    return;
-  }
-  document.getElementById('reportPwBox').style.display = 'none';
-  const form = document.getElementById('reportForm');
-  form.style.display = 'block';
-  setTimeout(() => form.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
-}
-
-function saveReport() {
-  const icon  = document.getElementById('rIcon').value.trim()  || '📄';
-  const title = document.getElementById('rTitle').value.trim();
-  const sub   = document.getElementById('rSub').value.trim();
-  const tags  = document.getElementById('rTags').value.trim();
-  const body  = document.getElementById('rBody').value.trim();
-  if (!title || !body) { alert('タイトルと本文は必須です。'); return; }
-
-  const reports = JSON.parse(localStorage.getItem('deepdive_reports') || '[]');
-  reports.unshift({
-    id:   Date.now(),
-    icon, title, sub, tags, body,
-    date: new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' }),
-  });
-  localStorage.setItem('deepdive_reports', JSON.stringify(reports));
-  ['rTitle', 'rSub', 'rTags', 'rBody'].forEach(id => { document.getElementById(id).value = ''; });
-  document.getElementById('rIcon').value             = '📄';
-  document.getElementById('reportForm').style.display = 'none';
-  renderExtraReports();
-  document.getElementById('extraReportsArea').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function deleteReport(id) {
-  const input = prompt('削除するにはパスワードを入力してください');
-  if (!input) return;
-  if (input !== window.ADMIN_PW) { alert('パスワードが違います。'); return; }
-  const reports = JSON.parse(localStorage.getItem('deepdive_reports') || '[]');
-  localStorage.setItem('deepdive_reports', JSON.stringify(reports.filter(r => r.id !== id)));
-  renderExtraReports();
-}
-
-function renderExtraReports() {
-  const area = document.getElementById('extraReportsArea');
-  if (!area) return;
-  const reports = JSON.parse(localStorage.getItem('deepdive_reports') || '[]');
-  if (reports.length === 0) { area.innerHTML = ''; return; }
-
-  const COLORS = ['#7b1fa2', '#00695c', '#1565c0', '#e65100', '#b71c1c'];
-  area.innerHTML = `
-    <h3 style="font-family:'Oswald',sans-serif;font-size:1.1rem;color:rgba(255,255,255,0.5);
-               letter-spacing:0.15em;text-align:center;margin-bottom:1.5rem;text-transform:uppercase">
-      ── 追加レポート ──
-    </h3>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem">
-      ${reports.map((r, i) => {
-        const color   = COLORS[i % COLORS.length];
-        const tagHtml = r.tags
-          ? r.tags.split(',').map(t =>
-              `<span style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);
-                            font-size:0.72rem;padding:0.2rem 0.7rem;border-radius:20px;
-                            border:1px solid rgba(255,255,255,0.15)">${t.trim()}</span>`
-            ).join('')
-          : '';
-        return `
-          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);
-                      border-radius:16px;overflow:hidden;position:relative">
-            <div style="background:linear-gradient(135deg,${color}cc,${color});padding:1.5rem;text-align:center">
-              <div style="font-size:2.5rem;margin-bottom:0.3rem">${r.icon}</div>
-              <div style="font-size:0.7rem;color:rgba(255,255,255,0.7);letter-spacing:0.1em">${r.date}</div>
-            </div>
-            <div style="padding:1.3rem">
-              <h3 style="font-family:'Oswald',sans-serif;font-size:1rem;color:white;
-                         margin-bottom:0.5rem;line-height:1.4">${r.title}</h3>
-              ${r.sub ? `<p style="font-size:0.8rem;color:rgba(255,255,255,0.55);margin-bottom:0.8rem">${r.sub}</p>` : ''}
-              ${tagHtml ? `<div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.8rem">${tagHtml}</div>` : ''}
-              <p style="font-size:0.83rem;color:rgba(255,255,255,0.75);line-height:1.8;white-space:pre-wrap">${r.body}</p>
-              <button onclick="deleteReport(${r.id})"
-                style="margin-top:1rem;background:rgba(239,68,68,0.15);color:#fca5a5;
-                       border:1px solid rgba(239,68,68,0.3);border-radius:6px;
-                       padding:0.3rem 0.8rem;cursor:pointer;font-size:0.75rem">🗑️ 削除</button>
-            </div>
-          </div>`;
-      }).join('')}
-    </div>`;
-}
 
 
 /* ------------------------------------------------------------
@@ -2047,8 +1947,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ---- 追加レポート初期表示 ----
-  renderExtraReports();
 
   // ---- ビジュアライザーバー生成 ----
   const visEl = document.getElementById('visualizer');
