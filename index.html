@@ -31,6 +31,12 @@
       50%  { box-shadow: 0 0 18px 6px rgba(120,180,255,0.95); transform: scale(1.07); border-color: #aee0ff; }
       100% { box-shadow: 0 0 0 0 rgba(120,180,255,0.7); transform: scale(1); border-color: rgba(255,255,255,0.85); }
     }
+    /* 再生中：オレンジの光がやさしく脈打つ（音楽が流れている雰囲気） */
+    @keyframes bgmPlayingPulse {
+      0%   { box-shadow: 0 0 4px 1px rgba(251,106,0,0.5);  border-color: #fb6a00; transform: scale(1); }
+      50%  { box-shadow: 0 0 20px 7px rgba(255,140,30,0.9); border-color: #ffae5c; transform: scale(1.06); }
+      100% { box-shadow: 0 0 4px 1px rgba(251,106,0,0.5);  border-color: #fb6a00; transform: scale(1); }
+    }
     .bgm-visitor-btn {
       display: inline-flex !important;
       flex-direction: row !important;
@@ -69,9 +75,8 @@
     }
     /* 再生中はカウンター箱の明滅を止めてオレンジ枠に */
     .bgm-visitor-btn.playing .bgm-counter-box {
-      animation: none !important;
+      animation: bgmPlayingPulse 1.3s ease-in-out infinite !important;
       border-color: #fb6a00 !important;
-      box-shadow: 0 4px 14px rgba(251,106,0,0.6);
     }
   </style>
   <!-- Google Analytics -->
