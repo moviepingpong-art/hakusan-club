@@ -102,18 +102,18 @@
     #bgmBgLayer .slide1 { background-image: url('top-bg-lake.jpg'); }
     #bgmBgLayer .slide2 { background-image: url('top-bg-sunset.jpg'); }
     #bgmBgLayer .slide3 { background-image: url('top-bg-snow.jpg'); }
-    /* 再生中だけ、3枚を10秒ずつ時間差でフェード（合計30秒でループ） */
+    /* 再生中だけ、3枚を15秒ずつ時間差でフェード（合計45秒でループ・少し重なる） */
     .hero.bgm-playing #bgmBgLayer .bgm-bg-slide {
-      animation: bgmSlideFade 30s ease-in-out infinite;
+      animation: bgmSlideFade 45s ease-in-out infinite;
     }
     .hero.bgm-playing #bgmBgLayer .slide1 { animation-delay: 0s; }
-    .hero.bgm-playing #bgmBgLayer .slide2 { animation-delay: 10s; }
-    .hero.bgm-playing #bgmBgLayer .slide3 { animation-delay: 20s; }
+    .hero.bgm-playing #bgmBgLayer .slide2 { animation-delay: 15s; }
+    .hero.bgm-playing #bgmBgLayer .slide3 { animation-delay: 30s; }
     @keyframes bgmSlideFade {
       0%    { opacity: 0; transform: scale(1.05); }
-      5%    { opacity: 1; }
-      28%   { opacity: 1; }
-      33%   { opacity: 0; transform: scale(1.12); }
+      8%    { opacity: 1; }
+      36%   { opacity: 1; }
+      44%   { opacity: 0; transform: scale(1.12); }
       100%  { opacity: 0; transform: scale(1.05); }
     }
   </style>
