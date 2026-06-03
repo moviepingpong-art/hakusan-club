@@ -102,18 +102,20 @@
     #bgmBgLayer .slide1 { background-image: url('top-bg-lake.jpg'); }
     #bgmBgLayer .slide2 { background-image: url('top-bg-sunset.jpg'); }
     #bgmBgLayer .slide3 { background-image: url('top-bg-snow.jpg'); }
-    /* 再生中だけ、3枚を20秒ずつ時間差でフェード（合計60秒でループ・少し重なる） */
+    #bgmBgLayer .slide4 { background-image: url('top-bg-forest.jpg'); }
+    /* 再生中だけ、4枚を20秒ずつ時間差でフェード（合計80秒でループ・少し重なる） */
     .hero.bgm-playing #bgmBgLayer .bgm-bg-slide {
-      animation: bgmSlideFade 60s ease-in-out infinite;
+      animation: bgmSlideFade 80s ease-in-out infinite;
     }
     .hero.bgm-playing #bgmBgLayer .slide1 { animation-delay: 0s; }
     .hero.bgm-playing #bgmBgLayer .slide2 { animation-delay: 20s; }
     .hero.bgm-playing #bgmBgLayer .slide3 { animation-delay: 40s; }
+    .hero.bgm-playing #bgmBgLayer .slide4 { animation-delay: 60s; }
     @keyframes bgmSlideFade {
       0%    { opacity: 0.15; transform: scale(1.05); }
-      22.2% { opacity: 0.75; transform: scale(1.10); }
-      33.3% { opacity: 0.15; transform: scale(1.13); }
-      33.4% { opacity: 0;    transform: scale(1.05); }
+      16.6% { opacity: 0.75; transform: scale(1.10); }
+      25%   { opacity: 0.15; transform: scale(1.13); }
+      25.1% { opacity: 0;    transform: scale(1.05); }
       100%  { opacity: 0;    transform: scale(1.05); }
     }
   </style>
@@ -320,6 +322,7 @@
     <div class="bgm-bg-slide slide1"></div>
     <div class="bgm-bg-slide slide2"></div>
     <div class="bgm-bg-slide slide3"></div>
+    <div class="bgm-bg-slide slide4"></div>
   </div>
   <canvas id="heroCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;display:none"></canvas>
   <div class="hero-bg-shape s1"></div>
