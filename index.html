@@ -78,6 +78,25 @@
       animation: bgmPlayingPulse 1.3s ease-in-out infinite !important;
       border-color: #fb6a00 !important;
     }
+
+    /* BGM再生中の背景演出（最下層・薄くゆっくり動く） */
+    #bgmBgLayer {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: url('top-bg-lake.jpg') center center / cover no-repeat;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+      pointer-events: none;
+    }
+    body.bgm-playing #bgmBgLayer {
+      opacity: 0.18;
+      animation: bgmBgDrift 40s ease-in-out infinite alternate;
+    }
+    @keyframes bgmBgDrift {
+      0%   { transform: scale(1.05) translate(0, 0); }
+      100% { transform: scale(1.18) translate(-2%, -1.5%); }
+    }
   </style>
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-62E06GLKBV"></script>
@@ -264,6 +283,9 @@
   <script src="main.js" defer></script>
 </head>
 <body>
+
+<!-- BGM再生中の背景演出（最下層・通常は非表示） -->
+<div id="bgmBgLayer" aria-hidden="true"></div>
 
 <!-- HEADER -->
 <header>
@@ -1760,10 +1782,12 @@ onmouseout="this.style.transform='';this.style.boxShadow='0 6px 18px rgba(198,61
     if (audio.paused) {
       audio.play().then(function(){
         btn.classList.add('playing');
+        document.body.classList.add('bgm-playing');
       }).catch(function(){});
     } else {
       audio.pause();
       btn.classList.remove('playing');
+      document.body.classList.remove('bgm-playing');
     }
   }
 </script>
