@@ -224,7 +224,7 @@ let photos = [
   },
   {
     "id": 11,
-    "src": "https://drive.google.com/thumbnail?id=1ad63JMDzhKK_BNGbir5MTcWao3FwtSYc&sz=w800",
+    "src": "https://drive.google.com/thumbnail?id=1MyA05cqhoRqxv7hiUvshyCc4V_AMbOvL&sz=w800",
     "category": "match",
     "caption": "2026/5/31ゆーりんピック２"
   },
