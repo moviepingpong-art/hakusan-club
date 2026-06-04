@@ -344,7 +344,7 @@ onmouseout="this.style.transform='';this.style.boxShadow='0 6px 18px rgba(0,87,2
   }
 
   /* ===== 音符＋キラキラ星屑アニメーション ===== */
-  var mfxCanvas, mfxCtx, mfxNotes = [], mfxStars = [], mfxRAF = null, mfxRunning = false, mfxTick = 0;
+  var mfxCanvas, mfxCtx, mfxNotes = [], mfxStars = [], mfxBubbles = [], mfxRAF = null, mfxRunning = false, mfxTick = 0;
   var NOTE_CHARS = ['♪','♫','♬','♩'];
   var NOTE_COLORS = ['#42a5f5','#ec407a','#ab47bc','#ffca28','#26c6da','#ffffff'];
 
@@ -378,6 +378,18 @@ onmouseout="this.style.transform='';this.style.boxShadow='0 6px 18px rgba(0,87,2
       color: NOTE_COLORS[Math.floor(Math.random()*NOTE_COLORS.length)]
     };
   }
+  function makeBubble(){
+    var r = 8 + Math.random()*22;
+    return {
+      x: Math.random() * mfxCanvas.width,
+      y: mfxCanvas.height + r + 10,
+      r: r,
+      speedY: 0.5 + Math.random()*1.2,
+      sway: Math.random()*Math.PI*2,
+      swayAmp: 0.6 + Math.random()*1.4,
+      alpha: 0.25 + Math.random()*0.35
+    };
+  }
   function startMusicFx(){
     mfxCanvas = document.getElementById('musicCanvas');
     if (!mfxCanvas) return;
@@ -387,6 +399,7 @@ onmouseout="this.style.transform='';this.style.boxShadow='0 6px 18px rgba(0,87,2
     mfxCanvas.style.display = 'block';
     mfxNotes = [];
     mfxStars = [];
+    mfxBubbles = [];
     mfxRunning = true;
     mfxTick = 0;
     mfxLoop();
@@ -401,6 +414,7 @@ onmouseout="this.style.transform='';this.style.boxShadow='0 6px 18px rgba(0,87,2
     if (mfxTick % 18 === 0 && mfxNotes.length < 40) mfxNotes.push(makeNote());
     // 星屑を頻繁に追加
     if (mfxTick % 4 === 0 && mfxStars.length < 90) mfxStars.push(makeStar());
+    if (mfxTick % 30 === 0 && mfxBubbles.length < 18) mfxBubbles.push(makeBubble());
 
     // 音符の描画・更新
     for (var i = mfxNotes.length - 1; i >= 0; i--){
@@ -437,6 +451,35 @@ onmouseout="this.style.transform='';this.style.boxShadow='0 6px 18px rgba(0,87,2
       ctx.fillRect(-0.5, -sz, 1, sz*2);
       ctx.restore();
       if (s.life >= s.maxLife) mfxStars.splice(j, 1);
+    }
+    // シャボン玉の描画・更新
+    for (var k = mfxBubbles.length - 1; k >= 0; k--){
+      var b = mfxBubbles[k];
+      b.y -= b.speedY;
+      b.sway += 0.02;
+      b.x += Math.sin(b.sway) * b.swayAmp;
+      ctx.save();
+      ctx.globalAlpha = b.alpha;
+      // 本体（半透明の円＋うっすら光沢）
+      var grad = ctx.createRadialGradient(b.x - b.r*0.3, b.y - b.r*0.3, b.r*0.1, b.x, b.y, b.r);
+      grad.addColorStop(0, 'rgba(255,255,255,0.9)');
+      grad.addColorStop(0.3, 'rgba(180,220,255,0.3)');
+      grad.addColorStop(1, 'rgba(200,180,255,0.15)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
+      ctx.fill();
+      // 輪郭
+      ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      // ハイライト
+      ctx.fillStyle = 'rgba(255,255,255,0.8)';
+      ctx.beginPath();
+      ctx.arc(b.x - b.r*0.35, b.y - b.r*0.35, b.r*0.15, 0, Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+      if (b.y < -b.r - 10) mfxBubbles.splice(k, 1);
     }
     mfxRAF = requestAnimationFrame(mfxLoop);
   }
