@@ -344,7 +344,7 @@ onmouseout="this.style.transform='';this.style.boxShadow='0 6px 18px rgba(0,87,2
   }
 
   /* ===== 音符＋キラキラ星屑アニメーション ===== */
-  var mfxCanvas, mfxCtx, mfxNotes = [], mfxStars = [], mfxBubbles = [], mfxRAF = null, mfxRunning = false, mfxTick = 0;
+  var mfxCanvas, mfxCtx, mfxNotes = [], mfxStars = [], mfxBubbles = [], mfxBokeh = [], mfxRAF = null, mfxRunning = false, mfxTick = 0;
   var NOTE_CHARS = ['♪','♫','♬','♩'];
   var NOTE_COLORS = ['#42a5f5','#ec407a','#ab47bc','#ffca28','#26c6da','#ffffff'];
 
@@ -390,6 +390,20 @@ onmouseout="this.style.transform='';this.style.boxShadow='0 6px 18px rgba(0,87,2
       alpha: 0.25 + Math.random()*0.35
     };
   }
+  function makeBokeh(){
+    var r = 14 + Math.random()*40;
+    return {
+      x: Math.random() * mfxCanvas.width,
+      y: Math.random() * mfxCanvas.height,
+      r: r,
+      color: NOTE_COLORS[Math.floor(Math.random()*NOTE_COLORS.length)],
+      driftX: -0.3 + Math.random()*0.6,
+      driftY: -0.5 - Math.random()*0.5,
+      baseAlpha: 0.06 + Math.random()*0.12,
+      pulse: Math.random()*Math.PI*2,
+      pulseSpeed: 0.01 + Math.random()*0.02
+    };
+  }
   function startMusicFx(){
     mfxCanvas = document.getElementById('musicCanvas');
     if (!mfxCanvas) return;
@@ -400,6 +414,8 @@ onmouseout="this.style.transform='';this.style.boxShadow='0 6px 18px rgba(0,87,2
     mfxNotes = [];
     mfxStars = [];
     mfxBubbles = [];
+    mfxBokeh = [];
+    for (var b = 0; b < 14; b++) mfxBokeh.push(makeBokeh());
     mfxRunning = true;
     mfxTick = 0;
     mfxLoop();
@@ -409,6 +425,29 @@ onmouseout="this.style.transform='';this.style.boxShadow='0 6px 18px rgba(0,87,2
     var ctx = mfxCtx, cv = mfxCanvas;
     ctx.clearRect(0, 0, cv.width, cv.height);
     mfxTick++;
+
+    // 光の粒（ボケ）を最背面に描画・更新
+    for (var bi = 0; bi < mfxBokeh.length; bi++){
+      var bk = mfxBokeh[bi];
+      bk.x += bk.driftX;
+      bk.y += bk.driftY;
+      bk.pulse += bk.pulseSpeed;
+      // 画面外に出たら下/横から再登場
+      if (bk.y < -bk.r) { bk.y = cv.height + bk.r; bk.x = Math.random()*cv.width; }
+      if (bk.x < -bk.r) bk.x = cv.width + bk.r;
+      if (bk.x > cv.width + bk.r) bk.x = -bk.r;
+      var pulseA = bk.baseAlpha * (0.6 + 0.4*Math.sin(bk.pulse));
+      var g = ctx.createRadialGradient(bk.x, bk.y, 0, bk.x, bk.y, bk.r);
+      g.addColorStop(0, bk.color);
+      g.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.save();
+      ctx.globalAlpha = pulseA;
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(bk.x, bk.y, bk.r, 0, Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+    }
 
     // 音符を一定間隔で追加
     if (mfxTick % 18 === 0 && mfxNotes.length < 40) mfxNotes.push(makeNote());
