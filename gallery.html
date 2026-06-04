@@ -189,6 +189,7 @@
 </head>
 
 <body class="gallery-page">
+<canvas id="musicCanvas" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999;display:none"></canvas>
 
 <!-- HEADER -->
 <header class="gallery-header">
@@ -332,12 +333,118 @@ onmouseout="this.style.transform='';this.style.boxShadow='0 6px 18px rgba(0,87,2
       audio.play().then(function(){
         icon.textContent  = '⏸';
         label.textContent = 'BGMを停止';
+        startMusicFx();
       }).catch(function(){});
     } else {
       audio.pause();
       icon.textContent  = '▶';
       label.textContent = 'BGMを再生';
+      stopMusicFx();
     }
+  }
+
+  /* ===== 音符＋キラキラ星屑アニメーション ===== */
+  var mfxCanvas, mfxCtx, mfxNotes = [], mfxStars = [], mfxRAF = null, mfxRunning = false, mfxTick = 0;
+  var NOTE_CHARS = ['♪','♫','♬','♩'];
+  var NOTE_COLORS = ['#42a5f5','#ec407a','#ab47bc','#ffca28','#26c6da','#ffffff'];
+
+  function mfxResize(){
+    if (!mfxCanvas) return;
+    mfxCanvas.width  = window.innerWidth;
+    mfxCanvas.height = window.innerHeight;
+  }
+  function makeNote(){
+    return {
+      x: Math.random() * mfxCanvas.width,
+      y: mfxCanvas.height + 30,
+      char: NOTE_CHARS[Math.floor(Math.random()*NOTE_CHARS.length)],
+      color: NOTE_COLORS[Math.floor(Math.random()*NOTE_COLORS.length)],
+      size: 18 + Math.random()*22,
+      speedY: 0.8 + Math.random()*1.4,
+      sway: Math.random()*Math.PI*2,
+      swayAmp: 0.5 + Math.random()*1.2,
+      angle: -0.3 + Math.random()*0.6,
+      spin: -0.01 + Math.random()*0.02,
+      alpha: 0.7 + Math.random()*0.3
+    };
+  }
+  function makeStar(){
+    return {
+      x: Math.random() * mfxCanvas.width,
+      y: Math.random() * mfxCanvas.height,
+      size: 1.5 + Math.random()*3,
+      life: 0,
+      maxLife: 40 + Math.random()*60,
+      color: NOTE_COLORS[Math.floor(Math.random()*NOTE_COLORS.length)]
+    };
+  }
+  function startMusicFx(){
+    mfxCanvas = document.getElementById('musicCanvas');
+    if (!mfxCanvas) return;
+    mfxCtx = mfxCanvas.getContext('2d');
+    mfxResize();
+    window.addEventListener('resize', mfxResize);
+    mfxCanvas.style.display = 'block';
+    mfxNotes = [];
+    mfxStars = [];
+    mfxRunning = true;
+    mfxTick = 0;
+    mfxLoop();
+  }
+  function mfxLoop(){
+    if (!mfxRunning) return;
+    var ctx = mfxCtx, cv = mfxCanvas;
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    mfxTick++;
+
+    // 音符を一定間隔で追加
+    if (mfxTick % 18 === 0 && mfxNotes.length < 40) mfxNotes.push(makeNote());
+    // 星屑を頻繁に追加
+    if (mfxTick % 4 === 0 && mfxStars.length < 90) mfxStars.push(makeStar());
+
+    // 音符の描画・更新
+    for (var i = mfxNotes.length - 1; i >= 0; i--){
+      var n = mfxNotes[i];
+      n.y -= n.speedY;
+      n.sway += 0.04;
+      n.x += Math.sin(n.sway) * n.swayAmp;
+      n.angle += n.spin;
+      ctx.save();
+      ctx.globalAlpha = n.alpha;
+      ctx.translate(n.x, n.y);
+      ctx.rotate(n.angle);
+      ctx.fillStyle = n.color;
+      ctx.font = 'bold ' + n.size + 'px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(n.char, 0, 0);
+      ctx.restore();
+      if (n.y < -40) mfxNotes.splice(i, 1);
+    }
+    // 星屑の描画・更新（点滅して消える）
+    for (var j = mfxStars.length - 1; j >= 0; j--){
+      var s = mfxStars[j];
+      s.life++;
+      var t = s.life / s.maxLife;
+      var a = Math.sin(t * Math.PI); // 0→1→0 でフェード
+      ctx.save();
+      ctx.globalAlpha = a;
+      ctx.fillStyle = s.color;
+      ctx.beginPath();
+      // 4方向に伸びるきらめき（星形）
+      ctx.translate(s.x, s.y);
+      var sz = s.size * (0.6 + a * 0.7);
+      ctx.fillRect(-sz, -0.5, sz*2, 1);
+      ctx.fillRect(-0.5, -sz, 1, sz*2);
+      ctx.restore();
+      if (s.life >= s.maxLife) mfxStars.splice(j, 1);
+    }
+    mfxRAF = requestAnimationFrame(mfxLoop);
+  }
+  function stopMusicFx(){
+    mfxRunning = false;
+    if (mfxRAF) cancelAnimationFrame(mfxRAF);
+    if (mfxCtx && mfxCanvas) mfxCtx.clearRect(0, 0, mfxCanvas.width, mfxCanvas.height);
+    if (mfxCanvas) mfxCanvas.style.display = 'none';
   }
 </script>
 </body>
