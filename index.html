@@ -600,23 +600,14 @@
 </section>
 
 <!-- CLUB INFO（クラブ案内：タブ式） -->
-<section id="clubinfo" data-menu-icon="🏓" data-menu-label="クラブ案内" data-menu-color="rgba(255,255,255,0.1)" data-menu-border="rgba(255,255,255,0.2)">
+<section id="clubinfo" data-menu-icon="🏓" data-menu-label="クラブ紹介" data-menu-color="rgba(255,255,255,0.1)" data-menu-border="rgba(255,255,255,0.2)">
   <div class="section-inner">
     <div class="fade-in" id="clubinfoHeading">
       <p class="section-label">Club Info</p>
-      <h2 class="section-title">クラブ<span class="blue">案内</span></h2>
+      <h2 class="section-title">クラブ<span class="blue">紹介</span></h2>
     </div>
 
-    <!-- タブボタン -->
-    <div class="clubinfo-tabs fade-in" id="clubinfoTabs">
-      <button class="clubinfo-tab active" onclick="showClubInfoTab('about',this)">👥 クラブ紹介</button>
-      <button class="clubinfo-tab" onclick="showClubInfoTab('schedule',this)">📅 練習日時</button>
-      <button class="clubinfo-tab" onclick="location.href='matches.html'">🏆 大会結果</button>
-      <button class="clubinfo-tab" onclick="location.href='gallery.html'">📸 ギャラリー</button>
-    </div>
 
-    <!-- タブパネル：クラブ紹介 -->
-    <div id="clubinfo-about" class="clubinfo-panel">
 
     <div class="fade-in">
       <p class="section-label">About Us</p>
@@ -639,11 +630,8 @@
         <p>日本卓球協会及び石川県卓球連盟にラージボールクラブとして登録しています。</p>
       </div>
     </div>
-  
-    </div>
 
-    <!-- タブパネル：練習日時 -->
-    <div id="clubinfo-schedule" class="clubinfo-panel" style="display:none">
+    <!-- 練習日時・場所 -->
 
     <div class="fade-in">
       <p class="section-label">Schedule</p>
@@ -678,25 +666,6 @@
         <a href="https://www.google.com/maps/search/?api=1&query=若宮公園体育館+石川県白山市徳丸町491" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:0.85rem">🗺️ Google マップで開く</a>
         <a href="https://maps.apple.com/?q=若宮公園体育館&address=石川県白山市徳丸町491" target="_blank" rel="noopener" class="btn btn-outline-dark" style="font-size:0.85rem">🍎 Apple マップで開く</a>
       </div>
-    </div>
-  
-    </div>
-
-    <!-- タブパネル：ギャラリー -->
-    <div id="clubinfo-gallery" class="clubinfo-panel" style="display:none">
-      <div class="fade-in">
-        <p class="section-label">Photo Gallery</p>
-        <h2 class="section-title">フォト<span class="blue">ギャラリー</span></h2>
-        <p class="section-desc">白山クラブの日々の活動を写真でご紹介します。</p>
-      </div>
-      <div class="gallery-tabs fade-in">
-        <button class="gallery-tab active" onclick="filterGallery('all',this)">すべて</button>
-        <button class="gallery-tab" onclick="filterGallery('atmosphere',this)">😊 クラブ紹介・雰囲気</button>
-        <button class="gallery-tab" onclick="filterGallery('equipment',this)">🏓 用具・施設</button>
-        <button class="gallery-tab" onclick="filterGallery('practice',this)">🏋️ 練習・技術</button>
-        <button class="gallery-tab" onclick="filterGallery('match',this)">🏆 試合・大会</button>
-      </div>
-      <div class="gallery-grid fade-in" id="galleryGrid"></div>
     </div>
   </div>
 </section>
