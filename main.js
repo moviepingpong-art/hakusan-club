@@ -2020,10 +2020,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---- 独立ページへの外部リンクをメニューに追加 ----
   // フォトギャラリー・大会結果・全国クラブマップ・DEEP DIVE（別HTMLページ）
   const EXTERNAL_MENU = [
-    { href: 'gallery.html',  icon: '📸', label: 'フォトギャラリー', color: 'rgba(0,87,255,0.28)',   border: 'rgba(0,87,255,0.5)',   hover: 'rgba(0,87,255,0.45)' },
-    { href: 'matches.html',  icon: '🏆', label: '大会結果',         color: 'rgba(63,81,181,0.3)',   border: 'rgba(63,81,181,0.55)', hover: 'rgba(63,81,181,0.5)' },
-    { href: 'map.html',      icon: '🗾', label: '全国クラブマップ', color: 'rgba(76,175,80,0.28)',  border: 'rgba(76,175,80,0.5)',  hover: 'rgba(76,175,80,0.45)' },
-    { href: 'deepdive.html', icon: '🔬', label: 'DEEP DIVE',        color: 'rgba(255,143,0,0.28)',  border: 'rgba(255,143,0,0.5)',  hover: 'rgba(255,143,0,0.45)' }
+    { href: 'gallery.html',  icon: '📸', label: 'フォトギャラリー', color: 'rgba(255,255,255,0.12)', border: 'rgba(100,181,246,0.9)',  hover: 'rgba(255,255,255,0.22)' },
+    { href: 'matches.html',  icon: '🏆', label: '大会結果',         color: 'rgba(255,255,255,0.12)', border: 'rgba(255,213,79,0.9)',   hover: 'rgba(255,255,255,0.22)' },
+    { href: 'map.html',      icon: '🗾', label: '全国クラブマップ', color: 'rgba(255,255,255,0.12)', border: 'rgba(129,199,132,0.9)', hover: 'rgba(255,255,255,0.22)' },
+    { href: 'deepdive.html', icon: '🔬', label: 'DEEP DIVE',        color: 'rgba(255,255,255,0.12)', border: 'rgba(255,183,77,0.9)',  hover: 'rgba(255,255,255,0.22)' }
   ];
 
   // 上部グローバルナビへ
