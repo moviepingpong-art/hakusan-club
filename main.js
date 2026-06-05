@@ -504,43 +504,6 @@ const CATEGORY_ICONS = {
 };
 
 /* photos 配列は data.js で定義しています */
-let currentCategory = 'all';
-
-/* フォトギャラリーで表示するカテゴリのみ（groupphoto/interactionはセクション写真用なので除外） */
-const GALLERY_CATEGORIES = ['atmosphere', 'equipment', 'practice', 'match'];
-
-function renderGallery() {
-  const grid = document.getElementById('galleryGrid');
-  if (!grid) return;
-
-  // ギャラリー対象カテゴリのみに絞り込む（セクション写真は除外）
-  const galleryPhotos = photos.filter(p => GALLERY_CATEGORIES.includes(p.category));
-
-  const filtered = currentCategory === 'all'
-    ? galleryPhotos
-    : galleryPhotos.filter(p => p.category === currentCategory);
-
-  if (filtered.length === 0) {
-    grid.innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-light)">
-        <div style="font-size:3rem;margin-bottom:0.8rem">📷</div>
-        <div style="font-size:0.9rem">写真はGoogle Driveフォルダに保存すると毎週月曜日に自動更新されます。</div>
-      </div>`;
-    return;
-  }
-
-  grid.innerHTML = filtered.map(photo => `
-    <div class="gallery-item${photo.caption ? ' has-title' : ''}"
-         onclick="openLightbox('${photo.src}')">
-      <img src="${photo.src}" alt="${photo.caption || ''}">
-      <div class="gallery-label">
-        ${CATEGORY_ICONS[photo.category]} ${CATEGORY_NAMES[photo.category]}
-        ${photo.caption
-          ? `<br><strong style="font-size:0.85rem;letter-spacing:0.03em">${photo.caption}</strong>`
-          : ''}
-      </div>
-    </div>`).join('');
-}
 
 /* 🏆 栄光の記録：championsカテゴリの写真を試合・大会タブに表示 */
 function renderChampions() {
@@ -566,13 +529,6 @@ function renderChampions() {
         ? `<div class="champions-label">🏆 <strong>${photo.caption}</strong></div>`
         : ''}
     </div>`).join('');
-}
-
-function filterGallery(cat, btn) {
-  currentCategory = cat;
-  document.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  renderGallery();
 }
 
 /* クラブ紹介・メンバー募集の写真ストリップを表示
@@ -1088,23 +1044,6 @@ function renderMap(clubs, centerLat, centerLng, zoom) {
   }
 }
 
-function showClubInfoTab(tab, clickedBtn) {
-  ['about', 'schedule', 'gallery'].forEach(t => {
-    const panel = document.getElementById('clubinfo-' + t);
-    if (panel) panel.style.display = t === tab ? 'block' : 'none';
-  });
-  document.querySelectorAll('.clubinfo-tab').forEach(btn => btn.classList.remove('active'));
-  if (clickedBtn) clickedBtn.classList.add('active');
-  if (tab === 'gallery') renderGallery();
-  /* クラブ案内がフォーカス表示中なら、URL欄を共有可能な形に更新（再読み込みなし） */
-  if (document.body.classList.contains('focus-mode') && tab !== 'gallery') {
-    history.replaceState(
-      { focusMode: true, sectionId: 'clubinfo' },
-      '',
-      '?view=clubinfo&tab=' + tab
-    );
-  }
-}
 
 /* ============================================================
    フォーカスモード
@@ -1122,21 +1061,6 @@ function enterFocusMode(sectionId, playVideo) {
   const backToTopWrap = document.getElementById('backToTopWrap');
   if (exitBtn)       exitBtn.classList.add('visible');
   if (backToTopWrap) backToTopWrap.style.display = 'none';
-  if (sectionId === 'community') {
-    /* ORANGE HUB を開いた時はメニューカード表示状態に戻す */
-    if (typeof closeOrangeSection === 'function') closeOrangeSection();
-    if (playVideo) {
-      /* メニュー選択時のみ動画あり・音声あり・球アニメありで再生 */
-      setTimeout(() => {
-        if (window._communityPlayWithVideo) window._communityPlayWithVideo();
-      }, 50);
-    } else {
-      /* 外部ページから戻った時は動画も球アニメも流さず即コンテンツ表示 */
-      setTimeout(() => {
-        if (window._communityShowInstant) window._communityShowInstant();
-      }, 50);
-    }
-  }
 }
 
 function exitFocusMode() {
@@ -1160,93 +1084,8 @@ function exitFocusMode() {
 }
 
 /* ORANGE HUB のメニューカードから各セクションを開く */
-function openOrangeSection(section) {
-  // メニューカードを隠す
-  const menu = document.getElementById('orangeHubMenu');
-  if (menu) menu.style.display = 'none';
-
-  // タイトル類を隠す
-  const headline = document.getElementById('orangeHubHeadline');
-  if (headline) headline.style.display = 'none';
-  const title = document.getElementById('orangeHubTitle');
-  if (title) title.style.display = 'none';
-
-  // コンテンツエリアを表示
-  const area = document.getElementById('orangeHubContentArea');
-  if (area) area.style.display = 'block';
-
-  // フローティング戻るボタンを表示
-  const backFloat = document.getElementById('orangeHubBackFloat');
-  if (backFloat) backFloat.style.display = 'flex';
-
-  // 該当セクション以外を隠す
-  const sectionMap = {
-    map:      'community-map',
-    voices:   'community-voices',
-    omake:    'community-omake',
-    deepdive: 'community-deepdive',
-  };
-  Object.keys(sectionMap).forEach(s => {
-    const el = document.getElementById(sectionMap[s]);
-    if (el) el.style.display = s === section ? 'block' : 'none';
-  });
-
-  // 地図を初期化・再描画
-  if (section === 'map') {
-    setTimeout(() => {
-      // 既存の地図があればサイズを再計算（display:noneだった後の表示修正）
-      if (window._clubLeafletMap && typeof window._clubLeafletMap.invalidateSize === 'function') {
-        window._clubLeafletMap.invalidateSize();
-      } else if (typeof renderMap === 'function' && typeof CLUB_DATA !== 'undefined') {
-        // 地図がまだ作られていない場合は新規作成
-        const centerLat = typeof HAKUSAN_LAT !== 'undefined' ? HAKUSAN_LAT : 36.5134;
-        const centerLng = typeof HAKUSAN_LNG !== 'undefined' ? HAKUSAN_LNG : 136.5625;
-        renderMap(CLUB_DATA, centerLat, centerLng, 11);
-      }
-    }, 150);
-  }
-
-  // ORANGE HUB セクションの上部にスクロール
-  const community = document.getElementById('community');
-  if (community) {
-    setTimeout(() => {
-      community.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
-  }
-}
 
 /* ORANGE HUB のメニュー画面に戻る */
-function closeOrangeSection() {
-  // すべてのサブセクションを隠す
-  ['community-map', 'community-voices', 'community-omake', 'community-deepdive'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.style.display = 'none';
-  });
-
-  // コンテンツエリアを隠す
-  const area = document.getElementById('orangeHubContentArea');
-  if (area) area.style.display = 'none';
-
-  // フローティング戻るボタンを隠す
-  const backFloat = document.getElementById('orangeHubBackFloat');
-  if (backFloat) backFloat.style.display = 'none';
-
-  // メニューカードを表示
-  const menu = document.getElementById('orangeHubMenu');
-  if (menu) menu.style.display = 'grid';
-
-  // タイトル類を再表示
-  const headline = document.getElementById('orangeHubHeadline');
-  if (headline) headline.style.display = 'block';
-  const title = document.getElementById('orangeHubTitle');
-  if (title) title.style.display = 'flex';
-
-  // ORANGE HUB セクションの上部にスクロール
-  const community = document.getElementById('community');
-  if (community) {
-    community.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-}
 
 function filterClubs(region, clickedBtn) {
   document.querySelectorAll('.region-btn').forEach(btn => {
@@ -1849,43 +1688,6 @@ function launchFireworks() {
 /* ------------------------------------------------------------
    14. 星フィールド
    ------------------------------------------------------------ */
-function initStars() {
-  const canvas = document.getElementById('starCanvas');
-  if (!canvas) return;
-  const ctx   = canvas.getContext('2d');
-  const stars = [];
-
-  function resize() {
-    canvas.width  = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  for (let i = 0; i < 200; i++) {
-    stars.push({
-      x:     Math.random(),
-      y:     Math.random(),
-      r:     Math.random() * 1.5 + 0.2,
-      o:     Math.random() * 0.8 + 0.2,
-      speed: Math.random() * 0.003 + 0.001,
-    });
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    stars.forEach(s => {
-      s.o += s.speed;
-      if (s.o > 1 || s.o < 0.1) s.speed = -s.speed;
-      ctx.beginPath();
-      ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${s.o})`;
-      ctx.fill();
-    });
-    requestAnimationFrame(draw);
-  }
-  draw();
-}
 
 
 /* ------------------------------------------------------------
@@ -1904,9 +1706,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---- お問い合わせフォーム初期化 ----
   initContactForm();
-
-  // ---- ギャラリー初期表示 ----
-  renderGallery();
 
   // ---- ヒーロー区画のイントロ要素（ロゴ・オレンジタグ）処理 ----
   initHeroIntro();
@@ -2020,9 +1819,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---- クラブマップ・Orange HUB 初期化 ----
   initClubMap();
 
-  // ---- 星フィールド ----
-  initStars();
-
   // ---- フォーカスモード：ブラウザ「戻る」対応 ----
   window.addEventListener('popstate', e => {
     if (e.state && e.state.focusMode) {
@@ -2038,18 +1834,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (viewParam && document.getElementById(viewParam)) {
     history.replaceState({ focusMode: true, sectionId: viewParam }, '', location.search);
     enterFocusMode(viewParam);
-    /* ?tab= が指定されていれば、クラブ案内の該当タブを開く（共有リンク用） */
+    /* 旧共有リンク対応：?tab=matches は専用ページへリダイレクト */
     const tabParam = urlParams.get('tab');
-    if (viewParam === 'clubinfo' && tabParam) {
-      /* 大会結果は専用ページに移行したのでリダイレクト（旧共有リンク対応） */
-      if (tabParam === 'matches') {
-        location.href = 'matches.html';
-        return;
-      }
-      const tabBtn = document.querySelector(`.clubinfo-tab[onclick*="'${tabParam}'"]`);
-      if (typeof showClubInfoTab === 'function') {
-        showClubInfoTab(tabParam, tabBtn || null);
-      }
+    if (viewParam === 'clubinfo' && tabParam === 'matches') {
+      location.href = 'matches.html';
+      return;
     }
   }
   /* プリロード時の画面隠しを解除（focus-mode適用後に表示） */
