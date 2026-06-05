@@ -553,6 +553,13 @@
       <p id="sakuraAudioTrigger" onclick="toggleSakuraAudio()"
          style="margin:0;font-size:0.75rem;color:rgba(255,200,140,0.5);cursor:pointer;letter-spacing:0.08em;text-align:center">🌸 タップで音声再生</p>
     </div>
+    <!-- メニュー外ページへのリンク（ヒーロー最下部） -->
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0.5rem 1rem;margin:1.6rem auto 0;max-width:480px;width:100%">
+      <a href="#community-voices" onclick="event.preventDefault();enterFocusMode('community-voices',true)" style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:0.72rem;letter-spacing:0.04em">💬 ORANGE VOICES</a>
+      <a href="#calendar" onclick="event.preventDefault();enterFocusMode('calendar',true)" style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:0.72rem;letter-spacing:0.04em">📆 部員カレンダー</a>
+      <a href="#links" onclick="event.preventDefault();enterFocusMode('links',true)" style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:0.72rem;letter-spacing:0.04em">🔗 関連リンク</a>
+      <a href="#contact" onclick="event.preventDefault();enterFocusMode('contact',true)" style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:0.72rem;letter-spacing:0.04em">✉️ お問い合わせ</a>
+    </div>
     <audio id="sakuraAudioEl" preload="none" style="display:none">
       <source src="sakura.mp3" type="audio/mpeg">
     </audio>
@@ -1279,30 +1286,11 @@
   </div>
 </div>
 
-<!-- ページ最後のクイックリンク（メニュー外のページへの入口） -->
-<section style="background:linear-gradient(135deg,#1565ff 0%,#0d47c1 100%);padding:2.5rem 1.5rem">
-  <div style="max-width:680px;margin:0 auto;text-align:center">
-    <p style="color:rgba(255,255,255,0.85);font-size:0.85rem;font-weight:700;letter-spacing:0.08em;margin:0 0 1.3rem">そのほかのコンテンツ</p>
-    <div style="display:flex;flex-wrap:wrap;align-items:stretch;justify-content:center;gap:0.7rem">
-      <a href="#community-voices" onclick="event.preventDefault();enterFocusMode('community-voices',true)" style="flex:1 1 140px;max-width:200px;display:flex;align-items:center;justify-content:center;gap:0.5rem;background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.3);border-radius:12px;padding:0.9rem 0.8rem;text-decoration:none;color:#fff;font-size:0.85rem;font-weight:600;backdrop-filter:blur(6px)" onmouseover="this.style.background='rgba(255,255,255,0.22)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'"><span style="font-size:1.2rem">💬</span>ORANGE VOICES</a>
-      <a href="#calendar" onclick="event.preventDefault();enterFocusMode('calendar',true)" style="flex:1 1 140px;max-width:200px;display:flex;align-items:center;justify-content:center;gap:0.5rem;background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.3);border-radius:12px;padding:0.9rem 0.8rem;text-decoration:none;color:#fff;font-size:0.85rem;font-weight:600;backdrop-filter:blur(6px)" onmouseover="this.style.background='rgba(255,255,255,0.22)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'"><span style="font-size:1.2rem">📆</span>部員カレンダー</a>
-      <a href="#links" onclick="event.preventDefault();enterFocusMode('links',true)" style="flex:1 1 140px;max-width:200px;display:flex;align-items:center;justify-content:center;gap:0.5rem;background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.3);border-radius:12px;padding:0.9rem 0.8rem;text-decoration:none;color:#fff;font-size:0.85rem;font-weight:600;backdrop-filter:blur(6px)" onmouseover="this.style.background='rgba(255,255,255,0.22)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'"><span style="font-size:1.2rem">🔗</span>関連リンク</a>
-      <a href="#contact" onclick="event.preventDefault();enterFocusMode('contact',true)" style="flex:1 1 140px;max-width:200px;display:flex;align-items:center;justify-content:center;gap:0.5rem;background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.3);border-radius:12px;padding:0.9rem 0.8rem;text-decoration:none;color:#fff;font-size:0.85rem;font-weight:600;backdrop-filter:blur(6px)" onmouseover="this.style.background='rgba(255,255,255,0.22)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'"><span style="font-size:1.2rem">✉️</span>お問い合わせ</a>
-    </div>
-  </div>
-</section>
-
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo" style="display:flex;align-items:center;justify-content:center;gap:0.8rem;margin-bottom:0.8rem">
     <img data-img="1" src="" style="width:54px;height:54px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.4)" alt="白山クラブロゴ">
     <span>白山クラブ ● Large Ball</span>
-  </div>
-  <div class="footer-links" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0.5rem 1.2rem;margin:1rem auto 1.2rem;max-width:560px">
-    <a href="#community-voices" onclick="event.preventDefault();enterFocusMode('community-voices',true)" style="color:rgba(255,255,255,0.85);text-decoration:none;font-size:0.82rem;border-bottom:1px solid rgba(255,255,255,0.3);padding-bottom:1px">💬 ORANGE VOICES</a>
-    <a href="#calendar" onclick="event.preventDefault();enterFocusMode('calendar',true)" style="color:rgba(255,255,255,0.85);text-decoration:none;font-size:0.82rem;border-bottom:1px solid rgba(255,255,255,0.3);padding-bottom:1px">📆 部員カレンダー</a>
-    <a href="#links" onclick="event.preventDefault();enterFocusMode('links',true)" style="color:rgba(255,255,255,0.85);text-decoration:none;font-size:0.82rem;border-bottom:1px solid rgba(255,255,255,0.3);padding-bottom:1px">🔗 関連リンク</a>
-    <a href="#contact" onclick="event.preventDefault();enterFocusMode('contact',true)" style="color:rgba(255,255,255,0.85);text-decoration:none;font-size:0.82rem;border-bottom:1px solid rgba(255,255,255,0.3);padding-bottom:1px">✉️ お問い合わせ</a>
   </div>
   <p>若宮公園体育館 2F ／ 毎週月・水曜日 19:00〜21:30</p>
   <p style="margin-top:0.4rem">📧 hakusan.large@gmail.com</p>
