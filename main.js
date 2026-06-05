@@ -2017,6 +2017,51 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ---- 独立ページへの外部リンクをメニューに追加 ----
+  // フォトギャラリー・大会結果・全国クラブマップ・DEEP DIVE（別HTMLページ）
+  const EXTERNAL_MENU = [
+    { href: 'gallery.html',  icon: '📸', label: 'フォトギャラリー', color: 'rgba(0,87,255,0.28)',   border: 'rgba(0,87,255,0.5)',   hover: 'rgba(0,87,255,0.45)' },
+    { href: 'matches.html',  icon: '🏆', label: '大会結果',         color: 'rgba(63,81,181,0.3)',   border: 'rgba(63,81,181,0.55)', hover: 'rgba(63,81,181,0.5)' },
+    { href: 'map.html',      icon: '🗾', label: '全国クラブマップ', color: 'rgba(76,175,80,0.28)',  border: 'rgba(76,175,80,0.5)',  hover: 'rgba(76,175,80,0.45)' },
+    { href: 'deepdive.html', icon: '🔬', label: 'DEEP DIVE',        color: 'rgba(255,143,0,0.28)',  border: 'rgba(255,143,0,0.5)',  hover: 'rgba(255,143,0,0.45)' }
+  ];
+
+  // 上部グローバルナビへ
+  if (navEl) {
+    EXTERNAL_MENU.forEach(m => {
+      const a = document.createElement('a');
+      a.href = m.href;
+      a.textContent = m.icon + ' ' + m.label;
+      navEl.appendChild(a);
+    });
+  }
+
+  // ヒーロークイックメニューへ
+  if (menuEl) {
+    EXTERNAL_MENU.forEach(m => {
+      const a = document.createElement('a');
+      a.href = m.href;
+      a.style.cssText =
+        `display:flex;flex-direction:row;align-items:center;gap:0.6rem;` +
+        `background:${m.color};border:1.5px solid ${m.border};border-radius:12px;` +
+        `padding:0.75rem 1rem;text-decoration:none;color:white;` +
+        `transition:background 0.2s,transform 0.15s;backdrop-filter:blur(6px);` +
+        `position:relative;z-index:1;`;
+      a.addEventListener('mouseover', () => {
+        a.style.background = m.hover;
+        a.style.transform  = 'translateY(-2px)';
+      });
+      a.addEventListener('mouseout', () => {
+        a.style.background = m.color;
+        a.style.transform  = '';
+      });
+      a.innerHTML =
+        `<span style="font-size:1.4rem;flex-shrink:0">${m.icon}</span>` +
+        `<span style="font-size:0.82rem;font-weight:700;letter-spacing:0.04em;line-height:1.3">${m.label}</span>`;
+      menuEl.appendChild(a);
+    });
+  }
+
   // ---- クラブマップ・Orange HUB 初期化 ----
   initClubMap();
 
