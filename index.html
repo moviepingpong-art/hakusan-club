@@ -553,13 +553,6 @@
       <p id="sakuraAudioTrigger" onclick="toggleSakuraAudio()"
          style="margin:0;font-size:0.75rem;color:rgba(255,200,140,0.5);cursor:pointer;letter-spacing:0.08em;text-align:center">🌸 タップで音声再生</p>
     </div>
-    <!-- メニュー外ページへのリンク（ヒーロー最下部） -->
-    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0.5rem 1rem;margin:1.6rem auto 0;max-width:480px;width:100%">
-      <a href="#community-voices" onclick="event.preventDefault();enterFocusMode('community-voices',true)" style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:0.72rem;letter-spacing:0.04em">💬 ORANGE VOICES</a>
-      <a href="#calendar" onclick="event.preventDefault();enterFocusMode('calendar',true)" style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:0.72rem;letter-spacing:0.04em">📆 部員カレンダー</a>
-      <a href="#links" onclick="event.preventDefault();enterFocusMode('links',true)" style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:0.72rem;letter-spacing:0.04em">🔗 関連リンク</a>
-      <a href="#contact" onclick="event.preventDefault();enterFocusMode('contact',true)" style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:0.72rem;letter-spacing:0.04em">✉️ お問い合わせ</a>
-    </div>
     <audio id="sakuraAudioEl" preload="none" style="display:none">
       <source src="sakura.mp3" type="audio/mpeg">
     </audio>
@@ -761,8 +754,49 @@
   </div>
 </section>
 
+<!-- ORANGE VOICES（独立セクション・フッターからアクセス） -->
+<section id="community-voices" data-menu-icon="💬" data-menu-label="ORANGE VOICES" data-menu-color="rgba(255,120,0,0.25)" data-menu-border="rgba(255,120,0,0.5)" data-menu-hover="rgba(255,120,0,0.4)" style="background:linear-gradient(135deg,#fff4e0 0%,#ffd89e 30%,#ffb56b 70%,#ff8c42 100%);padding:5rem 1.5rem">
+  <div class="section-inner" style="max-width:760px;margin:0 auto">
+      <div style="position:relative;border:8px double #ffff00;box-shadow:0 0 8px #ffff00,0 0 16px #ffff00;border-radius:4px;padding:2.2rem 1rem 2rem;margin-top:2rem;margin-bottom:1rem">
+        <div style="position:absolute;top:-1.6rem;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#0d1117,#1a1a2e);padding:0.35rem 1rem;white-space:nowrap;text-align:center">
+          <span style="font-family:'Oswald',sans-serif;font-size:1.05rem;font-weight:700;color:#ff7a00;letter-spacing:0.12em">ORANGE VOICES</span>
+          <br>
+          <span style="font-size:0.62rem;color:rgba(255,255,255,0.5);letter-spacing:0.06em;display:block;margin-top:0.05rem">オレンジハブの発言コーナー</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1.3rem">
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdaYlf3TOyCqkhlb92sihxZIBfIrj2Qre1wqRu3nLr4AnucTw/viewform" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:0.9rem;background:rgba(255,255,255,0.92);border:2px solid rgba(198,61,0,0.4);border-radius:14px;padding:2.4rem 1.2rem;text-decoration:none;color:#4a2200;transition:background 0.2s;box-shadow:0 4px 12px rgba(124,46,0,0.12)" onmouseover="this.style.background='#fff5e8'" onmouseout="this.style.background='rgba(255,255,255,0.92)'">
+            <span style="font-size:2.2rem;flex-shrink:0">💬</span>
+            <span style="display:flex;flex-direction:column;gap:0.3rem;flex:1">
+              <span style="font-weight:700;font-size:0.98rem">ひとこと掲示板</span>
+              <span style="font-size:0.74rem;color:#8a4d1d;line-height:1.5">今日の練習の感想やラージボールへの想いなど、なんでも気軽にひとことどうぞ。みんなの声が集まります</span>
+            </span>
+            <span style="background:#c63d00;color:white;border-radius:50px;padding:0.5rem 1.1rem;font-size:0.82rem;font-weight:700;white-space:nowrap;flex-shrink:0">✏️ 投稿</span>
+          </a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLScNdEaqRwh4J8dKADQXFh2KZYNKzRCvc6bVZQEdkgndPY9tdQ/viewform" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:0.9rem;background:rgba(255,255,255,0.92);border:2px solid rgba(198,61,0,0.4);border-radius:14px;padding:2.4rem 1.2rem;text-decoration:none;color:#4a2200;transition:background 0.2s;box-shadow:0 4px 12px rgba(124,46,0,0.12)" onmouseover="this.style.background='#fff5e8'" onmouseout="this.style.background='rgba(255,255,255,0.92)'">
+            <span style="font-size:2.2rem;flex-shrink:0">🏓</span>
+            <span style="display:flex;flex-direction:column;gap:0.3rem;flex:1">
+              <span style="font-weight:700;font-size:0.98rem">用具レビュー</span>
+              <span style="font-size:0.74rem;color:#8a4d1d;line-height:1.5">ラケット・ラバー・シューズなど、使ってみた用具の感想や評価を共有。仲間の用具選びの参考になります</span>
+            </span>
+            <span style="background:#c63d00;color:white;border-radius:50px;padding:0.5rem 1.1rem;font-size:0.82rem;font-weight:700;white-space:nowrap;flex-shrink:0">✏️ 投稿</span>
+          </a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfYisEGoIrwXikFbND8nnMZEo_lOtNUrvtzH6uTtktMctll1g/viewform" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:0.9rem;background:rgba(255,255,255,0.92);border:2px solid rgba(198,61,0,0.4);border-radius:14px;padding:2.4rem 1.2rem;text-decoration:none;color:#4a2200;transition:background 0.2s;box-shadow:0 4px 12px rgba(124,46,0,0.12)" onmouseover="this.style.background='#fff5e8'" onmouseout="this.style.background='rgba(255,255,255,0.92)'">
+            <span style="font-size:2.2rem;flex-shrink:0">🏆</span>
+            <span style="display:flex;flex-direction:column;gap:0.3rem;flex:1">
+              <span style="font-weight:700;font-size:0.98rem">大会結果・自慢</span>
+              <span style="font-size:0.74rem;color:#8a4d1d;line-height:1.5">大会での成績や嬉しかったプレー、自慢のエピソードを報告。みんなで喜びを分かち合いましょう</span>
+            </span>
+            <span style="background:#c63d00;color:white;border-radius:50px;padding:0.5rem 1.1rem;font-size:0.82rem;font-weight:700;white-space:nowrap;flex-shrink:0">🏆 報告</span>
+          </a>
+        </div>
+      </div>
+  </div>
+</section>
 
-<section id="calendar" data-menu-icon="📆" data-menu-color="rgba(66,133,244,0.2)" data-menu-border="rgba(66,133,244,0.4)" data-menu-hover="rgba(66,133,244,0.35)" style="background:linear-gradient(180deg,#eef4ff 0%,#f5f8ff 100%);padding:5rem 1.5rem">
+
+
+
+<section id="calendar" data-menu-icon="📆" data-menu-label="部員カレンダー" data-menu-color="rgba(66,133,244,0.2)" data-menu-border="rgba(66,133,244,0.4)" data-menu-hover="rgba(66,133,244,0.35)" style="background:linear-gradient(180deg,#eef4ff 0%,#f5f8ff 100%);padding:5rem 1.5rem">
   <div class="section-inner">
     <div class="fade-in">
       <p class="section-label">Members Only</p>
@@ -802,7 +836,7 @@
 </section>
 
 <!-- LINKS（関連リンク） -->
-<section id="links" data-menu-icon="🔗" data-menu-color="rgba(255,255,255,0.1)" data-menu-border="rgba(255,255,255,0.2)" style="background:linear-gradient(180deg,#effbf5 0%,#f5fdf8 100%)">
+<section id="links" data-menu-icon="🔗" data-menu-label="関連リンク" data-menu-color="rgba(255,255,255,0.1)" data-menu-border="rgba(255,255,255,0.2)" style="background:linear-gradient(180deg,#effbf5 0%,#f5fdf8 100%)">
   <div class="section-inner">
     <div class="fade-in">
       <p class="section-label">Related Links</p>
@@ -1072,7 +1106,7 @@
 </section>
 
 <!-- CONTACT -->
-<section id="contact" data-menu-icon="✉️" data-menu-color="rgba(255,255,255,0.1)" data-menu-border="rgba(255,255,255,0.2)">
+<section id="contact" data-menu-icon="✉️" data-menu-label="お問い合わせ" data-menu-color="rgba(255,255,255,0.1)" data-menu-border="rgba(255,255,255,0.2)">
   <div class="section-inner">
     <div class="fade-in" style="text-align:center">
       <p class="section-label">Contact</p>
@@ -1160,46 +1194,6 @@
     </div>
   </div>
 </section>
-
-<!-- ORANGE VOICES（独立セクション・フッターからアクセス） -->
-<section id="community-voices" style="background:linear-gradient(135deg,#fff4e0 0%,#ffd89e 30%,#ffb56b 70%,#ff8c42 100%);padding:5rem 1.5rem">
-  <div class="section-inner" style="max-width:760px;margin:0 auto">
-      <div style="position:relative;border:8px double #ffff00;box-shadow:0 0 8px #ffff00,0 0 16px #ffff00;border-radius:4px;padding:2.2rem 1rem 2rem;margin-top:2rem;margin-bottom:1rem">
-        <div style="position:absolute;top:-1.6rem;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#0d1117,#1a1a2e);padding:0.35rem 1rem;white-space:nowrap;text-align:center">
-          <span style="font-family:'Oswald',sans-serif;font-size:1.05rem;font-weight:700;color:#ff7a00;letter-spacing:0.12em">ORANGE VOICES</span>
-          <br>
-          <span style="font-size:0.62rem;color:rgba(255,255,255,0.5);letter-spacing:0.06em;display:block;margin-top:0.05rem">オレンジハブの発言コーナー</span>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:1.3rem">
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdaYlf3TOyCqkhlb92sihxZIBfIrj2Qre1wqRu3nLr4AnucTw/viewform" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:0.9rem;background:rgba(255,255,255,0.92);border:2px solid rgba(198,61,0,0.4);border-radius:14px;padding:2.4rem 1.2rem;text-decoration:none;color:#4a2200;transition:background 0.2s;box-shadow:0 4px 12px rgba(124,46,0,0.12)" onmouseover="this.style.background='#fff5e8'" onmouseout="this.style.background='rgba(255,255,255,0.92)'">
-            <span style="font-size:2.2rem;flex-shrink:0">💬</span>
-            <span style="display:flex;flex-direction:column;gap:0.3rem;flex:1">
-              <span style="font-weight:700;font-size:0.98rem">ひとこと掲示板</span>
-              <span style="font-size:0.74rem;color:#8a4d1d;line-height:1.5">今日の練習の感想やラージボールへの想いなど、なんでも気軽にひとことどうぞ。みんなの声が集まります</span>
-            </span>
-            <span style="background:#c63d00;color:white;border-radius:50px;padding:0.5rem 1.1rem;font-size:0.82rem;font-weight:700;white-space:nowrap;flex-shrink:0">✏️ 投稿</span>
-          </a>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLScNdEaqRwh4J8dKADQXFh2KZYNKzRCvc6bVZQEdkgndPY9tdQ/viewform" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:0.9rem;background:rgba(255,255,255,0.92);border:2px solid rgba(198,61,0,0.4);border-radius:14px;padding:2.4rem 1.2rem;text-decoration:none;color:#4a2200;transition:background 0.2s;box-shadow:0 4px 12px rgba(124,46,0,0.12)" onmouseover="this.style.background='#fff5e8'" onmouseout="this.style.background='rgba(255,255,255,0.92)'">
-            <span style="font-size:2.2rem;flex-shrink:0">🏓</span>
-            <span style="display:flex;flex-direction:column;gap:0.3rem;flex:1">
-              <span style="font-weight:700;font-size:0.98rem">用具レビュー</span>
-              <span style="font-size:0.74rem;color:#8a4d1d;line-height:1.5">ラケット・ラバー・シューズなど、使ってみた用具の感想や評価を共有。仲間の用具選びの参考になります</span>
-            </span>
-            <span style="background:#c63d00;color:white;border-radius:50px;padding:0.5rem 1.1rem;font-size:0.82rem;font-weight:700;white-space:nowrap;flex-shrink:0">✏️ 投稿</span>
-          </a>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfYisEGoIrwXikFbND8nnMZEo_lOtNUrvtzH6uTtktMctll1g/viewform" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:0.9rem;background:rgba(255,255,255,0.92);border:2px solid rgba(198,61,0,0.4);border-radius:14px;padding:2.4rem 1.2rem;text-decoration:none;color:#4a2200;transition:background 0.2s;box-shadow:0 4px 12px rgba(124,46,0,0.12)" onmouseover="this.style.background='#fff5e8'" onmouseout="this.style.background='rgba(255,255,255,0.92)'">
-            <span style="font-size:2.2rem;flex-shrink:0">🏆</span>
-            <span style="display:flex;flex-direction:column;gap:0.3rem;flex:1">
-              <span style="font-weight:700;font-size:0.98rem">大会結果・自慢</span>
-              <span style="font-size:0.74rem;color:#8a4d1d;line-height:1.5">大会での成績や嬉しかったプレー、自慢のエピソードを報告。みんなで喜びを分かち合いましょう</span>
-            </span>
-            <span style="background:#c63d00;color:white;border-radius:50px;padding:0.5rem 1.1rem;font-size:0.82rem;font-weight:700;white-space:nowrap;flex-shrink:0">🏆 報告</span>
-          </a>
-        </div>
-      </div>
-  </div>
-</section>
-
 
 <!-- CALENDAR（部員専用） -->
 
