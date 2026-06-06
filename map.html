@@ -42,7 +42,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
-  <meta name="theme-color" content="#ff7a00">
+  <meta name="theme-color" content="#0077b6">
 
   <!-- 構造化データ（JSON-LD）：全国クラブのItemList -->
   <script type="application/ld+json">
@@ -220,11 +220,11 @@
   <!-- ページ専用スタイル -->
   <style>
     .map-page-body {
-      background: linear-gradient(180deg, #fff5e8 0%, #ffe8d0 100%);
+      background: linear-gradient(180deg, #eef9fd 0%, #d8f3fc 100%);
       min-height: 100vh;
     }
     .map-hero {
-      background: linear-gradient(135deg, #c63d00 0%, #ff7a00 60%, #ffa040 100%);
+      background: linear-gradient(135deg, #055a8c 0%, #0077b6 60%, #48cae4 100%);
       color: white;
       padding: calc(64px + 1.5rem) 1.5rem 1.8rem;
       text-align: center;
@@ -310,7 +310,7 @@
 <body class="map-page-body">
 
 <!-- HEADER -->
-<header style="background:linear-gradient(135deg,#c63d00,#ff7a00);">
+<header style="background:linear-gradient(135deg,#055a8c,#0077b6);">
   <a href="index.html" class="logo">
     <img data-img="1" src="" class="logo-img" alt="白山クラブ ロゴ">
     <span class="logo-text">白山クラブ <span class="dot">●</span> Large Ball</span>
@@ -330,80 +330,80 @@
   <!-- 全国クラブマップ（index.html から抜粋・display:none を解除） -->
   <div id="community-map">
     <div style="background:rgba(255,255,255,0.95);border:2px solid rgba(255,255,255,0.95);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:0 8px 24px rgba(124,46,0,0.15)" id="clubListCard">
-      <h2 style="color:#c63d00;font-family:'Oswald',sans-serif;font-size:1.1rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem">🗾 全国ラージボールクラブ一覧</h2>
+      <h2 style="color:#055a8c;font-family:'Oswald',sans-serif;font-size:1.1rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem">🗾 全国ラージボールクラブ一覧</h2>
 
       <!-- 地図 -->
-      <div id="clubMap" style="width:100%;height:320px;border-radius:12px;overflow:hidden;margin-bottom:1.2rem;border:2px solid rgba(255,120,0,0.3)"></div>
+      <div id="clubMap" style="width:100%;height:320px;border-radius:12px;overflow:hidden;margin-bottom:1.2rem;border:2px solid rgba(0,180,216,0.3)"></div>
 
       <!-- クラブテーブル -->
       <div style="max-height:300px;overflow-y:auto;overflow-x:auto;border-radius:8px">
         <table id="clubTable" style="width:100%;border-collapse:collapse;font-size:0.88rem;color:#4a2200">
           <thead>
-            <tr style="border-bottom:2px solid rgba(255,120,0,0.5)">
-              <th style="text-align:left;padding:0.6rem 0.8rem;color:#c63d00;position:sticky;top:0;background:#fff;z-index:2">地域</th>
-              <th style="text-align:left;padding:0.6rem 0.8rem;color:#c63d00;position:sticky;top:0;background:#fff;z-index:2">🍊 クラブ名<br><span style="font-size:0.65rem;color:#8a4d1d;font-weight:400">タップ→地図移動</span></th>
-              <th style="text-align:left;padding:0.6rem 0.8rem;color:#c63d00;position:sticky;top:0;background:#fff;z-index:2">📍 活動エリア<br><span style="font-size:0.65rem;color:#8a4d1d;font-weight:400">タップ→地図アプリ</span></th>
-              <th style="text-align:left;padding:0.6rem 0.8rem;color:#c63d00;position:sticky;top:0;background:#fff;z-index:2">連絡先・備考</th>
+            <tr style="border-bottom:2px solid rgba(0,180,216,0.5)">
+              <th style="text-align:left;padding:0.6rem 0.8rem;color:#055a8c;position:sticky;top:0;background:#fff;z-index:2">地域</th>
+              <th style="text-align:left;padding:0.6rem 0.8rem;color:#055a8c;position:sticky;top:0;background:#fff;z-index:2">🏓 クラブ名<br><span style="font-size:0.65rem;color:#5a7d8c;font-weight:400">タップ→地図移動</span></th>
+              <th style="text-align:left;padding:0.6rem 0.8rem;color:#055a8c;position:sticky;top:0;background:#fff;z-index:2">📍 活動エリア<br><span style="font-size:0.65rem;color:#5a7d8c;font-weight:400">タップ→地図アプリ</span></th>
+              <th style="text-align:left;padding:0.6rem 0.8rem;color:#055a8c;position:sticky;top:0;background:#fff;z-index:2">連絡先・備考</th>
             </tr>
           </thead>
           <tbody id="clubTableBody">
             <tr data-region="北陸" data-lat="36.5134" data-lng="136.5625" data-name="白山クラブ" data-address="白山市若宮公園体育館" style="border-bottom:1px solid rgba(0,0,0,0.08)">
-              <td style="padding:0.6rem 0.8rem"><span style="background:rgba(255,120,0,0.2);color:#ff7a00;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
-              <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#ff7a00;" onclick="flyToClub(36.5134,136.5625,'白山クラブ','白山市若宮公園体育館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🍊 白山クラブ</td>
+              <td style="padding:0.6rem 0.8rem"><span style="background:rgba(0,180,216,0.2);color:#0077b6;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
+              <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#0077b6;" onclick="flyToClub(36.5134,136.5625,'白山クラブ','白山市若宮公園体育館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🏓 白山クラブ</td>
               <td style="padding:0.6rem 0.8rem;cursor:pointer;color:#4a2200;" onclick="openMap(36.5134,136.5625,'白山市若宮公園体育館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">📍 白山市若宮公園体育館</td>
-              <td style="padding:0.6rem 0.8rem;color:#8a4d1d">このサイト運営クラブ</td>
+              <td style="padding:0.6rem 0.8rem;color:#5a7d8c">このサイト運営クラブ</td>
             </tr>
             <tr data-region="北陸" data-lat="36.544115545864024" data-lng="136.65778949623632" data-name="金沢兼六クラブ" data-address="金沢市立野田中学校トレーニング場" style="border-bottom:1px solid rgba(0,0,0,0.08)">
-              <td style="padding:0.6rem 0.8rem"><span style="background:rgba(255,120,0,0.2);color:#ff7a00;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
-              <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#ff7a00;" onclick="flyToClub(36.544115545864024,136.65778949623632,'金沢兼六クラブ','金沢市立野田中学校トレーニング場')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🍊 金沢兼六クラブ</td>
+              <td style="padding:0.6rem 0.8rem"><span style="background:rgba(0,180,216,0.2);color:#0077b6;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
+              <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#0077b6;" onclick="flyToClub(36.544115545864024,136.65778949623632,'金沢兼六クラブ','金沢市立野田中学校トレーニング場')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🏓 金沢兼六クラブ</td>
               <td style="padding:0.6rem 0.8rem;cursor:pointer;color:#4a2200;" onclick="openMap(36.544115545864024,136.65778949623632,'金沢市立野田中学校トレーニング場')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">📍 金沢市立野田中学校トレーニング場</td>
-              <td style="padding:0.6rem 0.8rem;color:#8a4d1d">—</td>
+              <td style="padding:0.6rem 0.8rem;color:#5a7d8c">—</td>
             </tr>
             <tr data-region="北陸" data-lat="36.623335847157655" data-lng="136.65328535353913" data-name="金沢大浦ラージ" data-address="大浦小学校" style="border-bottom:1px solid rgba(0,0,0,0.08)">
-              <td style="padding:0.6rem 0.8rem"><span style="background:rgba(255,120,0,0.2);color:#ff7a00;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
-              <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#ff7a00;" onclick="flyToClub(36.623335847157655,136.65328535353913,'金沢大浦ラージ','大浦小学校')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🍊 金沢大浦ラージ</td>
+              <td style="padding:0.6rem 0.8rem"><span style="background:rgba(0,180,216,0.2);color:#0077b6;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
+              <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#0077b6;" onclick="flyToClub(36.623335847157655,136.65328535353913,'金沢大浦ラージ','大浦小学校')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🏓 金沢大浦ラージ</td>
               <td style="padding:0.6rem 0.8rem;cursor:pointer;color:#4a2200;" onclick="openMap(36.623335847157655,136.65328535353913,'大浦小学校')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">📍 大浦小学校</td>
-              <td style="padding:0.6rem 0.8rem;color:#8a4d1d">—</td>
+              <td style="padding:0.6rem 0.8rem;color:#5a7d8c">—</td>
             </tr>
             <tr data-region="北陸" data-lat="36.35519673736004" data-lng="136.4191410779788" data-name="南加賀クラブ" data-address="粟津公園体育館" style="border-bottom:1px solid rgba(0,0,0,0.08)">
-              <td style="padding:0.6rem 0.8rem"><span style="background:rgba(255,120,0,0.2);color:#ff7a00;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
-              <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#ff7a00;" onclick="flyToClub(36.35519673736004,136.4191410779788,'南加賀クラブ','粟津公園体育館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🍊 南加賀クラブ</td>
+              <td style="padding:0.6rem 0.8rem"><span style="background:rgba(0,180,216,0.2);color:#0077b6;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
+              <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#0077b6;" onclick="flyToClub(36.35519673736004,136.4191410779788,'南加賀クラブ','粟津公園体育館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🏓 南加賀クラブ</td>
               <td style="padding:0.6rem 0.8rem;cursor:pointer;color:#4a2200;" onclick="openMap(36.35519673736004,136.4191410779788,'粟津公園体育館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">📍 粟津公園体育館</td>
-              <td style="padding:0.6rem 0.8rem;color:#8a4d1d">—</td>
+              <td style="padding:0.6rem 0.8rem;color:#5a7d8c">—</td>
             </tr>
             <tr data-region="北陸" data-lat="36.434776" data-lng="136.525954" data-name="能美クラブ" data-address="能美市泉台スポーツセンター" style="border-bottom:1px solid rgba(0,0,0,0.08)">
-              <td style="padding:0.6rem 0.8rem"><span style="background:rgba(255,120,0,0.2);color:#ff7a00;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
-              <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#ff7a00;" onclick="flyToClub(36.434776,136.525954,'能美クラブ','能美市泉台スポーツセンター')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🍊 能美クラブ</td>
+              <td style="padding:0.6rem 0.8rem"><span style="background:rgba(0,180,216,0.2);color:#0077b6;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
+              <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#0077b6;" onclick="flyToClub(36.434776,136.525954,'能美クラブ','能美市泉台スポーツセンター')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🏓 能美クラブ</td>
               <td style="padding:0.6rem 0.8rem;cursor:pointer;color:#4a2200;" onclick="openMap(36.434776,136.525954,'能美市泉台スポーツセンター')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">📍 能美市泉台スポーツセンター</td>
-              <td style="padding:0.6rem 0.8rem;color:#8a4d1d">—</td>
+              <td style="padding:0.6rem 0.8rem;color:#5a7d8c">—</td>
             </tr>
             <tr data-region="北陸" data-lat="37.043806" data-lng="136.952778" data-name="七尾スターズ" data-address="七尾総合市民体育館" style="border-bottom:1px solid rgba(0,0,0,0.08)">
-              <td style="padding:0.6rem 0.8rem"><span style="background:rgba(255,120,0,0.2);color:#ff7a00;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
-              <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#ff7a00;" onclick="flyToClub(37.043806,136.952778,'七尾スターズ','七尾総合市民体育館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🍊 七尾スターズ</td>
+              <td style="padding:0.6rem 0.8rem"><span style="background:rgba(0,180,216,0.2);color:#0077b6;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
+              <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#0077b6;" onclick="flyToClub(37.043806,136.952778,'七尾スターズ','七尾総合市民体育館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🏓 七尾スターズ</td>
               <td style="padding:0.6rem 0.8rem;cursor:pointer;color:#4a2200;" onclick="openMap(37.043806,136.952778,'七尾総合市民体育館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">📍 七尾総合市民体育館</td>
-              <td style="padding:0.6rem 0.8rem;color:#8a4d1d">—</td>
+              <td style="padding:0.6rem 0.8rem;color:#5a7d8c">—</td>
             </tr>
             <tr data-region="北陸" data-lat="36.577046" data-lng="136.679195" data-name="金沢44クラブ" data-address="金沢市鳴和台市民体育会館" style="border-bottom:1px solid rgba(0,0,0,0.08)">
-              <td style="padding:0.6rem 0.8rem"><span style="background:rgba(255,120,0,0.2);color:#ff7a00;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
-              <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#ff7a00;" onclick="flyToClub(36.577046,136.679195,'金沢44クラブ','金沢市鳴和台市民体育会館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🍊 金沢44クラブ</td>
+              <td style="padding:0.6rem 0.8rem"><span style="background:rgba(0,180,216,0.2);color:#0077b6;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
+              <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#0077b6;" onclick="flyToClub(36.577046,136.679195,'金沢44クラブ','金沢市鳴和台市民体育会館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🏓 金沢44クラブ</td>
               <td style="padding:0.6rem 0.8rem;cursor:pointer;color:#4a2200;" onclick="openMap(36.577046,136.679195,'金沢市鳴和台市民体育会館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">📍 金沢市鳴和台市民体育会館</td>
-              <td style="padding:0.6rem 0.8rem;color:#8a4d1d">—</td>
+              <td style="padding:0.6rem 0.8rem;color:#5a7d8c">—</td>
             </tr>
             <tr data-region="北陸" data-lat="36.303779" data-lng="136.318341" data-name="加賀クラブ" data-address="加賀体育館" style="border-bottom:1px solid rgba(0,0,0,0.08)">
-              <td style="padding:0.6rem 0.8rem"><span style="background:rgba(255,120,0,0.2);color:#ff7a00;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
-              <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#ff7a00;" onclick="flyToClub(36.303779,136.318341,'加賀クラブ','加賀体育館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🍊 加賀クラブ</td>
+              <td style="padding:0.6rem 0.8rem"><span style="background:rgba(0,180,216,0.2);color:#0077b6;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
+              <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#0077b6;" onclick="flyToClub(36.303779,136.318341,'加賀クラブ','加賀体育館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🏓 加賀クラブ</td>
               <td style="padding:0.6rem 0.8rem;cursor:pointer;color:#4a2200;" onclick="openMap(36.303779,136.318341,'加賀体育館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">📍 加賀体育館</td>
-              <td style="padding:0.6rem 0.8rem;color:#8a4d1d">—</td>
+              <td style="padding:0.6rem 0.8rem;color:#5a7d8c">—</td>
             </tr>
             <tr data-region="北陸" data-lat="36.898348" data-lng="136.790309" data-name="羽咋卓友会" data-address="羽咋体育館" style="border-bottom:1px solid rgba(0,0,0,0.08)">
-              <td style="padding:0.6rem 0.8rem"><span style="background:rgba(255,120,0,0.2);color:#ff7a00;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
-              <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#ff7a00;" onclick="flyToClub(36.898348,136.790309,'羽咋卓友会','羽咋体育館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🍊 羽咋卓友会</td>
+              <td style="padding:0.6rem 0.8rem"><span style="background:rgba(0,180,216,0.2);color:#0077b6;border-radius:4px;padding:0.2rem 0.5rem;font-size:0.8rem">石川</span></td>
+              <td style="padding:0.6rem 0.8rem;font-weight:600;cursor:pointer;color:#0077b6;" onclick="flyToClub(36.898348,136.790309,'羽咋卓友会','羽咋体育館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">🏓 羽咋卓友会</td>
               <td style="padding:0.6rem 0.8rem;cursor:pointer;color:#4a2200;" onclick="openMap(36.898348,136.790309,'羽咋体育館')" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">📍 羽咋体育館</td>
-              <td style="padding:0.6rem 0.8rem;color:#8a4d1d">—</td>
+              <td style="padding:0.6rem 0.8rem;color:#5a7d8c">—</td>
             </tr>
           </tbody>
         </table>
-        <div id="noClubResult" style="display:none;text-align:center;padding:2rem;color:#8a4d1d;font-size:0.9rem">この地域のクラブはまだ登録されていません</div>
+        <div id="noClubResult" style="display:none;text-align:center;padding:2rem;color:#5a7d8c;font-size:0.9rem">この地域のクラブはまだ登録されていません</div>
       </div>
 
       <!-- 地域フィルターボタン -->
@@ -412,17 +412,17 @@
           🔍 地域でクラブを探す
         </p>
         <div style="display:flex;gap:0.5rem;flex-wrap:wrap" id="regionBtnWrap">
-          <button class="region-btn" data-region="北海道" onclick="filterClubs('北海道',this)" style="background:rgba(255,255,255,0.85);color:#c63d00;border:1.5px solid rgba(198,61,0,0.35);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">北海道</button>
-          <button class="region-btn" data-region="東北" onclick="filterClubs('東北',this)" style="background:rgba(255,255,255,0.85);color:#c63d00;border:1.5px solid rgba(198,61,0,0.35);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">東北</button>
-          <button class="region-btn" data-region="関東" onclick="filterClubs('関東',this)" style="background:rgba(255,255,255,0.85);color:#c63d00;border:1.5px solid rgba(198,61,0,0.35);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">関東</button>
-          <button class="region-btn" data-region="北陸" onclick="filterClubs('北陸',this)" style="background:rgba(255,255,255,0.85);color:#c63d00;border:1.5px solid rgba(198,61,0,0.35);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">北陸</button>
-          <button class="region-btn" data-region="東海" onclick="filterClubs('東海',this)" style="background:rgba(255,255,255,0.85);color:#c63d00;border:1.5px solid rgba(198,61,0,0.35);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">東海</button>
-          <button class="region-btn" data-region="関西" onclick="filterClubs('関西',this)" style="background:rgba(255,255,255,0.85);color:#c63d00;border:1.5px solid rgba(198,61,0,0.35);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">関西</button>
-          <button class="region-btn" data-region="中国・四国" onclick="filterClubs('中国・四国',this)" style="background:rgba(255,255,255,0.85);color:#c63d00;border:1.5px solid rgba(198,61,0,0.35);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">中国・四国</button>
-          <button class="region-btn" data-region="九州" onclick="filterClubs('九州',this)" style="background:rgba(255,255,255,0.85);color:#c63d00;border:1.5px solid rgba(198,61,0,0.35);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">九州</button>
-          <button class="region-btn active-region" data-region="all" onclick="filterClubs('all',this)" style="background:#c63d00;color:white;border:1.5px solid #c63d00;border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s;box-shadow:0 2px 8px rgba(198,61,0,0.3)">すべて</button>
+          <button class="region-btn" data-region="北海道" onclick="filterClubs('北海道',this)" style="background:rgba(255,255,255,0.85);color:#055a8c;border:1.5px solid rgba(198,61,0,0.35);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">北海道</button>
+          <button class="region-btn" data-region="東北" onclick="filterClubs('東北',this)" style="background:rgba(255,255,255,0.85);color:#055a8c;border:1.5px solid rgba(198,61,0,0.35);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">東北</button>
+          <button class="region-btn" data-region="関東" onclick="filterClubs('関東',this)" style="background:rgba(255,255,255,0.85);color:#055a8c;border:1.5px solid rgba(198,61,0,0.35);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">関東</button>
+          <button class="region-btn" data-region="北陸" onclick="filterClubs('北陸',this)" style="background:rgba(255,255,255,0.85);color:#055a8c;border:1.5px solid rgba(198,61,0,0.35);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">北陸</button>
+          <button class="region-btn" data-region="東海" onclick="filterClubs('東海',this)" style="background:rgba(255,255,255,0.85);color:#055a8c;border:1.5px solid rgba(198,61,0,0.35);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">東海</button>
+          <button class="region-btn" data-region="関西" onclick="filterClubs('関西',this)" style="background:rgba(255,255,255,0.85);color:#055a8c;border:1.5px solid rgba(198,61,0,0.35);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">関西</button>
+          <button class="region-btn" data-region="中国・四国" onclick="filterClubs('中国・四国',this)" style="background:rgba(255,255,255,0.85);color:#055a8c;border:1.5px solid rgba(198,61,0,0.35);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">中国・四国</button>
+          <button class="region-btn" data-region="九州" onclick="filterClubs('九州',this)" style="background:rgba(255,255,255,0.85);color:#055a8c;border:1.5px solid rgba(198,61,0,0.35);border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s">九州</button>
+          <button class="region-btn active-region" data-region="all" onclick="filterClubs('all',this)" style="background:#055a8c;color:white;border:1.5px solid #055a8c;border-radius:50px;padding:0.4rem 1rem;font-size:0.8rem;cursor:pointer;font-weight:700;transition:all 0.15s;box-shadow:0 2px 8px rgba(198,61,0,0.3)">すべて</button>
         </div>
-        <p style="font-size:0.72rem;color:#8a4d1d;margin-top:0.5rem">※ 掲載クラブが増え次第、地域別に絞り込みができます</p>
+        <p style="font-size:0.72rem;color:#5a7d8c;margin-top:0.5rem">※ 掲載クラブが増え次第、地域別に絞り込みができます</p>
       </div>
 
       <!-- クラブ追加ボタン -->
@@ -430,17 +430,17 @@
         <button onclick="openClubRequestModal()"
           style="display:inline-flex;align-items:center;gap:0.6rem;
                  background:linear-gradient(135deg,rgba(255,255,255,0.9),rgba(255,245,230,0.95));
-                 border:2px dashed #c63d00;border-radius:12px;
-                 color:#c63d00;padding:0.8rem 1.8rem;cursor:pointer;font-size:0.92rem;
+                 border:2px dashed #055a8c;border-radius:12px;
+                 color:#055a8c;padding:0.8rem 1.8rem;cursor:pointer;font-size:0.92rem;
                  font-weight:700;font-family:'Noto Sans JP',sans-serif;
                  transition:all 0.2s;letter-spacing:0.03em;box-shadow:0 2px 8px rgba(0,0,0,0.06)"
-          onmouseover="this.style.background='linear-gradient(135deg,#c63d00,#ff7a00)';this.style.color='white'"
-          onmouseout="this.style.background='linear-gradient(135deg,rgba(255,255,255,0.9),rgba(255,245,230,0.95))';this.style.color='#c63d00'">
+          onmouseover="this.style.background='linear-gradient(135deg,#055a8c,#0077b6)';this.style.color='white'"
+          onmouseout="this.style.background='linear-gradient(135deg,rgba(255,255,255,0.9),rgba(255,245,230,0.95))';this.style.color='#055a8c'">
           ＋ あなたのクラブを追加してもらう
         </button>
         <p style="font-size:0.75rem;color:#7a3a00;margin-top:0.6rem;line-height:1.8;font-weight:600">
           申請内容を管理者が確認後、掲載します<br>
-          <span style="color:#8a4d1d;font-weight:400">※ 申請はそのクラブの部員の方が行ってください。</span>
+          <span style="color:#5a7d8c;font-weight:400">※ 申請はそのクラブの部員の方が行ってください。</span>
         </p>
       </div>
     </div>
@@ -461,7 +461,7 @@
 
 <!-- マップ選択モーダル -->
 <div id="mapChoiceModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;" onclick="if(event.target===this)closeMapModal()">
-  <div style="background:#1a1a2e;border:1px solid rgba(255,120,0,0.4);border-radius:16px;padding:2rem;max-width:320px;width:90%;text-align:center">
+  <div style="background:#1a1a2e;border:1px solid rgba(0,180,216,0.4);border-radius:16px;padding:2rem;max-width:320px;width:90%;text-align:center">
     <p style="color:rgba(255,255,255,0.6);font-size:0.85rem;margin-bottom:0.4rem">📍 目的地</p>
     <p id="mapChoiceName" style="color:white;font-weight:700;font-size:1rem;margin-bottom:1.5rem"></p>
     <p style="color:rgba(255,255,255,0.6);font-size:0.85rem;margin-bottom:1rem">地図アプリを選択してください</p>
@@ -484,13 +484,13 @@
   style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:9999;
          align-items:center;justify-content:center;padding:1rem;"
   onclick="if(event.target===this)closeClubRequestModal()">
-  <div style="background:linear-gradient(135deg,#0d1117,#1a1a2e);border:1px solid rgba(255,120,0,0.4);
+  <div style="background:linear-gradient(135deg,#0d1117,#1a1a2e);border:1px solid rgba(0,180,216,0.4);
               border-radius:20px;padding:2rem 1.8rem;max-width:480px;width:100%;
               max-height:90vh;overflow-y:auto;position:relative">
     <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.4rem">
       <div>
         <p style="font-family:'Oswald',sans-serif;font-size:0.72rem;letter-spacing:0.2em;
-                  color:#ff7a00;text-transform:uppercase;margin-bottom:0.3rem">Club Registration</p>
+                  color:#0077b6;text-transform:uppercase;margin-bottom:0.3rem">Club Registration</p>
         <h3 style="font-family:'Oswald',sans-serif;font-size:1.3rem;color:white;margin:0">
           クラブ掲載を申請する
         </h3>
@@ -511,10 +511,10 @@
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSdh5a2jeOYRH8N2zGlx_wnTTcTPisSnkg5Cqa0wPKuwVJbO1g/viewform?usp=publish-editor"
         target="_blank" rel="noopener"
         style="display:inline-flex;align-items:center;gap:0.7rem;
-               background:linear-gradient(135deg,#ff7a00,#ff5000);
+               background:linear-gradient(135deg,#0077b6,#00b4d8);
                color:white;border-radius:50px;padding:0.9rem 2.2rem;
                text-decoration:none;font-size:1rem;font-weight:700;
-               box-shadow:0 4px 18px rgba(255,120,0,0.4);letter-spacing:0.03em;
+               box-shadow:0 4px 18px rgba(0,180,216,0.4);letter-spacing:0.03em;
                font-family:'Noto Sans JP',sans-serif"
         onclick="closeClubRequestModal()">
         🔗 申請フォームを開く
@@ -540,7 +540,7 @@
       label.style.cssText = 'font-size:0.62rem;color:rgba(255,255,255,0.9);background:rgba(0,0,0,0.55);padding:0.15rem 0.5rem;border-radius:4px;letter-spacing:0.05em;white-space:nowrap';
       var btn = document.createElement('button');
       btn.textContent = '▲';
-      btn.style.cssText = 'width:48px;height:48px;background:#c63d00;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:1.2rem;box-shadow:0 4px 16px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;transition:transform 0.2s';
+      btn.style.cssText = 'width:48px;height:48px;background:#055a8c;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:1.2rem;box-shadow:0 4px 16px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;transition:transform 0.2s';
       btn.onclick = function(){ location.href = 'index.html'; };
       btn.onmouseover = function(){ btn.style.transform = 'translateY(-3px)'; };
       btn.onmouseout  = function(){ btn.style.transform = ''; };
