@@ -1052,11 +1052,11 @@ function updateMarkers(clubs) {
   if (clubs.length === 0) return;
 
   const orangeIcon = L.divIcon({
-    html: '<div style="width:28px;height:28px;background:#ff7a00;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.4)"></div>',
+    html: '<div style="width:28px;height:28px;background:#0077b6;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.4)"></div>',
     iconSize:[28,28], iconAnchor:[14,28], popupAnchor:[0,-30], className:'',
   });
   const hakusanIcon = L.divIcon({
-    html: '<div style="width:32px;height:32px;background:#ff3d00;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 2px 10px rgba(255,61,0,0.6)"></div>',
+    html: '<div style="width:32px;height:32px;background:#00b4d8;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 2px 10px rgba(0,180,216,0.6)"></div>',
     iconSize:[32,32], iconAnchor:[16,32], popupAnchor:[0,-34], className:'',
   });
 
@@ -1065,7 +1065,7 @@ function updateMarkers(clubs) {
     const marker = L.marker([club.lat, club.lng], { icon: isHakusan ? hakusanIcon : orangeIcon })
       .addTo(map)
       .bindPopup(
-        `<b style="color:${isHakusan?'#ff3d00':'#ff7a00'}">${club.name}${isHakusan?' ⭐':''}</b><br>` +
+        `<b style="color:${isHakusan?'#0096c7':'#0077b6'}">${club.name}${isHakusan?' ⭐':''}</b><br>` +
         `<span style="font-size:0.85em">${club.address}</span>`
       );
     window._clubMarkers[club.lat + ',' + club.lng] = marker;
