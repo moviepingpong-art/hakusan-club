@@ -591,12 +591,19 @@
 <!-- オリジナルコンテンツ特設ページ -->
 <section id="originalContents" style="background:linear-gradient(135deg,#0d1b4b 0%,#1a2a6c 50%,#0d1b4b 100%);padding:3rem 1.5rem">
   <div style="max-width:760px;margin:0 auto">
-    <div style="text-align:center;margin-bottom:2rem">
-      <p style="font-family:'Oswald',sans-serif;font-size:0.78rem;letter-spacing:0.3em;color:rgba(255,200,100,0.8);text-transform:uppercase;margin:0 0 0.6rem">Original Contents</p>
-      <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(1.4rem,4vw,2rem);font-weight:700;color:#fff;margin:0;letter-spacing:0.05em">白山クラブ<span style="color:#ffca28">オリジナル</span>コンテンツ</h2>
-      <p style="color:rgba(255,255,255,0.6);font-size:0.85rem;margin:0.7rem 0 0">白山クラブが独自に制作した特設ページです</p>
+    <div style="text-align:center;margin-bottom:2.2rem">
+      <p style="font-family:'Oswald',sans-serif;font-size:0.78rem;letter-spacing:0.3em;color:rgba(255,200,100,0.8);text-transform:uppercase;margin:0 0 0.6rem">Explore</p>
+      <h2 style="font-family:'Noto Sans JP',sans-serif;font-size:clamp(1.5rem,4.5vw,2.1rem);font-weight:800;color:#fff;margin:0;letter-spacing:0.05em">見る・知る・<span style="color:#ffca28">楽しむ</span></h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem">
+
+    <!-- グループ1：わたしたちの記録 -->
+    <div style="margin-bottom:2.2rem">
+      <div style="display:flex;align-items:center;gap:0.7rem;margin-bottom:1rem">
+        <span style="font-size:1.3rem">📔</span>
+        <h3 style="font-family:'Noto Sans JP',sans-serif;font-size:1.15rem;font-weight:700;color:#ffe082;margin:0;letter-spacing:0.04em">わたしたちの記録</h3>
+        <span style="flex:1;height:1px;background:rgba(255,224,130,0.3)"></span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem">
 
       <!-- フォトギャラリー -->
       <a href="gallery.html" style="display:flex;flex-direction:column;gap:0.7rem;background:rgba(255,255,255,0.07);border:1.5px solid rgba(100,181,246,0.6);border-radius:16px;padding:1.4rem 1.3rem;text-decoration:none;transition:background 0.2s,transform 0.15s;backdrop-filter:blur(8px)" onmouseover="this.style.background='rgba(100,181,246,0.15)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.07)';this.style.transform=''">
@@ -618,6 +625,18 @@
         <span style="align-self:flex-end;color:#ffd54f;font-size:0.78rem;font-weight:600;letter-spacing:0.05em">結果を見る →</span>
       </a>
 
+      </div>
+    </div>
+
+    <!-- グループ2：知る・学ぶ -->
+    <div>
+      <div style="display:flex;align-items:center;gap:0.7rem;margin-bottom:1rem">
+        <span style="font-size:1.3rem">📚</span>
+        <h3 style="font-family:'Noto Sans JP',sans-serif;font-size:1.15rem;font-weight:700;color:#a5d6a7;margin:0;letter-spacing:0.04em">知る・学ぶ</h3>
+        <span style="flex:1;height:1px;background:rgba(165,214,167,0.3)"></span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem">
+
       <!-- 全国クラブマップ -->
       <a href="map.html" style="display:flex;flex-direction:column;gap:0.7rem;background:rgba(255,255,255,0.07);border:1.5px solid rgba(129,199,132,0.6);border-radius:16px;padding:1.4rem 1.3rem;text-decoration:none;transition:background 0.2s,transform 0.15s;backdrop-filter:blur(8px)" onmouseover="this.style.background='rgba(129,199,132,0.12)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.07)';this.style.transform=''">
         <div style="display:flex;align-items:center;gap:0.7rem">
@@ -638,6 +657,7 @@
         <span style="align-self:flex-end;color:#ffcc80;font-size:0.78rem;font-weight:600;letter-spacing:0.05em">深堀りする →</span>
       </a>
 
+      </div>
     </div>
   </div>
 </section>

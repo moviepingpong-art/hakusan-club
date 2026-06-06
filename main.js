@@ -504,6 +504,50 @@ const CATEGORY_ICONS = {
 };
 
 /* photos 配列は data.js で定義しています */
+let currentCategory = 'all';
+
+/* フォトギャラリーで表示するカテゴリのみ（groupphoto/interactionはセクション写真用なので除外） */
+const GALLERY_CATEGORIES = ['atmosphere', 'equipment', 'practice', 'match'];
+
+function renderGallery() {
+  const grid = document.getElementById('galleryGrid');
+  if (!grid) return;
+
+  // ギャラリー対象カテゴリのみに絞り込む（セクション写真は除外）
+  const galleryPhotos = photos.filter(p => GALLERY_CATEGORIES.includes(p.category));
+
+  const filtered = currentCategory === 'all'
+    ? galleryPhotos
+    : galleryPhotos.filter(p => p.category === currentCategory);
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-light)">
+        <div style="font-size:3rem;margin-bottom:0.8rem">📷</div>
+        <div style="font-size:0.9rem">写真はGoogle Driveフォルダに保存すると毎週月曜日に自動更新されます。</div>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(photo => `
+    <div class="gallery-item${photo.caption ? ' has-title' : ''}"
+         onclick="openLightbox('${photo.src}')">
+      <img src="${photo.src}" alt="${photo.caption || ''}">
+      <div class="gallery-label">
+        ${CATEGORY_ICONS[photo.category]} ${CATEGORY_NAMES[photo.category]}
+        ${photo.caption
+          ? `<br><strong style="font-size:0.85rem;letter-spacing:0.03em">${photo.caption}</strong>`
+          : ''}
+      </div>
+    </div>`).join('');
+}
+
+function filterGallery(cat, btn) {
+  currentCategory = cat;
+  document.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderGallery();
+}
 
 /* 🏆 栄光の記録：championsカテゴリの写真を試合・大会タブに表示 */
 function renderChampions() {
@@ -1706,6 +1750,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---- お問い合わせフォーム初期化 ----
   initContactForm();
+
+  // ---- ギャラリー初期表示（gallery.html用）----
+  renderGallery();
 
   // ---- ヒーロー区画のイントロ要素（ロゴ・オレンジタグ）処理 ----
   initHeroIntro();
