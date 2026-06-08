@@ -193,7 +193,7 @@ let photos = [
     "id": 5,
     "src": "https://drive.google.com/thumbnail?id=1_Pd7fYZY5jdIWvY-kGmoD7PaHvjF9Kw_&sz=w800",
     "category": "equipment",
-    "caption": ""
+    "caption": "白山クラブオリジナルうちわ"
   },
   {
     "id": 6,
