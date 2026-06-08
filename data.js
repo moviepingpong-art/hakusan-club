@@ -191,96 +191,108 @@ let photos = [
   },
   {
     "id": 5,
+    "src": "https://drive.google.com/thumbnail?id=1_Pd7fYZY5jdIWvY-kGmoD7PaHvjF9Kw_&sz=w800",
+    "category": "equipment",
+    "caption": ""
+  },
+  {
+    "id": 6,
+    "src": "https://drive.google.com/thumbnail?id=1ZXsm4gt8A2tt3wKTyJnD5DmGz_6w0DU0&sz=w800",
+    "category": "equipment",
+    "caption": ""
+  },
+  {
+    "id": 7,
     "src": "https://drive.google.com/thumbnail?id=1_P5Lro2MX7G4IrP_xwSZHv6q2MLEUfqe&sz=w800",
     "category": "practice",
     "caption": ""
   },
   {
-    "id": 6,
+    "id": 8,
     "src": "https://drive.google.com/thumbnail?id=1UvO4rfYz0swvfgmEaoX2Gof7ra5mKle-&sz=w800",
     "category": "practice",
     "caption": ""
   },
   {
-    "id": 7,
+    "id": 9,
     "src": "https://drive.google.com/thumbnail?id=1Y_GlL4UKbY9ywpEf0uFzs7FZGZ3LBNPu&sz=w800",
     "category": "practice",
     "caption": ""
   },
   {
-    "id": 8,
+    "id": 10,
     "src": "https://drive.google.com/thumbnail?id=1rBHi4oj0sbs0fk_RWYe7a_Dne_fdutCP&sz=w800",
     "category": "practice",
     "caption": ""
   },
   {
-    "id": 9,
+    "id": 11,
     "src": "https://drive.google.com/thumbnail?id=199wQY9aK9kHLFp8uSwbwR2W4ucGbygVq&sz=w800",
     "category": "practice",
     "caption": ""
   },
   {
-    "id": 10,
+    "id": 12,
     "src": "https://drive.google.com/thumbnail?id=1JQ74O1k0bIH-DTYDJ7yJX1z3KRTY36wx&sz=w800",
     "category": "practice",
     "caption": ""
   },
   {
-    "id": 11,
+    "id": 13,
     "src": "https://drive.google.com/thumbnail?id=1MyA05cqhoRqxv7hiUvshyCc4V_AMbOvL&sz=w800",
     "category": "match",
     "caption": "2026/5/31ゆーりんピック２"
   },
   {
-    "id": 12,
+    "id": 14,
     "src": "https://drive.google.com/thumbnail?id=1U8-D6wQ1HdsfhWdtt0hoMHMDdmoknc3W&sz=w800",
     "category": "match",
     "caption": "2026/5/31ゆーりんピック１"
   },
   {
-    "id": 13,
+    "id": 15,
     "src": "https://drive.google.com/thumbnail?id=14S67-yQkv_umKUIz_Z0c_ZjsCrohGkjM&sz=w800",
     "category": "match",
     "caption": "2026/5/10スポレク2"
   },
   {
-    "id": 14,
+    "id": 16,
     "src": "https://drive.google.com/thumbnail?id=16fb7Q4ZS3zV0T8KvF-Zj8kCHKgNXaKqg&sz=w800",
     "category": "match",
     "caption": "2026/5/10スポレク1"
   },
   {
-    "id": 15,
+    "id": 17,
     "src": "https://drive.google.com/thumbnail?id=1tFdwbHuL8SInlqP5nrkZvd-52nOEVzbn&sz=w800",
     "category": "interaction",
     "caption": "能美クラブさん（石川総合スポーツセンター）"
   },
   {
-    "id": 16,
+    "id": 18,
     "src": "https://drive.google.com/thumbnail?id=1UrjFB9027WCPaiS8--TG-n9joMTJtI5b&sz=w800",
     "category": "interaction",
     "caption": "兼六クラブさん"
   },
   {
-    "id": 17,
+    "id": 19,
     "src": "https://drive.google.com/thumbnail?id=1yRrbwj8XWEfiUFLtzy1cWA6WaUO0jzmw&sz=w800",
     "category": "interaction",
     "caption": "万葉クラブさん"
   },
   {
-    "id": 18,
+    "id": 20,
     "src": "https://drive.google.com/thumbnail?id=1RIJASatiAk-Blx8HeZdVM8VzUwiVE-CA&sz=w800",
     "category": "champions",
     "caption": "2026/5/30ゆーりんピック70代優勝"
   },
   {
-    "id": 19,
+    "id": 21,
     "src": "https://drive.google.com/thumbnail?id=1Jp-C_MCBNugYVHaRcU-3ZLMRitgdGl-j&sz=w800",
     "category": "champions",
     "caption": "2026/5/31ゆーりんピック優勝"
   },
   {
-    "id": 20,
+    "id": 22,
     "src": "https://drive.google.com/thumbnail?id=1yGR9YRV0-nB9HvlbMTnDotNMqBT_2C3N&sz=w800",
     "category": "champions",
     "caption": "2026/5/10スポレク優勝"
