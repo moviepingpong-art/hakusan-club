@@ -506,6 +506,35 @@ const CATEGORY_ICONS = {
 /* photos 配列は data.js で定義しています */
 let currentCategory = 'all';
 
+/* ------------------------------------------------------------
+   Drive画像URLの正規化
+   ------------------------------------------------------------
+   data.js（GASが週次で自動生成）の写真URLは
+     https://drive.google.com/thumbnail?id=<ID>&sz=w800
+   という形をしているが、これは画像本体ではなく、実体である
+     https://lh3.googleusercontent.com/d/<ID>=w800
+   へ302リダイレクトするだけの窓口。
+
+   iOSのホーム画面アプリ（webクリップ）はSafari本体とは別の隔離された
+   保存領域で動くため、このクロスサイトのリダイレクトが通らず、
+   写真が1枚も表示されなくなる（同一サーバーの画像は出るのに写真だけ×）。
+   実体URLを直接指せばリダイレクトが不要になり、この問題は起きない。
+
+   data.js は GAS の updateGallery() が毎週上書きするので、
+   あちらを直しても月曜に元へ戻る。そのため表示側で変換している。
+   ------------------------------------------------------------ */
+function toDirectImageUrl(src) {
+  const m = /^https?:\/\/drive\.google\.com\/thumbnail\?id=([A-Za-z0-9_-]+)(?:&sz=(w\d+))?/.exec(src || '');
+  return m ? 'https://lh3.googleusercontent.com/d/' + m[1] + '=' + (m[2] || 'w800') : src;
+}
+
+/* 読み込み直後に photos 配列を変換しておく。
+   これでギャラリー・栄光の記録・セクション写真・ライトボックスの
+   すべての表示経路が一度に正しいURLを使うようになる。 */
+if (typeof photos !== 'undefined' && Array.isArray(photos)) {
+  photos.forEach(p => { p.src = toDirectImageUrl(p.src); });
+}
+
 /* フォトギャラリーで表示するカテゴリのみ（groupphoto/interactionはセクション写真用なので除外） */
 const GALLERY_CATEGORIES = ['atmosphere', 'equipment', 'practice', 'match'];
 
